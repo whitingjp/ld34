@@ -11,6 +11,22 @@ static const space_sprite ship_sprite =
 	6,
 };
 
+static const space_sprite ship_lengine =
+{
+	{{0.3,0.95},{0.3,0.95}},
+	{{0,1}},
+	2,
+	1,
+};
+
+static const space_sprite ship_rengine =
+{
+	{{0.7,0.95},{0.7,0.95}},
+	{{0,1}},
+	2,
+	1,
+};
+
 space_player space_player_update(space_player p)
 {
 	whitgl_bool l = whitgl_input_down(WHITGL_INPUT_LEFT);
@@ -29,9 +45,23 @@ space_player space_player_update(space_player p)
 	p.angle = whitgl_fwrap(p.angle+p.angle_speed, 0, whitgl_pi*2);
 	p.pos = whitgl_fvec_add(p.pos, p.speed);
 	p.speed = whitgl_fvec_interpolate(p.speed, whitgl_fvec_zero, 0.01);
+	whitgl_int i;
+	for(i=0; i<2; i++)
+	{
+		whitgl_bool on = i == 0 ? r : l;
+		whitgl_float target = on ? 1 : 0;
+		p.engine_thrust[i] = p.engine_thrust[i]*0.6 + 0.4*target;
+	}
+
 	return p;
 }
 void space_player_draw(space_player p, space_camera camera)
 {
 	space_sprite_draw(ship_sprite, p.pos, p.angle, camera);
+	space_sprite lengine = ship_lengine;
+	lengine.points[1].y += 0.5*p.engine_thrust[0];
+	space_sprite_draw(lengine, p.pos, p.angle, camera);
+	space_sprite rengine = ship_rengine;
+	rengine.points[1].y += 0.5*p.engine_thrust[1];
+	space_sprite_draw(rengine, p.pos, p.angle, camera);
 }
