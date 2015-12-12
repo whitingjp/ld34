@@ -34,7 +34,7 @@ typedef struct
 
 whitgl_fvec space_camera_point(whitgl_fvec p, space_camera cam)
 {
-	p = whitgl_fvec_add(p, cam.pos);
+	p = whitgl_fvec_sub(p, cam.pos);
 	p = whitgl_fvec_scale_val(p, cam.scale);
 	return p;
 }
@@ -83,6 +83,8 @@ int main()
 	whitgl_float angle;
 	whitgl_fvec position = {2,2};
 	whitgl_fvec speed = whitgl_fvec_zero;
+	space_camera camera = {{0.0,0.0}, 32};
+
 	bool running = true;
 	while(running)
 	{
@@ -109,9 +111,12 @@ int main()
 			if(r)
 				angle = whitgl_fwrap(angle+0.1, 0, whitgl_pi*2);
 			position = whitgl_fvec_add(position, speed);
+			speed = whitgl_fvec_interpolate(speed, whitgl_fvec_zero, 0.1);
 		}
 		whitgl_sys_draw_init();
-		space_camera camera = {{0.0,0.0}, 32};
+		whitgl_fvec half_screen_at_scale = whitgl_fvec_divide_val(whitgl_ivec_to_fvec(setup.size), camera.scale*2);
+		whitgl_fvec target_camera = whitgl_fvec_sub(position, half_screen_at_scale);
+		camera.pos = whitgl_fvec_interpolate(camera.pos, target_camera, 0.01);
 		whitgl_iaabb screen_rect = {whitgl_ivec_zero, setup.size};
 		whitgl_sys_color blank_col = {0x00, 0x00, 0x00, 0xff};
 		whitgl_sys_draw_iaabb(screen_rect, blank_col);
