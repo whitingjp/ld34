@@ -8,6 +8,7 @@
 #include <whitgl/sys.h>
 #include <whitgl/timer.h>
 #include <game/player.h>
+#include <game/starfield.h>
 #include <camera.h>
 #include <capture.h>
 
@@ -33,6 +34,7 @@ int main()
 	bool capturing = false;
 	space_camera camera = {{0.0,0.0}, 128, whitgl_ivec_to_fvec(setup.size)};
 	space_player player = space_player_zero;
+	space_starfield starfield = space_starfield_zero();
 	bool running = true;
 	while(running)
 	{
@@ -52,6 +54,7 @@ int main()
 			whitgl_float dist = whitgl_fvec_magnitude(whitgl_fvec_sub(draw_pos, whitgl_fvec_divide_val(whitgl_ivec_to_fvec(setup.size), 2)));
 			whitgl_float scale_adjust = -(dist - 64);
 			camera.scale = whitgl_fclamp(camera.scale + scale_adjust/10, 10, 128);
+			starfield = space_starfield_update(starfield, player.speed, camera);
 		}
 		whitgl_sys_draw_init();
 
@@ -59,6 +62,7 @@ int main()
 		whitgl_sys_color blank_col = {0x00, 0x00, 0x00, 0xff};
 		whitgl_sys_draw_iaabb(screen_rect, blank_col);
 		space_player_draw(player, camera);
+		space_starfield_draw(starfield, camera);
 		whitgl_sys_draw_finish();
 		capture = capture_info_update(capture, capturing);
 	}
