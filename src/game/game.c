@@ -11,7 +11,7 @@ space_game space_game_zero(whitgl_ivec screen_size)
 	g.camera = camera;
 	g.player = space_player_zero;
 	g.pirate = space_pirate_zero;
-	whitgl_fvec diso_pos = {0,0};
+	whitgl_fvec diso_pos = {30,10};
 	g.stations[0] = space_station_zero(5, diso_pos);
 	whitgl_fvec centurai_pos = {-10,-40};
 	g.stations[1] = space_station_zero(7, centurai_pos);
@@ -63,6 +63,18 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 		focus.num_foci++;
 	}
 	focus_pos = whitgl_fvec_add(focus_pos, whitgl_fvec_scale_val(g.player.speed, 30));
+	{
+		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(focus_pos, g.pirate.e.pos));
+		whitgl_float mult = g.pirate.e.seen ? 1.25 : 1;
+		g.pirate.e.seen = false;
+		if(diff < 20*mult && g.player.active)
+		{
+			g.pirate.e.seen = true;
+			focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.pirate.e.pos, whitgl_fvec_val(3));
+			focus.foci[focus.num_foci].b = whitgl_fvec_add(g.pirate.e.pos, whitgl_fvec_val(3));
+			focus.num_foci++;
+		}
+	}
 	for(i=0; i<NUM_STATIONS; i++)
 	{
 		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(focus_pos, g.stations[i].e.pos));
