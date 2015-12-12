@@ -65,15 +65,16 @@ void space_menu_draw(space_menu menu, whitgl_ivec screen_size)
 	if(title_box.b.y-title_box.a.y > 12) title_box.b.y = title_box.a.y+12;
 	whitgl_sys_draw_iaabb(title_box, col);
 
+	whitgl_sprite big_font = {IMAGE_FONT, {36,0}, {12,12}};
+	whitgl_sprite little_font = {IMAGE_FONT, {0,0}, {6,6}};
 	if(title_box.b.y-title_box.a.y == 12)
 	{
-		whitgl_sprite big_font = {IMAGE_FONT, {36,0}, {12,12}};
+
 		whitgl_ivec title_pos = {(title_box.a.x+title_box.b.x)/2, title_box.a.y};
 		draw_string("diso", title_pos, box_size.x, big_font, true);
 	}
 	if(box_size.y == 180)
 	{
-		whitgl_sprite little_font = {IMAGE_FONT, {0,0}, {6,6}};
 		whitgl_ivec text_pos = {title_box.a.x+2, title_box.a.y+2+12};
 		const char* text =
 	//  01234567890123456789012345
@@ -94,5 +95,27 @@ void space_menu_draw(space_menu menu, whitgl_ivec screen_size)
 		char buffer[1024];
 		snprintf(buffer, whitgl_imin(menu.num_chars, 1024), "%s", text);
 		draw_string(buffer, text_pos, box_size.x-12, little_font, false);
+	}
+
+	whitgl_int button_height = 32;
+	whitgl_iaabb lbutton_box = box;
+	lbutton_box.b.x -= box_size.x/2;
+	lbutton_box.a.y = box.b.y-button_height;
+	if(lbutton_box.a.y > box.a.y)
+	{
+		whitgl_sys_draw_hollow_iaabb(lbutton_box, 1, col);
+		whitgl_ivec ltext_pos = {lbutton_box.a.x+box_size.x/4, box.b.y-(button_height-6)/2-6};
+		draw_string("sure", ltext_pos, box_size.x-12, little_font, true);
+	}
+
+
+	whitgl_iaabb rbutton_box = box;
+	rbutton_box.a.x = lbutton_box.b.x-1;
+	rbutton_box.a.y = box.b.y-button_height;
+	if(rbutton_box.a.y > box.a.y)
+	{
+		whitgl_sys_draw_hollow_iaabb(rbutton_box, 1, col);
+		whitgl_ivec rtext_pos = {rbutton_box.a.x+box_size.x/4, box.b.y-(button_height-6)/2-6};
+		draw_string("no way", rtext_pos, box_size.x-12, little_font, true);
 	}
 }
