@@ -11,10 +11,10 @@ space_game space_game_zero(whitgl_ivec screen_size)
 	g.camera = camera;
 	g.player = space_player_zero;
 	whitgl_fvec diso_pos = {50,26};
-	g.stations[0] = space_station_zero(6, diso_pos);
+	g.stations[0] = space_station_zero(5, diso_pos);
 	whitgl_fvec centurai_pos = {-10,-40};
-	g.stations[1] = space_station_zero(9, centurai_pos);
-	whitgl_fvec alpha_pos = {-100,150};
+	g.stations[1] = space_station_zero(7, centurai_pos);
+	whitgl_fvec alpha_pos = {-50,75};
 	g.stations[2] = space_station_zero(11, alpha_pos);
 	g.starfield = space_starfield_zero();
 	g.docked = false;
