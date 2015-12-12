@@ -32,12 +32,12 @@ space_camera space_camera_update(space_camera c, space_camera_focus focus, whitg
 	}
 	whitgl_fvec center = whitgl_fvec_divide_val(total, focus.num_foci);
 	whitgl_fvec old_pos = c.pos;
-	c.pos = whitgl_fvec_interpolate(c.pos, center, 0.1);
+	c.pos = whitgl_fvec_interpolate(c.pos, center, 0.075);
 	c.speed = whitgl_fvec_sub(c.pos, old_pos);
 
 	whitgl_fvec size = whitgl_fvec_sub(bounds.b, bounds.a);
 	whitgl_fvec best_scale = whitgl_fvec_divide(whitgl_ivec_to_fvec(screen_size), size);
-	whitgl_float target_scale = whitgl_fmin(best_scale.x, best_scale.y)*0.75;
-	c.scale = c.scale*0.95 + target_scale*0.05;
+	whitgl_float target_scale = whitgl_fmin(best_scale.x, best_scale.y)*0.8;
+	c.scale = c.scale*0.97 + target_scale*0.03;
 	return c;
 }

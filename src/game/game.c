@@ -51,16 +51,20 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size)
 	space_camera_focus focus;
 	g.hud = space_hud_markers_zero;
 	focus.num_foci = 0;
+	whitgl_fvec focus_pos = whitgl_fvec_add(g.player.e.pos, whitgl_fvec_scale_val(g.player.speed, 25));
 	if(g.player.active)
 	{
-		focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.player.e.pos, whitgl_fvec_val(3));
-		focus.foci[focus.num_foci].b = whitgl_fvec_add(g.player.e.pos, whitgl_fvec_val(3));
+		focus.foci[focus.num_foci].a = whitgl_fvec_sub(focus_pos, whitgl_fvec_val(3));
+		focus.foci[focus.num_foci].b = whitgl_fvec_add(focus_pos, whitgl_fvec_val(3));
+		focus.num_foci++;
+		focus.foci[focus.num_foci].a = whitgl_fvec_sub(focus_pos, whitgl_fvec_val(3));
+		focus.foci[focus.num_foci].b = whitgl_fvec_add(focus_pos, whitgl_fvec_val(3));
 		focus.num_foci++;
 	}
-
+	focus_pos = whitgl_fvec_add(focus_pos, whitgl_fvec_scale_val(g.player.speed, 30));
 	for(i=0; i<NUM_STATIONS; i++)
 	{
-		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(g.player.e.pos, g.stations[i].e.pos));
+		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(focus_pos, g.stations[i].e.pos));
 		whitgl_float mult = g.stations[i].e.seen ? 1.25 : 1;
 		g.stations[i].e.seen = false;
 		if(diff < 20*mult && g.player.active)
@@ -76,7 +80,7 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size)
 	}
 	for(i=0; i<NUM_ASTEROIDS; i++)
 	{
-		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(g.player.e.pos, g.asteroids[i].e.pos));
+		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(focus_pos, g.asteroids[i].e.pos));
 		whitgl_float mult = g.asteroids[i].e.seen ? 1.25 : 1;
 		g.asteroids[i].e.seen = false;
 		if(diff < 12*mult && g.player.active)
