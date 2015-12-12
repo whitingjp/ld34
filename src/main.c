@@ -9,6 +9,7 @@
 #include <whitgl/sys.h>
 #include <whitgl/timer.h>
 #include <game/game.h>
+#include <menu/menu.h>
 #include <capture.h>
 #include <resource.h>
 
@@ -57,6 +58,7 @@ int main(int argc, char* argv[])
 	whitgl_timer_init();
 
 	space_game game = space_game_zero(setup.size);
+	space_menu menu = space_menu_zero;
 
 	capture_info capture = capture_info_zero;
 	bool running = true;
@@ -74,6 +76,7 @@ int main(int argc, char* argv[])
 				running = false;
 
 			game = space_game_update(game, setup.size);
+			menu = space_menu_update(menu, game);
 		}
 		whitgl_sys_draw_init();
 
@@ -81,6 +84,7 @@ int main(int argc, char* argv[])
 		whitgl_sys_color blank_col = {0x0b, 0x1c, 0x1c, 0xff};
 		whitgl_sys_draw_iaabb(screen_rect, blank_col);
 		space_game_draw(game);
+		space_menu_draw(menu, setup.size);
 		whitgl_sys_draw_finish();
 		if(can_capture)
 			capture = capture_info_update(capture);
