@@ -14,8 +14,8 @@ void space_station_draw(space_station s, space_camera camera)
 	whitgl_int i;
 	for(i=0; i<num_points; i++)
 	{
-		whitgl_fvec point = {0.5, -2};
-		sprite.points[i] = whitgl_rotate_point_around_point(point, whitgl_fvec_val(0.5), (whitgl_pi*2)*(i/num_points));
+		whitgl_fvec point = {0, -2};
+		sprite.points[i] = whitgl_rotate_point_around_point(point, whitgl_fvec_zero, (whitgl_pi*2)*(i/num_points));
 	}
 	for(i=0; i<num_points-2; i++)
 	{

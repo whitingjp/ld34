@@ -9,12 +9,10 @@ void space_sprite_draw(space_sprite sprite, whitgl_fvec position, whitgl_float a
 	{
 		whitgl_fvec a = sprite.points[sprite.lines[i].x];
 		whitgl_fvec b = sprite.points[sprite.lines[i].y];
-		a = whitgl_rotate_point_around_point(a, whitgl_fvec_val(0.5), angle);
-		b = whitgl_rotate_point_around_point(b, whitgl_fvec_val(0.5), angle);
+		a = whitgl_rotate_point_around_point(a, whitgl_fvec_zero, angle);
+		b = whitgl_rotate_point_around_point(b, whitgl_fvec_zero, angle);
 		a = whitgl_fvec_add(a, position);
 		b = whitgl_fvec_add(b, position);
-		a = whitgl_fvec_sub(a, whitgl_fvec_val(0.5));
-		b = whitgl_fvec_sub(b, whitgl_fvec_val(0.5));
 		whitgl_faabb line;
 		line.a = space_camera_point(a, camera);
 		line.b = space_camera_point(b, camera);

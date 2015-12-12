@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
 	whitgl_timer_init();
 
 	capture_info capture = capture_info_zero;
-	space_camera camera = {{0.0,0.0}, 128, whitgl_ivec_to_fvec(setup.size), {0,0}};
+	space_camera camera = {{0.0,0.0}, 1, whitgl_ivec_to_fvec(setup.size), {0,0}};
 	space_player player = space_player_zero;
 	space_station station = space_station_zero;
 	space_starfield starfield = space_starfield_zero();
@@ -78,10 +78,10 @@ int main(int argc, char* argv[])
 			starfield = space_starfield_update(starfield, camera.speed, camera);
 
 			space_camera_focus focus;
-			focus.foci[0].a = player.pos;
-			focus.foci[0].b = whitgl_fvec_add(focus.foci[0].a, whitgl_fvec_val(1));
-			focus.foci[1].a = station.pos;
-			focus.foci[1].b = whitgl_fvec_add(focus.foci[1].a, whitgl_fvec_val(2)); // not correct
+			focus.foci[0].a = whitgl_fvec_sub(player.pos, whitgl_fvec_val(0.5));
+			focus.foci[0].b = whitgl_fvec_add(player.pos, whitgl_fvec_val(0.5));
+			focus.foci[1].a = whitgl_fvec_sub(station.pos, whitgl_fvec_val(2));
+			focus.foci[1].b = whitgl_fvec_add(station.pos, whitgl_fvec_val(2));
 			focus.num_foci = 2;
 			camera = space_camera_update(camera, focus, setup.size);
 
