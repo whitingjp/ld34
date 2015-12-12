@@ -31,22 +31,34 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size)
 
 	space_camera_focus focus;
 	focus.num_foci = 0;
-	focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.player.e.pos, whitgl_fvec_val(2));
-	focus.foci[focus.num_foci].b = whitgl_fvec_add(g.player.e.pos, whitgl_fvec_val(2));
-	focus.num_foci++;
+	if(g.player.active)
+	{
+		focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.player.e.pos, whitgl_fvec_val(2));
+		focus.foci[focus.num_foci].b = whitgl_fvec_add(g.player.e.pos, whitgl_fvec_val(2));
+		focus.num_foci++;
+	}
 	if(diff < 16)
 	{
 		focus.foci[1].a = whitgl_fvec_sub(g.station.e.pos, whitgl_fvec_val(2));
 		focus.foci[1].b = whitgl_fvec_add(g.station.e.pos, whitgl_fvec_val(2));
 		focus.num_foci++;
 	}
+	whitgl_int i;
+	for(i=0; i<MAX_PIECES; i++)
+	{
+		if(g.player.active || !g.debris.pieces[i].active)
+			continue;
+		focus.foci[focus.num_foci].a = g.debris.pieces[i].e.pos;
+		focus.foci[focus.num_foci].b = g.debris.pieces[i].e.pos;
+		focus.num_foci++;
+	}
 	g.camera = space_camera_update(g.camera, focus, screen_size);
 
 	whitgl_bool colliding = space_entity_colliding(g.player.e, g.station.e);
-	if(colliding)
+	if(colliding && g.player.active)
 	{
 		g.debris = space_debris_create(g.debris, g.player.e, g.player.speed);
-		g.player = space_player_zero;
+		g.player.active = false;
 
 	}
 	return g;

@@ -12,7 +12,12 @@ whitgl_fvec space_camera_point(whitgl_fvec p, space_camera cam)
 
 space_camera space_camera_update(space_camera c, space_camera_focus focus, whitgl_ivec screen_size)
 {
-	(void)screen_size;
+	if(focus.num_foci == 0)
+	{
+		c.pos = whitgl_fvec_add(c.pos, c.speed);
+		c.speed = whitgl_fvec_scale_val(c.speed, 0.99);
+	}
+
 	whitgl_fvec total = whitgl_fvec_zero;
 	whitgl_faabb bounds = focus.foci[0];
 	whitgl_int i;

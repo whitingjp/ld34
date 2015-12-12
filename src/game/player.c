@@ -22,6 +22,12 @@ static const space_sprite ship_rengine =
 
 space_player space_player_update(space_player p)
 {
+	if(!p.active)
+	{
+		whitgl_loop_volume(SOUND_POWER_L, 0);
+		whitgl_loop_volume(SOUND_POWER_R, 0);
+		return p;
+	}
 	whitgl_bool l = whitgl_input_down(WHITGL_INPUT_LEFT);
 	whitgl_bool r = whitgl_input_down(WHITGL_INPUT_RIGHT);
 	if(l&&r)
@@ -59,6 +65,8 @@ space_player space_player_update(space_player p)
 }
 void space_player_draw(space_player p, space_camera camera)
 {
+	if(!p.active)
+		return;
 	space_entity_draw(p.e, camera);
 	space_sprite lengine = ship_lengine;
 	lengine.points[1].y += 0.5*p.engine_thrust[0];
