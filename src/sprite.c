@@ -22,6 +22,11 @@ void space_sprite_draw(space_sprite sprite, whitgl_fvec position, whitgl_float a
 
 void space_entity_draw(space_entity e, space_camera camera)
 {
+	whitgl_fvec center_pos = space_camera_point(e.pos, camera);
+	if(center_pos.x < -100 || center_pos.y < -100)
+		return;
+	if(center_pos.x > 500 || center_pos.y > 500)
+		return;
 	space_sprite_draw(e.sprite, e.pos, e.angle, camera);
 }
 

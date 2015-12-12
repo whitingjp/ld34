@@ -11,7 +11,7 @@ typedef struct
 	whitgl_fvec speed;
 } space_camera;
 
-#define MAX_FOCI (8)
+#define MAX_FOCI (64)
 typedef struct
 {
 	whitgl_faabb foci[MAX_FOCI];
