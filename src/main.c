@@ -80,12 +80,11 @@ int main(int argc, char* argv[])
 			starfield = space_starfield_update(starfield, camera.speed, camera);
 
 			whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(player.pos, station.pos));
-			if(diff < 1)
-				docked = true;
+			docked = diff < 1 && player.engine_thrust[0]+player.engine_thrust[1] < 0.2;
 			if(docked)
 			{
-				player.pos = whitgl_fvec_interpolate(player.pos, station.pos, 0.1);
-				player.angle = whitgl_angle_lerp(player.angle, station.angle, 0.1);
+				player.pos = whitgl_fvec_interpolate(player.pos, station.pos, 0.05);
+				player.angle = whitgl_angle_lerp(player.angle, station.angle, 0.05);
 			}
 
 			space_camera_focus focus;
