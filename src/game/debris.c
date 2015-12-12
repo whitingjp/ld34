@@ -43,8 +43,8 @@ space_debris space_debris_update(space_debris d)
 		d.pieces[i].speed = whitgl_fvec_scale_val(d.pieces[i].speed,0.99);
 		d.pieces[i].angle_speed = d.pieces[i].angle_speed*0.99;
 		d.pieces[i].timer = whitgl_fclamp(d.pieces[i].timer - 0.01, 0, 1);
-		// if(d.pieces[i].timer <= 0.0)
-		// 	d.pieces[i].active = false;
+		if(d.pieces[i].timer <= 0.0)
+			d.pieces[i].active = false;
 	}
 	return d;
 }
