@@ -1,5 +1,6 @@
 #include "station.h"
 
+#include <whitgl/sys.h>
 #include <sprite.h>
 
 space_station space_station_update(space_station s)
@@ -25,4 +26,9 @@ void space_station_draw(space_station s, space_camera camera)
 	sprite.num_points = num_points;
 	sprite.num_lines = num_points-2;
 	space_sprite_draw(sprite, s.pos, s.angle, camera);
+	whitgl_fcircle circle;
+	circle.pos = space_camera_point(s.pos, camera);
+	circle.size = camera.scale;
+	whitgl_sys_color col = {0x0f, 0x52, 0x3a, 0x60};
+	whitgl_sys_draw_fcircle(circle, col, 10);
 }
