@@ -13,10 +13,10 @@ int main()
 	WHITGL_LOG("Starting main.");
 
 	whitgl_sys_setup setup = whitgl_sys_setup_zero;
-	setup.size.x = 32;
-	setup.size.y = 32;
-	setup.pixel_size = 16;
-	setup.name = "main";
+	setup.size.x = 280;
+	setup.size.y = 180;
+	setup.pixel_size = 3;
+	setup.name = "space";
 
 	if(!whitgl_sys_init(&setup))
 		return 1;
