@@ -9,6 +9,7 @@
 #include <whitgl/sys.h>
 #include <whitgl/timer.h>
 #include <game/player.h>
+#include <game/station.h>
 #include <game/starfield.h>
 #include <camera.h>
 #include <capture.h>
@@ -57,6 +58,7 @@ int main(int argc, char* argv[])
 	capture_info capture = capture_info_zero;
 	space_camera camera = {{0.0,0.0}, 128, whitgl_ivec_to_fvec(setup.size)};
 	space_player player = space_player_zero;
+	space_station station = space_station_zero;
 	space_starfield starfield = space_starfield_zero();
 	bool running = true;
 	while(running)
@@ -77,6 +79,7 @@ int main(int argc, char* argv[])
 			whitgl_float dist = whitgl_fvec_magnitude(whitgl_fvec_sub(draw_pos, whitgl_fvec_divide_val(whitgl_ivec_to_fvec(setup.size), 2)));
 			whitgl_float scale_adjust = -(dist - 32);
 			camera.scale = whitgl_fclamp(camera.scale + scale_adjust/40, 20, 64);
+			station = space_station_update(station);
 			starfield = space_starfield_update(starfield, player.speed, camera);
 		}
 		whitgl_sys_draw_init();
@@ -85,6 +88,7 @@ int main(int argc, char* argv[])
 		whitgl_sys_color blank_col = {0x0b, 0x1c, 0x1c, 0xff};
 		whitgl_sys_draw_iaabb(screen_rect, blank_col);
 		space_player_draw(player, camera);
+		space_station_draw(station, camera);
 		space_starfield_draw(starfield, camera);
 		whitgl_sys_draw_finish();
 		if(can_capture)
