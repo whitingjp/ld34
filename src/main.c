@@ -32,8 +32,8 @@ int main(int argc, char* argv[])
 	};
 
 	whitgl_sys_setup setup = whitgl_sys_setup_zero;
-	setup.size.x = 210;
-	setup.size.y = 135;
+	setup.size.x = 280;
+	setup.size.y = 180;
 	setup.pixel_size = 3;
 	setup.name = "space";
 	setup.fullscreen = fullscreen;
@@ -88,11 +88,16 @@ int main(int argc, char* argv[])
 			}
 
 			space_camera_focus focus;
-			focus.foci[0].a = whitgl_fvec_sub(player.pos, whitgl_fvec_val(0.5));
-			focus.foci[0].b = whitgl_fvec_add(player.pos, whitgl_fvec_val(0.5));
-			focus.foci[1].a = whitgl_fvec_sub(station.pos, whitgl_fvec_val(2));
-			focus.foci[1].b = whitgl_fvec_add(station.pos, whitgl_fvec_val(2));
-			focus.num_foci = 2;
+			focus.num_foci = 0;
+			focus.foci[focus.num_foci].a = whitgl_fvec_sub(player.pos, whitgl_fvec_val(2));
+			focus.foci[focus.num_foci].b = whitgl_fvec_add(player.pos, whitgl_fvec_val(2));
+			focus.num_foci++;
+			if(diff < 16)
+			{
+				focus.foci[1].a = whitgl_fvec_sub(station.pos, whitgl_fvec_val(2));
+				focus.foci[1].b = whitgl_fvec_add(station.pos, whitgl_fvec_val(2));
+				focus.num_foci++;
+			}
 			camera = space_camera_update(camera, focus, setup.size);
 
 		}
