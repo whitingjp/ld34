@@ -26,15 +26,27 @@ void draw_string(const char* string, whitgl_ivec pos, whitgl_int max_width, whit
 	whitgl_ivec draw_pos = pos;
 	while(*string)
 	{
+		int index = -1;
 		if(*string >= 'a' && *string <= 'z')
-		{
-			int index = *string-'a';
-			whitgl_ivec frame = {index%6, index/6};
-			whitgl_sys_draw_sprite(sprite, frame, draw_pos);
-		}
+			index = *string-'a';
 		if(*string >= '0' && *string <= '9')
+			index = *string-'0'+26;
+		if(*string == ',')
+			index = 36;
+		if(*string == '.')
+			index = 37;
+		if(*string == ':')
+			index = 38;
+		if(*string == '$')
+			index = 39;
+		if(*string == '!')
+			index = 40;
+		if(*string == '\'')
+			index = 41;
+		if(*string == '\n')
+			draw_pos.x += 10000;
+		if(index != -1)
 		{
-			int index = *string-'0'+26;
 			whitgl_ivec frame = {index%6, index/6};
 			whitgl_sys_draw_sprite(sprite, frame, draw_pos);
 		}
@@ -71,27 +83,27 @@ void space_menu_draw(space_menu menu, whitgl_ivec screen_size)
 	{
 
 		whitgl_ivec title_pos = {(title_box.a.x+title_box.b.x)/2, title_box.a.y};
-		draw_string("diso", title_pos, box_size.x, big_font, true);
+		draw_string("diso!!", title_pos, box_size.x, big_font, true);
 	}
 	if(box_size.y == 180)
 	{
 		whitgl_ivec text_pos = {title_box.a.x+2, title_box.a.y+2+12};
 		const char* text =
 	//  01234567890123456789012345
-		"the quick brown          "
-		"fox stole all            "
-		"of my cargo              "
-		"                         "
-		"dammit                   "
-		"                         "
-		"hey                      "
-		"                         "
-		"i dont suppose           "
-		"you could help           "
-		"out                      "
-		"                         "
-		"i will make it           "
-		"worthwhile               ";
+		"the quick brown.\n"
+		"fox stole all,\n"
+		"of my cargo!\n"
+		"\n"
+		"dammit$\n"
+		"\n"
+		"hey\n"
+		"\n"
+		"i dont suppose\n"
+		"you could help\n"
+		"out\n"
+		"\n"
+		"i will' make it\n"
+		"worthwhile\n";
 		char buffer[1024];
 		snprintf(buffer, whitgl_imin(menu.num_chars, 1024), "%s", text);
 		draw_string(buffer, text_pos, box_size.x-12, little_font, false);
