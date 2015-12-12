@@ -10,13 +10,14 @@
 #include <camera.h>
 
 #define NUM_STATIONS (3)
+#define NUM_ASTEROIDS (8)
 
 typedef struct
 {
 	space_player player;
 	space_station stations[NUM_STATIONS];
 	space_starfield starfield;
-	space_asteroid asteroid;
+	space_asteroid asteroids[NUM_ASTEROIDS];
 	space_camera camera;
 	space_debris debris;
 	space_hud_markers hud;

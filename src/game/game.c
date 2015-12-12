@@ -16,7 +16,9 @@ space_game space_game_zero(whitgl_ivec screen_size)
 	g.stations[1] = space_station_zero(7, centurai_pos);
 	whitgl_fvec alpha_pos = {-50,75};
 	g.stations[2] = space_station_zero(11, alpha_pos);
-	g.asteroid = space_asteroid_zero();
+	whitgl_int i;
+	for(i=0; i<NUM_ASTEROIDS; i++)
+		g.asteroids[i] = space_asteroid_zero();
 	g.starfield = space_starfield_zero();
 	g.docked = false;
 	g.debris = space_debris_zero();
@@ -28,7 +30,8 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size)
 	g.player = space_player_update(g.player);
 	for(i=0; i<NUM_STATIONS; i++)
 		g.stations[i] = space_station_update(g.stations[i]);
-	g.asteroid = space_asteroid_update(g.asteroid);
+	for(i=0; i<NUM_ASTEROIDS; i++)
+		g.asteroids[i] = space_asteroid_update(g.asteroids[i]);
 	g.starfield = space_starfield_update(g.starfield, g.camera.speed, g.camera);
 	g.debris = space_debris_update(g.debris);
 
@@ -96,7 +99,8 @@ void space_game_draw(space_game g)
 	space_player_draw(g.player, g.camera);
 	for(i=0; i<NUM_STATIONS; i++)
 		space_station_draw(g.stations[i], g.camera);
-	space_asteroid_draw(g.asteroid, g.camera);
+	for(i=0; i<NUM_ASTEROIDS; i++)
+		space_asteroid_draw(g.asteroids[i], g.camera);
 	space_starfield_draw(g.starfield, g.camera);
 	space_hud_draw(g.player.e, g.hud, g.camera);
 
