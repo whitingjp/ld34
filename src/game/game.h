@@ -10,7 +10,7 @@
 #include <camera.h>
 
 #define NUM_STATIONS (3)
-#define NUM_ASTEROIDS (32)
+#define NUM_ASTEROIDS (0)
 
 typedef struct
 {
@@ -25,7 +25,7 @@ typedef struct
 } space_game;
 
 space_game space_game_zero(whitgl_ivec screen_size);
-space_game space_game_update(space_game game, whitgl_ivec screen_size);
+space_game space_game_update(space_game game, whitgl_ivec screen_size, whitgl_fvec camera_offset);
 void space_game_draw(space_game game);
 
 #endif // GAME_H_

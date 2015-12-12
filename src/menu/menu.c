@@ -52,7 +52,7 @@ void space_menu_draw(space_menu menu, whitgl_ivec screen_size)
 {
 	if(menu.transition <= 0)
 		return;
-	whitgl_ivec box_size = {96, 180*menu.transition*menu.transition};
+	whitgl_ivec box_size = {156, 180*menu.transition*menu.transition};
 	whitgl_iaabb box;
 	box.a.x = 12;
 	box.a.y = (screen_size.y-box_size.y)/2;
@@ -71,28 +71,28 @@ void space_menu_draw(space_menu menu, whitgl_ivec screen_size)
 		whitgl_ivec title_pos = {(title_box.a.x+title_box.b.x)/2, title_box.a.y};
 		draw_string("diso", title_pos, box_size.x, big_font, true);
 	}
-	if(box_size.y == 128)
+	if(box_size.y == 180)
 	{
 		whitgl_sprite little_font = {IMAGE_FONT, {0,0}, {6,6}};
 		whitgl_ivec text_pos = {title_box.a.x+2, title_box.a.y+2+12};
 		const char* text =
-	//  0123456789012345
-		"the quick brown"
-		"fox stole all  "
-		"of my cargo    "
-		"               "
-		"dammit         "
-		"               "
-		"hey            "
-		"               "
-		"i dont suppose "
-		"you could help "
-		"out            "
-		"               "
-		"i will make it "
-		"worthwhile     ";
-		char buffer[256];
-		snprintf(buffer, whitgl_imin(menu.num_chars, 256), "%s", text);
+	//  01234567890123456789012345
+		"the quick brown          "
+		"fox stole all            "
+		"of my cargo              "
+		"                         "
+		"dammit                   "
+		"                         "
+		"hey                      "
+		"                         "
+		"i dont suppose           "
+		"you could help           "
+		"out                      "
+		"                         "
+		"i will make it           "
+		"worthwhile               ";
+		char buffer[1024];
+		snprintf(buffer, whitgl_imin(menu.num_chars, 1024), "%s", text);
 		draw_string(buffer, text_pos, box_size.x-12, little_font, false);
 	}
 }

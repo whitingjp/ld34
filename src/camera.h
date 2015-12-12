@@ -19,7 +19,7 @@ typedef struct
 } space_camera_focus;
 
 whitgl_fvec space_camera_point(whitgl_fvec p, space_camera cam);
-space_camera space_camera_update(space_camera c, space_camera_focus focus, whitgl_ivec screen_size);
+space_camera space_camera_update(space_camera c, space_camera_focus focus, whitgl_ivec screen_size, whitgl_fvec camera_offset);
 
 
 #endif //CAMERA_H_

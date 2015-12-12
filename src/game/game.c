@@ -24,7 +24,7 @@ space_game space_game_zero(whitgl_ivec screen_size)
 	g.debris = space_debris_zero();
 	return g;
 }
-space_game space_game_update(space_game g, whitgl_ivec screen_size)
+space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec camera_offset)
 {
 	whitgl_int i;
 	g.player = space_player_update(g.player);
@@ -99,7 +99,7 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size)
 		focus.foci[focus.num_foci].b = whitgl_fvec_add(g.debris.pieces[i].e.pos, whitgl_fvec_val(1));
 		focus.num_foci++;
 	}
-	g.camera = space_camera_update(g.camera, focus, screen_size);
+	g.camera = space_camera_update(g.camera, focus, screen_size, camera_offset);
 
 	whitgl_bool colliding = false;
 	for(i=0; i<NUM_STATIONS; i++)

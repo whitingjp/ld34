@@ -10,7 +10,7 @@ whitgl_fvec space_camera_point(whitgl_fvec p, space_camera cam)
 	return p;
 }
 
-space_camera space_camera_update(space_camera c, space_camera_focus focus, whitgl_ivec screen_size)
+space_camera space_camera_update(space_camera c, space_camera_focus focus, whitgl_ivec screen_size, whitgl_fvec camera_offset)
 {
 	if(focus.num_foci == 0)
 	{
@@ -31,6 +31,9 @@ space_camera space_camera_update(space_camera c, space_camera_focus focus, whitg
 		total.y += (focus.foci[i].a.y+focus.foci[i].b.y)/2;
 	}
 	whitgl_fvec center = whitgl_fvec_divide_val(total, focus.num_foci);
+	whitgl_fvec screen_size_units = whitgl_fvec_divide_val(c.screen_size, c.scale);
+	whitgl_fvec unit_offset = whitgl_fvec_scale(screen_size_units, camera_offset);
+	center = whitgl_fvec_add(center, unit_offset);
 	whitgl_fvec old_pos = c.pos;
 	c.pos = whitgl_fvec_interpolate(c.pos, center, 0.075);
 	c.speed = whitgl_fvec_sub(c.pos, old_pos);

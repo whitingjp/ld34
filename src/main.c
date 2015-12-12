@@ -77,7 +77,9 @@ int main(int argc, char* argv[])
 			if(whitgl_sys_should_close())
 				running = false;
 
-			game = space_game_update(game, setup.size);
+			whitgl_fvec camera_offset = whitgl_fvec_zero;
+			camera_offset.x = -0.2*menu.transition;
+			game = space_game_update(game, setup.size, camera_offset);
 			menu = space_menu_update(menu, game);
 		}
 		whitgl_sys_draw_init();
