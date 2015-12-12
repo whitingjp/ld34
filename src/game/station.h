@@ -6,9 +6,7 @@
 
 typedef struct
 {
-	space_sprite sprite;
-	whitgl_fvec pos;
-	whitgl_float angle;
+	space_entity e;
 } space_station;
 
 space_station space_station_zero();

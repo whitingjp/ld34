@@ -14,6 +14,13 @@ typedef struct
 	whitgl_int num_lines;
 } space_sprite;
 
+typedef struct
+{
+	space_sprite sprite;
+	whitgl_fvec pos;
+	whitgl_float angle;
+} space_entity;
+
 void space_sprite_draw(space_sprite sprite, whitgl_fvec position, whitgl_float angle, space_camera camera);
 
 #endif // SPRITE_H_

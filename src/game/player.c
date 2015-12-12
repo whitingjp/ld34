@@ -27,7 +27,7 @@ space_player space_player_update(space_player p)
 	if(l&&r)
 	{
 		whitgl_fvec impulse = {0,-0.002};
-		impulse = whitgl_rotate_point_around_point(impulse, whitgl_fvec_zero, p.angle);
+		impulse = whitgl_rotate_point_around_point(impulse, whitgl_fvec_zero, p.e.angle);
 		p.speed = whitgl_fvec_add(p.speed, impulse);
 	}
 	if(l)
@@ -35,8 +35,8 @@ space_player space_player_update(space_player p)
 	if(r)
 		p.angle_speed = whitgl_fclamp(p.angle_speed+0.01, -0.2, 0.2);
 	p.angle_speed = p.angle_speed*0.9;
-	p.angle = whitgl_fwrap(p.angle+p.angle_speed, 0, whitgl_pi*2);
-	p.pos = whitgl_fvec_add(p.pos, p.speed);
+	p.e.angle = whitgl_fwrap(p.e.angle+p.angle_speed, 0, whitgl_pi*2);
+	p.e.pos = whitgl_fvec_add(p.e.pos, p.speed);
 	p.speed = whitgl_fvec_interpolate(p.speed, whitgl_fvec_zero, 0.01);
 	whitgl_int i;
 	for(i=0; i<2; i++)
@@ -59,11 +59,11 @@ space_player space_player_update(space_player p)
 }
 void space_player_draw(space_player p, space_camera camera)
 {
-	space_sprite_draw(p.sprite, p.pos, p.angle, camera);
+	space_sprite_draw(p.e.sprite, p.e.pos, p.e.angle, camera);
 	space_sprite lengine = ship_lengine;
 	lengine.points[1].y += 0.5*p.engine_thrust[0];
-	space_sprite_draw(lengine, p.pos, p.angle, camera);
+	space_sprite_draw(lengine, p.e.pos, p.e.angle, camera);
 	space_sprite rengine = ship_rengine;
 	rengine.points[1].y += 0.5*p.engine_thrust[1];
-	space_sprite_draw(rengine, p.pos, p.angle, camera);
+	space_sprite_draw(rengine, p.e.pos, p.e.angle, camera);
 }

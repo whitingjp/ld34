@@ -79,23 +79,23 @@ int main(int argc, char* argv[])
 			station = space_station_update(station);
 			starfield = space_starfield_update(starfield, camera.speed, camera);
 
-			whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(player.pos, station.pos));
+			whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(player.e.pos, station.e.pos));
 			docked = diff < 1 && player.engine_thrust[0]+player.engine_thrust[1] < 0.2;
 			if(docked)
 			{
-				player.pos = whitgl_fvec_interpolate(player.pos, station.pos, 0.05);
-				player.angle = whitgl_angle_lerp(player.angle, station.angle, 0.05);
+				player.e.pos = whitgl_fvec_interpolate(player.e.pos, station.e.pos, 0.05);
+				player.e.angle = whitgl_angle_lerp(player.e.angle, station.e.angle, 0.05);
 			}
 
 			space_camera_focus focus;
 			focus.num_foci = 0;
-			focus.foci[focus.num_foci].a = whitgl_fvec_sub(player.pos, whitgl_fvec_val(2));
-			focus.foci[focus.num_foci].b = whitgl_fvec_add(player.pos, whitgl_fvec_val(2));
+			focus.foci[focus.num_foci].a = whitgl_fvec_sub(player.e.pos, whitgl_fvec_val(2));
+			focus.foci[focus.num_foci].b = whitgl_fvec_add(player.e.pos, whitgl_fvec_val(2));
 			focus.num_foci++;
 			if(diff < 16)
 			{
-				focus.foci[1].a = whitgl_fvec_sub(station.pos, whitgl_fvec_val(2));
-				focus.foci[1].b = whitgl_fvec_add(station.pos, whitgl_fvec_val(2));
+				focus.foci[1].a = whitgl_fvec_sub(station.e.pos, whitgl_fvec_val(2));
+				focus.foci[1].b = whitgl_fvec_add(station.e.pos, whitgl_fvec_val(2));
 				focus.num_foci++;
 			}
 			camera = space_camera_update(camera, focus, setup.size);
