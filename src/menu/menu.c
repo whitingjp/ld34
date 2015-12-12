@@ -1,5 +1,6 @@
 #include "menu.h"
 
+#include <stdio.h>
 #include <string.h>
 
 #include <resource.h>
@@ -10,6 +11,10 @@ space_menu space_menu_update(space_menu menu, space_game game)
 		menu.transition = whitgl_fclamp(menu.transition + 0.05, 0, 1);
 	else
 		menu.transition = whitgl_fclamp(menu.transition - 0.05, 0, 1);
+	if(menu.transition == 1)
+		menu.num_chars++;
+	else
+		menu.num_chars = 0;
 	return menu;
 }
 
@@ -70,6 +75,24 @@ void space_menu_draw(space_menu menu, whitgl_ivec screen_size)
 	{
 		whitgl_sprite little_font = {IMAGE_FONT, {0,0}, {6,6}};
 		whitgl_ivec text_pos = {title_box.a.x+2, title_box.a.y+2+12};
-		draw_string("this is a lot of nonsense text isn't it", text_pos, box_size.x-12, little_font, false);
+		const char* text =
+	//  0123456789012345
+		"the quick brown"
+		"fox stole all  "
+		"of my cargo    "
+		"               "
+		"dammit         "
+		"               "
+		"hey            "
+		"               "
+		"i dont suppose "
+		"you could help "
+		"out            "
+		"               "
+		"i will make it "
+		"worthwhile     ";
+		char buffer[256];
+		snprintf(buffer, whitgl_imin(menu.num_chars, 256), "%s", text);
+		draw_string(buffer, text_pos, box_size.x-12, little_font, false);
 	}
 }
