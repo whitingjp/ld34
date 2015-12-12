@@ -10,6 +10,7 @@ static const space_sprite ship_lengine =
 	{{0,1}},
 	2,
 	1,
+	{0x9f,0xfd,0x3b,0xff},
 };
 
 static const space_sprite ship_rengine =
@@ -18,6 +19,7 @@ static const space_sprite ship_rengine =
 	{{0,1}},
 	2,
 	1,
+	{0x9f,0xfd,0x3b,0xff},
 };
 
 space_player space_player_update(space_player p)

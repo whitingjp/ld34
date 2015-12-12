@@ -2,6 +2,7 @@
 #define SPRITE_H_
 
 #include <whitgl/math.h>
+#include <whitgl/sys.h>
 #include <camera.h>
 
 #define MAX_POINTS (32)
@@ -12,6 +13,7 @@ typedef struct
 	whitgl_ivec lines[MAX_LINES];
 	whitgl_int num_points;
 	whitgl_int num_lines;
+	whitgl_sys_color col;
 } space_sprite;
 
 typedef struct

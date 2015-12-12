@@ -22,6 +22,7 @@ static const space_player space_player_zero =
 			{{0,1},{1,2},{0,2},{1,3},{2,3},{0,3}},
 			4,
 			6,
+			{0x9f,0xfd,0x3b,0xff},
 		},
 		{0,0},0,
 	}, {0,0}, 0, {false,false}, {0,0}
