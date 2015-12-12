@@ -52,7 +52,7 @@ void space_menu_draw(space_menu menu, whitgl_ivec screen_size)
 {
 	if(menu.transition <= 0)
 		return;
-	whitgl_ivec box_size = {96, 128*menu.transition*menu.transition};
+	whitgl_ivec box_size = {96, 180*menu.transition*menu.transition};
 	whitgl_iaabb box;
 	box.a.x = 12;
 	box.a.y = (screen_size.y-box_size.y)/2;
