@@ -125,6 +125,17 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 		g.player.active = false;
 		whitgl_sound_play(SOUND_EXPLODE, 1);
 	}
+	colliding = false;
+	for(i=0; i<NUM_STATIONS; i++)
+		colliding |= space_entity_colliding(g.pirate.e, g.stations[i].e);
+	for(i=0; i<NUM_ASTEROIDS; i++)
+		colliding |= space_entity_colliding(g.pirate.e, g.asteroids[i].e);
+	if(colliding && g.pirate.active)
+	{
+		g.debris = space_debris_create(g.debris, g.pirate.e, g.player.speed);
+		g.pirate.active = false;
+		whitgl_sound_play(SOUND_EXPLODE, 1);
+	}
 	return g;
 }
 void space_game_draw(space_game g)
