@@ -1,7 +1,9 @@
 #include "player.h"
 
+#include <whitgl/sound.h>
 #include <whitgl/input.h>
 #include <sprite.h>
+#include <resource.h>
 
 static const space_sprite ship_sprite =
 {
@@ -49,9 +51,18 @@ space_player space_player_update(space_player p)
 	for(i=0; i<2; i++)
 	{
 		whitgl_bool on = i == 0 ? r : l;
+		if(on && !p.was_on[i])
+			whitgl_sound_play(i == 0 ? SOUND_THRUST_L : SOUND_THRUST_R, 1.0);
+		p.was_on[i] = on;
 		whitgl_float target = on ? 1 : 0;
 		p.engine_thrust[i] = p.engine_thrust[i]*0.6 + 0.4*target;
 	}
+
+	whitgl_loop_frequency(SOUND_POWER_L, p.engine_thrust[0]);
+	whitgl_loop_frequency(SOUND_POWER_R, p.engine_thrust[1]);
+
+	whitgl_loop_volume(SOUND_POWER_L, p.engine_thrust[0]*0.5);
+	whitgl_loop_volume(SOUND_POWER_R, p.engine_thrust[1]*0.5);
 
 	return p;
 }

@@ -11,6 +11,7 @@
 #include <game/starfield.h>
 #include <camera.h>
 #include <capture.h>
+#include <resource.h>
 
 int main()
 {
@@ -26,7 +27,13 @@ int main()
 		return 1;
 
 	whitgl_sound_init();
+	whitgl_sound_volume(0.25);
 	whitgl_input_init();
+
+	whitgl_sound_add(SOUND_THRUST_L, "data/sound/thrust_left.ogg");
+	whitgl_sound_add(SOUND_THRUST_R, "data/sound/thrust_right.ogg");
+	whitgl_loop_add(SOUND_POWER_L, "data/sound/power_left.ogg");
+	whitgl_loop_add(SOUND_POWER_R, "data/sound/power_right.ogg");
 
 	whitgl_timer_init();
 

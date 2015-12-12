@@ -1,0 +1,12 @@
+#ifndef RESOURCE_H_
+#define RESOURCE_H_
+
+enum
+{
+	SOUND_THRUST_L,
+	SOUND_THRUST_R,
+	SOUND_POWER_L,
+	SOUND_POWER_R,
+};
+
+#endif // RESOURCE_H_
