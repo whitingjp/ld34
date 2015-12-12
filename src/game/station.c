@@ -21,7 +21,7 @@ space_station space_station_zero()
 	sprite.num_points = num_points;
 	sprite.num_lines = num_points-2;
 	s.e.sprite = sprite;
-	s.e.pos.x = 4;
+	s.e.pos.x = 1.75;
 	s.e.pos.y = 0;
 	s.e.angle = 0;
 	return s;

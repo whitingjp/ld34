@@ -100,6 +100,9 @@ int main(int argc, char* argv[])
 			}
 			camera = space_camera_update(camera, focus, setup.size);
 
+			whitgl_bool colliding = space_entity_colliding(player.e, station.e);
+			WHITGL_LOG("colliding %d", colliding);
+
 		}
 		whitgl_sys_draw_init();
 
