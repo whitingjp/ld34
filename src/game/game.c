@@ -2,7 +2,6 @@
 
 #include <whitgl/logging.h>
 #include <whitgl/sound.h>
-#include <game/hud.h>
 #include <resource.h>
 
 space_game space_game_zero(whitgl_ivec screen_size)
@@ -22,6 +21,8 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size)
 	g.player = space_player_update(g.player);
 	g.station = space_station_update(g.station);
 	g.starfield = space_starfield_update(g.starfield, g.camera.speed, g.camera);
+
+	g.hud = space_hud_markers_zero;
 
 	whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(g.player.e.pos, g.station.e.pos));
 	g.docked = diff < 1 && g.player.engine_thrust[0]+g.player.engine_thrust[1] < 0.2;
@@ -45,6 +46,9 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size)
 		focus.foci[1].a = whitgl_fvec_sub(g.station.e.pos, whitgl_fvec_val(2));
 		focus.foci[1].b = whitgl_fvec_add(g.station.e.pos, whitgl_fvec_val(2));
 		focus.num_foci++;
+	} else
+	{
+		g.hud.marker[g.hud.num++] = g.station.e;
 	}
 	whitgl_int i;
 	for(i=0; i<MAX_PIECES; i++)
@@ -72,8 +76,6 @@ void space_game_draw(space_game g)
 	space_player_draw(g.player, g.camera);
 	space_station_draw(g.station, g.camera);
 	space_starfield_draw(g.starfield, g.camera);
-	space_hud_markers hud = space_hud_markers_zero;
-	hud.marker[hud.num++] = g.station.e;
-	space_hud_draw(g.player.e, hud, g.camera);
+	space_hud_draw(g.player.e, g.hud, g.camera);
 
 }

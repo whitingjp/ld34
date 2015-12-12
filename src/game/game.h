@@ -2,6 +2,7 @@
 #define GAME_H_
 
 #include <game/debris.h>
+#include <game/hud.h>
 #include <game/player.h>
 #include <game/station.h>
 #include <game/starfield.h>
@@ -14,6 +15,7 @@ typedef struct
 	space_starfield starfield;
 	space_camera camera;
 	space_debris debris;
+	space_hud_markers hud;
 	bool docked;
 } space_game;
 
