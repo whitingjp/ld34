@@ -49,11 +49,11 @@ int main()
 			if(whitgl_sys_should_close())
 				running = false;
 			player = space_player_update(player);
-			camera.pos = whitgl_fvec_interpolate(camera.pos, player.pos, 0.01);
+			camera.pos = whitgl_fvec_interpolate(camera.pos, player.pos, 0.04);
 			whitgl_fvec draw_pos = space_camera_point(player.pos, camera);
 			whitgl_float dist = whitgl_fvec_magnitude(whitgl_fvec_sub(draw_pos, whitgl_fvec_divide_val(whitgl_ivec_to_fvec(setup.size), 2)));
-			whitgl_float scale_adjust = -(dist - 64);
-			camera.scale = whitgl_fclamp(camera.scale + scale_adjust/10, 10, 128);
+			whitgl_float scale_adjust = -(dist - 32);
+			camera.scale = whitgl_fclamp(camera.scale + scale_adjust/40, 20, 64);
 			starfield = space_starfield_update(starfield, player.speed, camera);
 		}
 		whitgl_sys_draw_init();

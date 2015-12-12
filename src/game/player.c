@@ -17,16 +17,18 @@ space_player space_player_update(space_player p)
 	whitgl_bool r = whitgl_input_down(WHITGL_INPUT_RIGHT);
 	if(l&&r)
 	{
-		whitgl_fvec impulse = {0,-0.005};
+		whitgl_fvec impulse = {0,-0.002};
 		impulse = whitgl_rotate_point_around_point(impulse, whitgl_fvec_zero, p.angle);
 		p.speed = whitgl_fvec_add(p.speed, impulse);
 	}
 	if(l)
-		p.angle = whitgl_fwrap(p.angle-0.1, 0, whitgl_pi*2);
+		p.angle_speed = whitgl_fclamp(p.angle_speed-0.01, -0.2, 0.2);
 	if(r)
-		p.angle = whitgl_fwrap(p.angle+0.1, 0, whitgl_pi*2);
+		p.angle_speed = whitgl_fclamp(p.angle_speed+0.01, -0.2, 0.2);
+	p.angle_speed = p.angle_speed*0.9;
+	p.angle = whitgl_fwrap(p.angle+p.angle_speed, 0, whitgl_pi*2);
 	p.pos = whitgl_fvec_add(p.pos, p.speed);
-	p.speed = whitgl_fvec_interpolate(p.speed, whitgl_fvec_zero, 0.1);
+	p.speed = whitgl_fvec_interpolate(p.speed, whitgl_fvec_zero, 0.01);
 	return p;
 }
 void space_player_draw(space_player p, space_camera camera)
