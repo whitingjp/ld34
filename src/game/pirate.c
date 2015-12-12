@@ -4,14 +4,31 @@
 #include <whitgl/input.h>
 #include <resource.h>
 
-space_pirate space_pirate_update(space_pirate p)
+space_pirate space_pirate_update(space_pirate p, whitgl_fvec target)
 {
 	if(!p.active)
 	{
 		return p;
 	}
-	whitgl_bool l = whitgl_randfloat() > 0.5;
-	whitgl_bool r = whitgl_randfloat() > 0.75;
+	whitgl_fvec diff = whitgl_fvec_sub(target, p.e.pos);
+	whitgl_float target_angle = whitgl_fvec_to_angle(diff)+whitgl_pi/2;
+	whitgl_float ang_diff = whitgl_fwrap(target_angle-p.e.angle, -whitgl_pi, whitgl_pi);
+	whitgl_bool r, l;
+	if(ang_diff > 0.2)
+	{
+		r = true;
+		l = false;
+	}
+	else if(ang_diff < -0.2)
+	{
+		r = false;
+		l = true;
+	}
+	else
+	{
+		l = true;
+		r = true;
+	}
 	if(l&&r)
 	{
 		whitgl_fvec impulse = {0,-0.002};

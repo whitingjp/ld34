@@ -28,7 +28,7 @@ static const space_pirate space_pirate_zero =
 	}, {0,0}, 0, {false,false}, {0,0}
 };
 
-space_pirate space_pirate_update(space_pirate pirate);
+space_pirate space_pirate_update(space_pirate pirate, whitgl_fvec target);
 void space_pirate_draw(space_pirate pirate, space_camera camera);
 
 #endif // PIRATE_H_

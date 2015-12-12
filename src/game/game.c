@@ -28,7 +28,7 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 {
 	whitgl_int i;
 	g.player = space_player_update(g.player);
-	g.pirate = space_pirate_update(g.pirate);
+	g.pirate = space_pirate_update(g.pirate, g.player.e.pos);
 	for(i=0; i<NUM_STATIONS; i++)
 		g.stations[i] = space_station_update(g.stations[i]);
 	for(i=0; i<NUM_ASTEROIDS; i++)
