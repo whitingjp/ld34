@@ -2,14 +2,16 @@
 #define SPACE_STATION_H_
 
 #include <camera.h>
+#include <sprite.h>
 
 typedef struct
 {
+	space_sprite sprite;
 	whitgl_fvec pos;
 	whitgl_float angle;
 } space_station;
-static const space_station space_station_zero = {{4,0},0};
 
+space_station space_station_zero();
 space_station space_station_update(space_station s);
 void space_station_draw(space_station s, space_camera camera);
 

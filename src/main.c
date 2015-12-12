@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
 	capture_info capture = capture_info_zero;
 	space_camera camera = {{0.0,0.0}, 1, whitgl_ivec_to_fvec(setup.size), {0,0}};
 	space_player player = space_player_zero;
-	space_station station = space_station_zero;
+	space_station station = space_station_zero();
 	space_starfield starfield = space_starfield_zero();
 	bool docked = false;
 	bool running = true;

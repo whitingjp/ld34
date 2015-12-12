@@ -1,15 +1,10 @@
 #include "station.h"
 
 #include <whitgl/sys.h>
-#include <sprite.h>
 
-space_station space_station_update(space_station s)
+space_station space_station_zero()
 {
-	s.angle = whitgl_fwrap(s.angle += 0.01, 0, whitgl_pi*2);
-	return s;
-}
-void space_station_draw(space_station s, space_camera camera)
-{
+	space_station s;
 	space_sprite sprite;
 	whitgl_float num_points = 11;
 	whitgl_int i;
@@ -25,7 +20,21 @@ void space_station_draw(space_station s, space_camera camera)
 	}
 	sprite.num_points = num_points;
 	sprite.num_lines = num_points-2;
-	space_sprite_draw(sprite, s.pos, s.angle, camera);
+	s.sprite = sprite;
+	s.pos.x = 4;
+	s.pos.y = 0;
+	s.angle = 0;
+	return s;
+}
+
+space_station space_station_update(space_station s)
+{
+	s.angle = whitgl_fwrap(s.angle += 0.01, 0, whitgl_pi*2);
+	return s;
+}
+void space_station_draw(space_station s, space_camera camera)
+{
+	space_sprite_draw(s.sprite, s.pos, s.angle, camera);
 	whitgl_fcircle circle;
 	circle.pos = space_camera_point(s.pos, camera);
 	circle.size = camera.scale;

@@ -2,16 +2,7 @@
 
 #include <whitgl/sound.h>
 #include <whitgl/input.h>
-#include <sprite.h>
 #include <resource.h>
-
-static const space_sprite ship_sprite =
-{
-	{{0.0,-0.5},{0.5,0.5},{-0.5,0.5},{0.0,0.3}},
-	{{0,1},{1,2},{0,2},{1,3},{2,3},{0,3}},
-	4,
-	6,
-};
 
 static const space_sprite ship_lengine =
 {
@@ -68,7 +59,7 @@ space_player space_player_update(space_player p)
 }
 void space_player_draw(space_player p, space_camera camera)
 {
-	space_sprite_draw(ship_sprite, p.pos, p.angle, camera);
+	space_sprite_draw(p.sprite, p.pos, p.angle, camera);
 	space_sprite lengine = ship_lengine;
 	lengine.points[1].y += 0.5*p.engine_thrust[0];
 	space_sprite_draw(lengine, p.pos, p.angle, camera);
