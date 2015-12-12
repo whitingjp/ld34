@@ -9,7 +9,7 @@ typedef struct
 	space_entity e;
 } space_station;
 
-space_station space_station_zero();
+space_station space_station_zero(whitgl_int num_points, whitgl_fvec pos);
 space_station space_station_update(space_station s);
 void space_station_draw(space_station s, space_camera camera);
 

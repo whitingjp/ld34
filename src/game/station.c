@@ -2,16 +2,15 @@
 
 #include <whitgl/sys.h>
 
-space_station space_station_zero()
+space_station space_station_zero(whitgl_int num_points, whitgl_fvec pos)
 {
 	space_station s;
 	space_sprite sprite;
-	whitgl_float num_points = 11;
 	whitgl_int i;
 	for(i=0; i<num_points; i++)
 	{
 		whitgl_fvec point = {0, -2};
-		sprite.points[i] = whitgl_rotate_point_around_point(point, whitgl_fvec_zero, (whitgl_pi*2)*(i/num_points));
+		sprite.points[i] = whitgl_rotate_point_around_point(point, whitgl_fvec_zero, (whitgl_pi*2)*((float)i/num_points));
 	}
 	for(i=0; i<num_points-2; i++)
 	{
@@ -21,9 +20,8 @@ space_station space_station_zero()
 	sprite.num_points = num_points;
 	sprite.num_lines = num_points-2;
 	s.e.sprite = sprite;
-	s.e.pos.x = 4;
-	s.e.pos.y = 0;
-	s.e.angle = 0;
+	s.e.pos = pos;
+	s.e.angle = whitgl_randfloat()*whitgl_pi*2;
 	return s;
 }
 
@@ -39,5 +37,5 @@ void space_station_draw(space_station s, space_camera camera)
 	circle.pos = space_camera_point(s.e.pos, camera);
 	circle.size = camera.scale;
 	whitgl_sys_color col = {0x0f, 0x52, 0x3a, 0x60};
-	whitgl_sys_draw_fcircle(circle, col, 10);
+	whitgl_sys_draw_fcircle(circle, col, s.e.sprite.num_points);
 }

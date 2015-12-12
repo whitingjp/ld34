@@ -10,7 +10,8 @@ space_game space_game_zero(whitgl_ivec screen_size)
 	space_camera camera = {{0.0,0.0}, 8, whitgl_ivec_to_fvec(screen_size), {0,0}};
 	g.camera = camera;
 	g.player = space_player_zero;
-	g.station = space_station_zero();
+	whitgl_fvec station_pos = {50,26};
+	g.station = space_station_zero(6, station_pos);
 	g.starfield = space_starfield_zero();
 	g.docked = false;
 	g.debris = space_debris_zero();
