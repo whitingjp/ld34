@@ -61,7 +61,7 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size)
 	for(i=0; i<NUM_STATIONS; i++)
 	{
 		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(g.player.e.pos, g.stations[i].e.pos));
-		if(diff < 20)
+		if(diff < 20 && g.player.active)
 		{
 			focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.stations[i].e.pos, whitgl_fvec_val(2));
 			focus.foci[focus.num_foci].b = whitgl_fvec_add(g.stations[i].e.pos, whitgl_fvec_val(2));
@@ -74,10 +74,10 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size)
 	for(i=0; i<NUM_ASTEROIDS; i++)
 	{
 		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(g.player.e.pos, g.asteroids[i].e.pos));
-		if(diff < 10)
+		if(diff < 8 && g.player.active)
 		{
-			focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.asteroids[i].e.pos, whitgl_fvec_val(0));
-			focus.foci[focus.num_foci].b = whitgl_fvec_add(g.asteroids[i].e.pos, whitgl_fvec_val(0));
+			focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.asteroids[i].e.pos, whitgl_fvec_val(1));
+			focus.foci[focus.num_foci].b = whitgl_fvec_add(g.asteroids[i].e.pos, whitgl_fvec_val(1));
 			focus.num_foci++;
 		}
 	}
@@ -85,8 +85,8 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size)
 	{
 		if(g.player.active || !g.debris.pieces[i].active)
 			continue;
-		focus.foci[focus.num_foci].a = g.debris.pieces[i].e.pos;
-		focus.foci[focus.num_foci].b = g.debris.pieces[i].e.pos;
+		focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.debris.pieces[i].e.pos, whitgl_fvec_val(1));
+		focus.foci[focus.num_foci].b = whitgl_fvec_add(g.debris.pieces[i].e.pos, whitgl_fvec_val(1));
 		focus.num_foci++;
 	}
 	g.camera = space_camera_update(g.camera, focus, screen_size);
@@ -94,6 +94,8 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size)
 	whitgl_bool colliding = false;
 	for(i=0; i<NUM_STATIONS; i++)
 		colliding |= space_entity_colliding(g.player.e, g.stations[i].e);
+	for(i=0; i<NUM_ASTEROIDS; i++)
+		colliding |= space_entity_colliding(g.player.e, g.asteroids[i].e);
 	if(colliding && g.player.active)
 	{
 		g.debris = space_debris_create(g.debris, g.player.e, g.player.speed);
