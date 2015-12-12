@@ -4,24 +4,6 @@
 #include <whitgl/input.h>
 #include <resource.h>
 
-static const space_sprite ship_lengine =
-{
-	{{-0.2,0.45},{-0.2,0.45}},
-	{{0,1}},
-	2,
-	1,
-	{0x9f,0xfd,0x3b,0xff},
-};
-
-static const space_sprite ship_rengine =
-{
-	{{0.2,0.45},{0.2,0.45}},
-	{{0,1}},
-	2,
-	1,
-	{0x9f,0xfd,0x3b,0xff},
-};
-
 space_player space_player_update(space_player p)
 {
 	if(!p.active)
@@ -75,6 +57,25 @@ void space_player_draw(space_player p, space_camera camera)
 {
 	if(!p.active)
 		return;
+
+	const space_sprite ship_lengine =
+	{
+		{{-0.2,0.45},{-0.2,0.45}},
+		{{0,1}},
+		2,
+		1,
+		{0x9f,0xfd,0x3b,0xff},
+	};
+
+	const space_sprite ship_rengine =
+	{
+		{{0.2,0.45},{0.2,0.45}},
+		{{0,1}},
+		2,
+		1,
+		{0x9f,0xfd,0x3b,0xff},
+	};
+
 	space_entity_draw(p.e, camera);
 	space_sprite lengine = ship_lengine;
 	lengine.points[1].y += 0.5*p.engine_thrust[0];
