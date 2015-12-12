@@ -12,7 +12,7 @@ typedef struct
 } space_asteroid;
 
 space_asteroid space_asteroid_zero();
-space_asteroid space_asteroid_update(space_asteroid a);
+space_asteroid space_asteroid_update(space_asteroid a, whitgl_fvec player_pos);
 void space_asteroid_draw(space_asteroid a, space_camera camera);
 
 #endif // SPACE_ASTEROID_H_

@@ -31,7 +31,7 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size)
 	for(i=0; i<NUM_STATIONS; i++)
 		g.stations[i] = space_station_update(g.stations[i]);
 	for(i=0; i<NUM_ASTEROIDS; i++)
-		g.asteroids[i] = space_asteroid_update(g.asteroids[i]);
+		g.asteroids[i] = space_asteroid_update(g.asteroids[i], g.player.e.pos);
 	g.starfield = space_starfield_update(g.starfield, g.camera.speed, g.camera);
 	g.debris = space_debris_update(g.debris);
 
@@ -61,14 +61,24 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size)
 	for(i=0; i<NUM_STATIONS; i++)
 	{
 		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(g.player.e.pos, g.stations[i].e.pos));
-		if(diff < 24)
+		if(diff < 20)
 		{
-			focus.foci[1].a = whitgl_fvec_sub(g.stations[i].e.pos, whitgl_fvec_val(2));
-			focus.foci[1].b = whitgl_fvec_add(g.stations[i].e.pos, whitgl_fvec_val(2));
+			focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.stations[i].e.pos, whitgl_fvec_val(2));
+			focus.foci[focus.num_foci].b = whitgl_fvec_add(g.stations[i].e.pos, whitgl_fvec_val(2));
 			focus.num_foci++;
 		} else
 		{
 			g.hud.marker[g.hud.num++] = g.stations[i].e;
+		}
+	}
+	for(i=0; i<NUM_ASTEROIDS; i++)
+	{
+		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(g.player.e.pos, g.asteroids[i].e.pos));
+		if(diff < 10)
+		{
+			focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.asteroids[i].e.pos, whitgl_fvec_val(0));
+			focus.foci[focus.num_foci].b = whitgl_fvec_add(g.asteroids[i].e.pos, whitgl_fvec_val(0));
+			focus.num_foci++;
 		}
 	}
 	for(i=0; i<MAX_PIECES; i++)

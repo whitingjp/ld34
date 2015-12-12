@@ -10,7 +10,7 @@
 #include <camera.h>
 
 #define NUM_STATIONS (3)
-#define NUM_ASTEROIDS (8)
+#define NUM_ASTEROIDS (32)
 
 typedef struct
 {
