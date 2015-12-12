@@ -51,6 +51,9 @@ int main(int argc, char* argv[])
 	whitgl_loop_add(SOUND_POWER_R, "data/sound/power_right.ogg");
 	whitgl_sound_add(SOUND_EXPLODE, "data/sound/explode.ogg");
 
+	double now = whitgl_sys_get_time();
+	whitgl_randseed(now*10000);
+
 	whitgl_timer_init();
 
 	space_game game = space_game_zero(setup.size);

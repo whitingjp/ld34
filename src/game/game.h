@@ -1,6 +1,7 @@
 #ifndef GAME_H_
 #define GAME_H_
 
+#include <game/asteroid.h>
 #include <game/debris.h>
 #include <game/hud.h>
 #include <game/player.h>
@@ -15,6 +16,7 @@ typedef struct
 	space_player player;
 	space_station stations[NUM_STATIONS];
 	space_starfield starfield;
+	space_asteroid asteroid;
 	space_camera camera;
 	space_debris debris;
 	space_hud_markers hud;
