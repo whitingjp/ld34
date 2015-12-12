@@ -60,6 +60,7 @@ int main(int argc, char* argv[])
 	space_player player = space_player_zero;
 	space_station station = space_station_zero;
 	space_starfield starfield = space_starfield_zero();
+	bool docked = false;
 	bool running = true;
 	while(running)
 	{
@@ -73,9 +74,19 @@ int main(int argc, char* argv[])
 				running = false;
 			if(whitgl_sys_should_close())
 				running = false;
+
 			player = space_player_update(player);
 			station = space_station_update(station);
 			starfield = space_starfield_update(starfield, camera.speed, camera);
+
+			whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(player.pos, station.pos));
+			if(diff < 1)
+				docked = true;
+			if(docked)
+			{
+				player.pos = whitgl_fvec_interpolate(player.pos, station.pos, 0.1);
+				player.angle = whitgl_angle_lerp(player.angle, station.angle, 0.1);
+			}
 
 			space_camera_focus focus;
 			focus.foci[0].a = whitgl_fvec_sub(player.pos, whitgl_fvec_val(0.5));
