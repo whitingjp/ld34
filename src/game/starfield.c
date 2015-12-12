@@ -14,6 +14,7 @@ space_starfield space_starfield_zero()
 		s.stars[i].pos.x = bounds.a.x+whitgl_randfloat()*size.x;
 		s.stars[i].pos.y = bounds.a.y+whitgl_randfloat()*size.y;
 		s.stars[i].depth = whitgl_randfloat();
+		s.stars[i].alpha = whitgl_randfloat();
 	}
 	return s;
 }
@@ -38,7 +39,7 @@ void space_starfield_draw(space_starfield s, space_camera camera)
 		whitgl_iaabb box;
 		box.a = whitgl_fvec_to_ivec(pos);
 		box.b = whitgl_ivec_add(box.a, whitgl_ivec_val(1));
-		whitgl_sys_color col = {0x00, 0xff, 0x00, 0xff};
+		whitgl_sys_color col = {0x59, 0xc3, 0x49, 0xff*s.stars[i].alpha};
 		whitgl_sys_draw_iaabb(box, col);
 	}
 }

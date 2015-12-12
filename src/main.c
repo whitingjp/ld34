@@ -59,7 +59,7 @@ int main()
 		whitgl_sys_draw_init();
 
 		whitgl_iaabb screen_rect = {whitgl_ivec_zero, setup.size};
-		whitgl_sys_color blank_col = {0x00, 0x00, 0x00, 0xff};
+		whitgl_sys_color blank_col = {0x0b, 0x1c, 0x1c, 0xff};
 		whitgl_sys_draw_iaabb(screen_rect, blank_col);
 		space_player_draw(player, camera);
 		space_starfield_draw(starfield, camera);

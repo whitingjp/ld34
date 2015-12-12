@@ -18,7 +18,7 @@ void space_sprite_draw(space_sprite sprite, whitgl_fvec position, whitgl_float a
 		whitgl_faabb line;
 		line.a = space_camera_point(a, camera);
 		line.b = space_camera_point(b, camera);
-		whitgl_sys_color col = {0x00,0xff,0x00,0xff};
+		whitgl_sys_color col = {0x9f,0xfd,0x3b,0xff};
 		whitgl_sys_draw_line(whitgl_faabb_to_iaabb(line), col);
 	}
 }

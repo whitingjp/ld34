@@ -7,9 +7,10 @@ typedef struct
 {
 	whitgl_fvec pos;
 	whitgl_float depth;
+	whitgl_float alpha;
 } space_star;
 
-#define NUM_STARS (256)
+#define NUM_STARS (512)
 typedef struct
 {
 	space_star stars[NUM_STARS];
