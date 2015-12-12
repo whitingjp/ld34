@@ -12,6 +12,6 @@ typedef struct
 } capture_info;
 static const capture_info capture_info_zero = {false, 0, 0, -1};
 
-capture_info capture_info_update(capture_info capture, whitgl_bool capturing);
+capture_info capture_info_update(capture_info capture);
 
 #endif // CAPTURE_H_

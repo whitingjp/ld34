@@ -6,9 +6,9 @@
 #include <whitgl/logging.h>
 #include <whitgl/sys.h>
 
-capture_info capture_info_update(capture_info capture, whitgl_bool capturing)
+capture_info capture_info_update(capture_info capture)
 {
-	if(capturing)
+	if(whitgl_input_pressed(WHITGL_INPUT_Y))
 		capture.capturing = !capture.capturing;
 	if(!capture.capturing)
 	{

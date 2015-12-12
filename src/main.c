@@ -17,8 +17,8 @@ int main()
 	WHITGL_LOG("Starting main.");
 
 	whitgl_sys_setup setup = whitgl_sys_setup_zero;
-	setup.size.x = 280;
-	setup.size.y = 180;
+	setup.size.x = 210;
+	setup.size.y = 135;
 	setup.pixel_size = 3;
 	setup.name = "space";
 
@@ -31,7 +31,6 @@ int main()
 	whitgl_timer_init();
 
 	capture_info capture = capture_info_zero;
-	bool capturing = false;
 	space_camera camera = {{0.0,0.0}, 128, whitgl_ivec_to_fvec(setup.size)};
 	space_player player = space_player_zero;
 	space_starfield starfield = space_starfield_zero();
@@ -64,7 +63,7 @@ int main()
 		space_player_draw(player, camera);
 		space_starfield_draw(starfield, camera);
 		whitgl_sys_draw_finish();
-		capture = capture_info_update(capture, capturing);
+		capture = capture_info_update(capture);
 	}
 
 	whitgl_input_shutdown();
