@@ -10,6 +10,7 @@ space_game space_game_zero(whitgl_ivec screen_size)
 	space_camera camera = {{0.0,0.0}, 8, whitgl_ivec_to_fvec(screen_size), {0,0}};
 	g.camera = camera;
 	g.player = space_player_zero;
+	g.pirate = space_pirate_zero;
 	whitgl_fvec diso_pos = {0,0};
 	g.stations[0] = space_station_zero(5, diso_pos);
 	whitgl_fvec centurai_pos = {-10,-40};
@@ -27,6 +28,7 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 {
 	whitgl_int i;
 	g.player = space_player_update(g.player);
+	g.pirate = space_pirate_update(g.pirate);
 	for(i=0; i<NUM_STATIONS; i++)
 		g.stations[i] = space_station_update(g.stations[i]);
 	for(i=0; i<NUM_ASTEROIDS; i++)
@@ -118,6 +120,7 @@ void space_game_draw(space_game g)
 	whitgl_int i;
 	space_debris_draw(g.debris, g.camera);
 	space_player_draw(g.player, g.camera);
+	space_pirate_draw(g.pirate, g.camera);
 	for(i=0; i<NUM_STATIONS; i++)
 		space_station_draw(g.stations[i], g.camera);
 	for(i=0; i<NUM_ASTEROIDS; i++)

@@ -4,6 +4,7 @@
 #include <game/asteroid.h>
 #include <game/debris.h>
 #include <game/hud.h>
+#include <game/pirate.h>
 #include <game/player.h>
 #include <game/station.h>
 #include <game/starfield.h>
@@ -15,6 +16,7 @@
 typedef struct
 {
 	space_player player;
+	space_pirate pirate;
 	space_station stations[NUM_STATIONS];
 	space_starfield starfield;
 	space_asteroid asteroids[NUM_ASTEROIDS];
