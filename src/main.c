@@ -46,6 +46,8 @@ int main(int argc, char* argv[])
 	whitgl_sound_volume(0.25);
 	whitgl_input_init();
 
+	whitgl_sys_add_image(IMAGE_FONT, "data/image/font.png");
+
 	whitgl_sound_add(SOUND_THRUST_L, "data/sound/thrust_left.ogg");
 	whitgl_sound_add(SOUND_THRUST_R, "data/sound/thrust_right.ogg");
 	whitgl_loop_add(SOUND_POWER_L, "data/sound/power_left.ogg");

@@ -3,6 +3,11 @@
 
 enum
 {
+	IMAGE_FONT,
+};
+
+enum
+{
 	SOUND_THRUST_L,
 	SOUND_THRUST_R,
 	SOUND_POWER_L,
