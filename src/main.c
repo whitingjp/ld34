@@ -19,10 +19,10 @@ typedef struct
 } space_sprite;
 
 space_sprite ship_sprite = {
-	{{0.5,0},{1.0,1.0},{0.0,1.0}},
-	{{0,1},{1,2},{0,2}},
-	3,
-	3,
+	{{0.5,0},{1.0,1.0},{0.0,1.0},{0.5,0.8}},
+	{{0,1},{1,2},{0,2},{1,3},{2,3},{0,3}},
+	4,
+	6,
 };
 
 void draw_sprite(space_sprite sprite)
