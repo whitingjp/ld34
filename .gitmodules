@@ -1,0 +1,3 @@
+[submodule "whitgl"]
+	path = whitgl
+	url = git@github.com:whitingjp/whitgl.git
