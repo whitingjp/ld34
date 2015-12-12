@@ -20,7 +20,6 @@ space_game space_game_zero(whitgl_ivec screen_size)
 	for(i=0; i<NUM_ASTEROIDS; i++)
 		g.asteroids[i] = space_asteroid_zero();
 	g.starfield = space_starfield_zero();
-	g.docked = false;
 	g.debris = space_debris_zero();
 	return g;
 }
@@ -35,17 +34,17 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 	g.starfield = space_starfield_update(g.starfield, g.camera.speed, g.camera);
 	g.debris = space_debris_update(g.debris);
 
-	g.docked = -1;
+	g.player.docked = -1;
 	for(i=0; i<NUM_STATIONS; i++)
 	{
 		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(g.player.e.pos, g.stations[i].e.pos));
 		if(diff < 1 && g.player.engine_thrust[0]+g.player.engine_thrust[1] < 1.8)
-			g.docked = i;
+			g.player.docked = i;
 	}
-	if(g.docked != -1)
+	if(g.player.docked != -1)
 	{
-		g.player.e.pos = whitgl_fvec_interpolate(g.player.e.pos, g.stations[g.docked].e.pos, 0.1);
-		g.player.e.angle = whitgl_angle_lerp(g.player.e.angle, g.stations[g.docked].e.angle, 0.1);
+		g.player.e.pos = whitgl_fvec_interpolate(g.player.e.pos, g.stations[g.player.docked].e.pos, 0.1);
+		g.player.e.angle = whitgl_angle_lerp(g.player.e.angle, g.stations[g.player.docked].e.angle, 0.1);
 	}
 
 	space_camera_focus focus;

@@ -7,7 +7,7 @@
 
 space_menu space_menu_update(space_menu menu, space_game game)
 {
-	if(game.docked != -1)
+	if(game.player.docked != -1)
 		menu.transition = whitgl_fclamp(menu.transition + 0.05, 0, 1);
 	else
 		menu.transition = whitgl_fclamp(menu.transition - 0.05, 0, 1);

@@ -21,7 +21,6 @@ typedef struct
 	space_camera camera;
 	space_debris debris;
 	space_hud_markers hud;
-	whitgl_int docked;
 } space_game;
 
 space_game space_game_zero(whitgl_ivec screen_size);

@@ -32,6 +32,10 @@ space_player space_player_update(space_player p)
 	}
 	whitgl_bool l = whitgl_input_down(WHITGL_INPUT_LEFT);
 	whitgl_bool r = whitgl_input_down(WHITGL_INPUT_RIGHT);
+	if(l && !r && p.docked != -1)
+		l = false;
+	if(!l && r && p.docked != -1)
+		r = false;
 	if(l&&r)
 	{
 		whitgl_fvec impulse = {0,-0.002};
@@ -42,6 +46,7 @@ space_player space_player_update(space_player p)
 		p.angle_speed = whitgl_fclamp(p.angle_speed-0.01, -0.2, 0.2);
 	if(r)
 		p.angle_speed = whitgl_fclamp(p.angle_speed+0.01, -0.2, 0.2);
+
 	p.angle_speed = p.angle_speed*0.9;
 	p.e.angle = whitgl_fwrap(p.e.angle+p.angle_speed, 0, whitgl_pi*2);
 	p.e.pos = whitgl_fvec_add(p.e.pos, p.speed);
@@ -56,6 +61,7 @@ space_player space_player_update(space_player p)
 		whitgl_float target = on ? 1 : 0;
 		p.engine_thrust[i] = p.engine_thrust[i]*0.6 + 0.4*target;
 	}
+
 
 	whitgl_loop_frequency(SOUND_POWER_L, p.engine_thrust[0]);
 	whitgl_loop_frequency(SOUND_POWER_R, p.engine_thrust[1]);

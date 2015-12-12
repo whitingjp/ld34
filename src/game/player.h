@@ -12,6 +12,7 @@ typedef struct
 	whitgl_float angle_speed;
 	whitgl_float was_on[2];
 	whitgl_float engine_thrust[2];
+	whitgl_int docked;
 } space_player;
 static const space_player space_player_zero =
 {
@@ -25,7 +26,7 @@ static const space_player space_player_zero =
 			{0x9f,0xfd,0x3b,0xff},
 		},
 		{0,0},0,false,
-	}, {0,0}, 0, {false,false}, {0,0}
+	}, {0,0}, 0, {false,false}, {0,0}, -1,
 };
 
 space_player space_player_update(space_player player);
