@@ -1,11 +1,13 @@
 #include "game.h"
 
 #include <whitgl/logging.h>
+#include <whitgl/sound.h>
+#include <resource.h>
 
 space_game space_game_zero(whitgl_ivec screen_size)
 {
 	space_game g;
-	space_camera camera = {{0.0,0.0}, 1, whitgl_ivec_to_fvec(screen_size), {0,0}};
+	space_camera camera = {{0.0,0.0}, 8, whitgl_ivec_to_fvec(screen_size), {0,0}};
 	g.camera = camera;
 	g.player = space_player_zero;
 	g.station = space_station_zero();
@@ -59,7 +61,7 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size)
 	{
 		g.debris = space_debris_create(g.debris, g.player.e, g.player.speed);
 		g.player.active = false;
-
+		whitgl_sound_play(SOUND_EXPLODE, 1);
 	}
 	return g;
 }

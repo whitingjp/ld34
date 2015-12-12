@@ -49,6 +49,7 @@ int main(int argc, char* argv[])
 	whitgl_sound_add(SOUND_THRUST_R, "data/sound/thrust_right.ogg");
 	whitgl_loop_add(SOUND_POWER_L, "data/sound/power_left.ogg");
 	whitgl_loop_add(SOUND_POWER_R, "data/sound/power_right.ogg");
+	whitgl_sound_add(SOUND_EXPLODE, "data/sound/explode.ogg");
 
 	whitgl_timer_init();
 

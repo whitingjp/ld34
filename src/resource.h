@@ -7,6 +7,7 @@ enum
 	SOUND_THRUST_R,
 	SOUND_POWER_L,
 	SOUND_POWER_R,
+	SOUND_EXPLODE,
 };
 
 #endif // RESOURCE_H_
