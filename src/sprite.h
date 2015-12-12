@@ -22,5 +22,7 @@ typedef struct
 } space_entity;
 
 void space_sprite_draw(space_sprite sprite, whitgl_fvec position, whitgl_float angle, space_camera camera);
+void space_entity_draw(space_entity e, space_camera camera);
+
 
 #endif // SPRITE_H_

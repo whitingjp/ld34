@@ -34,7 +34,7 @@ space_station space_station_update(space_station s)
 }
 void space_station_draw(space_station s, space_camera camera)
 {
-	space_sprite_draw(s.e.sprite, s.e.pos, s.e.angle, camera);
+	space_entity_draw(s.e, camera);
 	whitgl_fcircle circle;
 	circle.pos = space_camera_point(s.e.pos, camera);
 	circle.size = camera.scale;

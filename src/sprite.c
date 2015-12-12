@@ -20,3 +20,8 @@ void space_sprite_draw(space_sprite sprite, whitgl_fvec position, whitgl_float a
 		whitgl_sys_draw_line(whitgl_faabb_to_iaabb(line), col);
 	}
 }
+
+void space_entity_draw(space_entity e, space_camera camera)
+{
+	space_sprite_draw(e.sprite, e.pos, e.angle, camera);
+}

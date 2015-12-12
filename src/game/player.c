@@ -59,7 +59,7 @@ space_player space_player_update(space_player p)
 }
 void space_player_draw(space_player p, space_camera camera)
 {
-	space_sprite_draw(p.e.sprite, p.e.pos, p.e.angle, camera);
+	space_entity_draw(p.e, camera);
 	space_sprite lengine = ship_lengine;
 	lengine.points[1].y += 0.5*p.engine_thrust[0];
 	space_sprite_draw(lengine, p.e.pos, p.e.angle, camera);
