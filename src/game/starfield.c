@@ -2,7 +2,7 @@
 
 #include <whitgl/sys.h>
 
-whitgl_faabb bounds = {{-20,-10},{20,10}};
+whitgl_faabb bounds = {{-30,-20},{30,20}};
 
 space_starfield space_starfield_zero()
 {

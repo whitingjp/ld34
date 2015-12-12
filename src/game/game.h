@@ -8,15 +8,17 @@
 #include <game/starfield.h>
 #include <camera.h>
 
+#define NUM_STATIONS (3)
+
 typedef struct
 {
 	space_player player;
-	space_station station;
+	space_station stations[NUM_STATIONS];
 	space_starfield starfield;
 	space_camera camera;
 	space_debris debris;
 	space_hud_markers hud;
-	bool docked;
+	whitgl_int docked;
 } space_game;
 
 space_game space_game_zero(whitgl_ivec screen_size);

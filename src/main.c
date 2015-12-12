@@ -29,9 +29,9 @@ int main(int argc, char* argv[])
 	};
 
 	whitgl_sys_setup setup = whitgl_sys_setup_zero;
-	setup.size.x = 280;
-	setup.size.y = 180;
-	setup.pixel_size = 3;
+	setup.size.x = 336;
+	setup.size.y = 216;
+	setup.pixel_size = 2;
 	setup.name = "space";
 	setup.fullscreen = fullscreen;
 	setup.vsync = vsync;
