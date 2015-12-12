@@ -38,14 +38,18 @@ whitgl_fvec space_camera_point(whitgl_fvec p, space_camera cam)
 	return p;
 }
 
-void draw_sprite(space_sprite sprite, space_camera camera)
+void draw_sprite(space_sprite sprite, whitgl_float angle, space_camera camera)
 {
 	whitgl_int i;
 	for(i=0; i<sprite.num_lines; i++)
 	{
+		whitgl_fvec a = sprite.points[sprite.lines[i].x];
+		whitgl_fvec b = sprite.points[sprite.lines[i].y];
+		a = whitgl_rotate_point_around_point(a, whitgl_fvec_val(0.5), angle);
+		b = whitgl_rotate_point_around_point(b, whitgl_fvec_val(0.5), angle);
 		whitgl_faabb line;
-		line.a = space_camera_point(sprite.points[sprite.lines[i].x], camera);
-		line.b = space_camera_point(sprite.points[sprite.lines[i].y], camera);
+		line.a = space_camera_point(a, camera);
+		line.b = space_camera_point(b, camera);
 		whitgl_sys_color col = {0x00,0xff,0x00,0xff};
 		whitgl_sys_draw_line(whitgl_faabb_to_iaabb(line), col);
 	}
@@ -56,8 +60,10 @@ int main()
 	WHITGL_LOG("Starting main.");
 
 	whitgl_sys_setup setup = whitgl_sys_setup_zero;
-	setup.size.x = 280;
-	setup.size.y = 180;
+	//setup.size.x = 280;
+	//setup.size.y = 180;
+	setup.size.x = 128;
+	setup.size.y = 128;
 	setup.pixel_size = 3;
 	setup.name = "space";
 
@@ -69,6 +75,7 @@ int main()
 
 	whitgl_timer_init();
 
+	whitgl_float angle;
 	bool running = true;
 	while(running)
 	{
@@ -82,10 +89,11 @@ int main()
 				running = false;
 			if(whitgl_sys_should_close())
 				running = false;
+			angle = whitgl_fwrap(angle+0.05, 0, whitgl_pi*2);
 		}
 		whitgl_sys_draw_init();
-		space_camera camera = {{1.5,1}, 64};
-		draw_sprite(ship_sprite, camera);
+		space_camera camera = {{0.5,0.5}, 64};
+		draw_sprite(ship_sprite, angle, camera);
 		whitgl_sys_draw_finish();
 	}
 
