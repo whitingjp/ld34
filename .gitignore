@@ -3,3 +3,4 @@ build
 build.ninja
 *.pyc
 input
+gifsrc
