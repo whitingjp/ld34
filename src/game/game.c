@@ -2,6 +2,7 @@
 
 #include <whitgl/logging.h>
 #include <whitgl/sound.h>
+#include <game/hud.h>
 #include <resource.h>
 
 space_game space_game_zero(whitgl_ivec screen_size)
@@ -71,4 +72,8 @@ void space_game_draw(space_game g)
 	space_player_draw(g.player, g.camera);
 	space_station_draw(g.station, g.camera);
 	space_starfield_draw(g.starfield, g.camera);
+	space_hud_markers hud = space_hud_markers_zero;
+	hud.marker[hud.num++] = g.station.e;
+	space_hud_draw(g.player.e, hud, g.camera);
+
 }
