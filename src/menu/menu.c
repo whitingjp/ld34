@@ -11,7 +11,7 @@ space_menu space_menu_update(space_menu menu, space_game game)
 		menu.transition = whitgl_fclamp(menu.transition + 0.05, 0, 1);
 	else
 		menu.transition = whitgl_fclamp(menu.transition - 0.05, 0, 1);
-	if(menu.transition == 1)
+	if(menu.transition > 0.5)
 		menu.num_chars++;
 	else
 		menu.num_chars = 0;
