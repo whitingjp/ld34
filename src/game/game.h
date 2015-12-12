@@ -1,6 +1,7 @@
 #ifndef GAME_H_
 #define GAME_H_
 
+#include <game/debris.h>
 #include <game/player.h>
 #include <game/station.h>
 #include <game/starfield.h>
@@ -12,6 +13,7 @@ typedef struct
 	space_station station;
 	space_starfield starfield;
 	space_camera camera;
+	space_debris debris;
 	bool docked;
 } space_game;
 

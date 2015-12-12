@@ -11,6 +11,7 @@ space_game space_game_zero(whitgl_ivec screen_size)
 	g.station = space_station_zero();
 	g.starfield = space_starfield_zero();
 	g.docked = false;
+	g.debris = space_debris_zero();
 	return g;
 }
 space_game space_game_update(space_game g, whitgl_ivec screen_size)
@@ -26,6 +27,7 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size)
 		g.player.e.pos = whitgl_fvec_interpolate(g.player.e.pos, g.station.e.pos, 0.05);
 		g.player.e.angle = whitgl_angle_lerp(g.player.e.angle, g.station.e.angle, 0.05);
 	}
+	g.debris = space_debris_update(g.debris);
 
 	space_camera_focus focus;
 	focus.num_foci = 0;
@@ -41,11 +43,17 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size)
 	g.camera = space_camera_update(g.camera, focus, screen_size);
 
 	whitgl_bool colliding = space_entity_colliding(g.player.e, g.station.e);
-	WHITGL_LOG("colliding %d", colliding);
+	if(colliding)
+	{
+		g.debris = space_debris_create(g.debris, g.player.e, g.player.speed);
+		g.player = space_player_zero;
+
+	}
 	return g;
 }
 void space_game_draw(space_game g)
 {
+	space_debris_draw(g.debris, g.camera);
 	space_player_draw(g.player, g.camera);
 	space_station_draw(g.station, g.camera);
 	space_starfield_draw(g.starfield, g.camera);
