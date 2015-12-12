@@ -30,12 +30,15 @@ typedef struct
 {
 	whitgl_fvec pos;
 	whitgl_float scale;
+	whitgl_fvec screen_size;
 } space_camera;
 
 whitgl_fvec space_camera_point(whitgl_fvec p, space_camera cam)
 {
+	whitgl_fvec half_screen_size = whitgl_fvec_scale_val(cam.screen_size, 0.5);
 	p = whitgl_fvec_sub(p, cam.pos);
 	p = whitgl_fvec_scale_val(p, cam.scale);
+	p = whitgl_fvec_add(p, half_screen_size);
 	return p;
 }
 
@@ -81,10 +84,9 @@ int main()
 	capture_info capture = capture_info_zero;
 	bool capturing = false;
 	whitgl_float angle;
-	whitgl_fvec position = {2,2};
+	whitgl_fvec position = {0,0};
 	whitgl_fvec speed = whitgl_fvec_zero;
-	space_camera camera = {{0.0,0.0}, 32};
-
+	space_camera camera = {{0.0,0.0}, 128, whitgl_ivec_to_fvec(setup.size)};
 	bool running = true;
 	while(running)
 	{
@@ -114,9 +116,11 @@ int main()
 			speed = whitgl_fvec_interpolate(speed, whitgl_fvec_zero, 0.1);
 		}
 		whitgl_sys_draw_init();
-		whitgl_fvec half_screen_at_scale = whitgl_fvec_divide_val(whitgl_ivec_to_fvec(setup.size), camera.scale*2);
-		whitgl_fvec target_camera = whitgl_fvec_sub(position, half_screen_at_scale);
-		camera.pos = whitgl_fvec_interpolate(camera.pos, target_camera, 0.01);
+		camera.pos = whitgl_fvec_interpolate(camera.pos, position, 0.01);
+		whitgl_fvec draw_pos = space_camera_point(position, camera);
+		whitgl_float dist = whitgl_fvec_magnitude(whitgl_fvec_sub(draw_pos, whitgl_fvec_divide_val(whitgl_ivec_to_fvec(setup.size), 2)));
+		whitgl_float scale_adjust = -(dist - 64);
+		camera.scale = whitgl_fclamp(camera.scale + scale_adjust/10, 10, 128);
 		whitgl_iaabb screen_rect = {whitgl_ivec_zero, setup.size};
 		whitgl_sys_color blank_col = {0x00, 0x00, 0x00, 0xff};
 		whitgl_sys_draw_iaabb(screen_rect, blank_col);
