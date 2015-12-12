@@ -22,6 +22,7 @@ space_asteroid space_asteroid_zero()
 	sprite.num_lines = num_points;
 	whitgl_sys_color col = {0x9f,0xfd,0x3b,0xff};
 	sprite.col = col;
+	a.e = space_entity_zero;
 	a.e.sprite = sprite;
 	a.e.pos.x = (whitgl_randfloat()-0.5)*200;
 	a.e.pos.y = (whitgl_randfloat()-0.5)*200;

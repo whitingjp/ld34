@@ -21,6 +21,7 @@ space_station space_station_zero(whitgl_int num_points, whitgl_fvec pos)
 	sprite.num_lines = num_points-2;
 	whitgl_sys_color col = {0x9f,0xfd,0x3b,0xff};
 	sprite.col = col;
+	s.e = space_entity_zero;
 	s.e.sprite = sprite;
 	s.e.pos = pos;
 	s.e.angle = whitgl_randfloat()*whitgl_pi*2;
