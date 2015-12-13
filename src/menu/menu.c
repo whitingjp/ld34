@@ -21,6 +21,8 @@ space_menu space_menu_update(space_menu m, space_game game, space_station* stati
 	if(!station)
 		return m;
 
+	m.name = station->name;
+
 	if(m.transition > 0.5)
 		m.num_chars++;
 	else
@@ -181,7 +183,7 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 	{
 
 		whitgl_ivec title_pos = {(title_box.a.x+title_box.b.x)/2, title_box.a.y};
-		draw_string("diso", title_pos, box_size.x, big_font, true, -1);
+		draw_string(m.name, title_pos, box_size.x, big_font, true, -1);
 	}
 	if(box_size.y == 180)
 	{

@@ -22,9 +22,10 @@ typedef struct
 	whitgl_bool has_choice;
 	whitgl_bool can_launch;
 	space_menu_state state;
+	const char* name;
 
 } space_menu;
-static const space_menu space_menu_zero = {0, 0,{0,0,0},NUM_MISSIONS,false,false,false, STATE_QUESTION};
+static const space_menu space_menu_zero = {0, 0,{0,0,0},NUM_MISSIONS,false,false,false, STATE_QUESTION, NULL};
 
 space_menu space_menu_update(space_menu menu, space_game game, space_station* station, space_player* player);
 void space_menu_draw(space_menu menu, whitgl_ivec screen_size);

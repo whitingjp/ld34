@@ -2,9 +2,10 @@
 
 #include <whitgl/sys.h>
 
-space_station space_station_zero(whitgl_int num_points, whitgl_fvec pos, mission_index mission_id)
+space_station space_station_zero(const char* name, whitgl_int num_points, whitgl_fvec pos, mission_index mission_id)
 {
 	space_station s;
+	s.name = name;
 	space_sprite sprite;
 	whitgl_int i;
 	for(i=0; i<num_points; i++)
