@@ -4,7 +4,7 @@
 #include <whitgl/input.h>
 #include <resource.h>
 
-space_player space_player_update(space_player p)
+space_player space_player_update(space_player p, whitgl_bool can_thrust)
 {
 	if(!p.e.active)
 	{
@@ -14,10 +14,11 @@ space_player space_player_update(space_player p)
 	}
 	whitgl_bool l = whitgl_input_down(WHITGL_INPUT_LEFT);
 	whitgl_bool r = whitgl_input_down(WHITGL_INPUT_RIGHT);
-	if(l && !r && p.docked != -1)
+	if(!can_thrust)
+	{
 		l = false;
-	if(!l && r && p.docked != -1)
 		r = false;
+	}
 	if(l&&r)
 	{
 		whitgl_fvec impulse = {0,-0.002};

@@ -28,7 +28,7 @@ static const space_player space_player_zero =
 	}, {0,0}, 0, {false,false}, {0,0}, -1,
 };
 
-space_player space_player_update(space_player player);
+space_player space_player_update(space_player player, whitgl_bool can_thrust);
 void space_player_draw(space_player player, space_camera camera);
 
 #endif // PLAYER_H_

@@ -27,7 +27,7 @@ typedef struct
 } space_game;
 
 space_game space_game_zero(whitgl_ivec screen_size);
-space_game space_game_update(space_game game, whitgl_ivec screen_size, whitgl_fvec camera_offset);
+space_game space_game_update(space_game game, whitgl_ivec screen_size, whitgl_fvec camera_offset, whitgl_bool in_menu);
 void space_game_draw(space_game game);
 
 #endif // GAME_H_

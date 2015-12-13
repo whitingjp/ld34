@@ -95,10 +95,10 @@ void _space_game_collide_handler(space_game* g, space_entity* e, whitgl_fvec spe
 
 }
 
-space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec camera_offset)
+space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec camera_offset, whitgl_bool in_menu)
 {
 	whitgl_int i;
-	g.player = space_player_update(g.player);
+	g.player = space_player_update(g.player, !in_menu);
 	for(i=0; i<NUM_PIRATES; i++)
 		g.pirates[i] = space_pirate_update(g.pirates[i], g.player.e.pos);
 	for(i=0; i<NUM_STATIONS; i++)
