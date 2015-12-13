@@ -50,7 +50,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{"Hey, I want to get started, but first can you nip to xyz and get me a snack.", "Sure thing", "Ugh fine!", ""},
 		{GOOD_NONE, 0},
 		{GOOD_NONE, 0},
-		-1,
+		MISSION_LAUNCH,
 		true,
 	},
 	{ // MISSION_LAUNCH

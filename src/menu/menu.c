@@ -46,6 +46,15 @@ space_menu space_menu_update(space_menu m, space_game game)
 	m.has_choice = strlen(page.left) > 0;
 	m.can_launch = strlen(page.launch) > 0;
 
+	if(m.has_choice)
+	{
+		if(m.buttons[0] >= 1 || m.buttons[1] >= 1)
+		{
+			m.mission = mission.replacement;
+			m.num_chars = 0;
+		}
+	}
+
 	return m;
 }
 
@@ -157,36 +166,39 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 	}
 
 
-	whitgl_iaabb lbutton_box = launch_box;
-	lbutton_box.b.x -= box_size.x/2;
-	lbutton_box.a.y = launch_box.a.y - 24-1;
-	lbutton_box.b.y = launch_box.a.y;
-	whitgl_iaabb left_box_fill = lbutton_box;
-	whitgl_int lwidth = lbutton_box.b.x - lbutton_box.a.x;
-	left_box_fill.a.x += lwidth*(1-m.buttons[0]*m.buttons[0]);
-
-
-	if(lbutton_box.a.y > box.a.y)
+	if(m.has_choice)
 	{
-		whitgl_sys_draw_iaabb(left_box_fill, inner_col);
-		whitgl_sys_draw_hollow_iaabb(lbutton_box, 1, col);
-		whitgl_ivec ltext_pos = {lbutton_box.a.x+box_size.x/4, lbutton_box.b.y-(24-6)/2-6};
-		draw_string(page.left, ltext_pos, box_size.x-12, little_font, true, -1);
-	}
+		whitgl_iaabb lbutton_box = launch_box;
+		lbutton_box.b.x -= box_size.x/2;
+		lbutton_box.a.y = launch_box.a.y - 24-1;
+		lbutton_box.b.y = launch_box.a.y;
+		whitgl_iaabb left_box_fill = lbutton_box;
+		whitgl_int lwidth = lbutton_box.b.x - lbutton_box.a.x;
+		left_box_fill.a.x += lwidth*(1-m.buttons[0]*m.buttons[0]);
 
-	whitgl_iaabb rbutton_box = lbutton_box;
-	rbutton_box.a.x += box_size.x/2-1;
-	rbutton_box.b.x += box_size.x/2;
 
-	whitgl_iaabb right_box_fill = rbutton_box;
-	whitgl_int rwidth = rbutton_box.b.x - rbutton_box.a.x;
-	right_box_fill.b.x -= rwidth*(1-m.buttons[1]*m.buttons[1]);
+		if(lbutton_box.a.y > box.a.y)
+		{
+			whitgl_sys_draw_iaabb(left_box_fill, inner_col);
+			whitgl_sys_draw_hollow_iaabb(lbutton_box, 1, col);
+			whitgl_ivec ltext_pos = {lbutton_box.a.x+box_size.x/4, lbutton_box.b.y-(24-6)/2-6};
+			draw_string(page.left, ltext_pos, box_size.x-12, little_font, true, -1);
+		}
 
-	if(rbutton_box.a.y > box.a.y)
-	{
-		whitgl_sys_draw_iaabb(right_box_fill, inner_col);
-		whitgl_sys_draw_hollow_iaabb(rbutton_box, 1, col);
-		whitgl_ivec rtext_pos = {rbutton_box.a.x+box_size.x/4, rbutton_box.b.y-(24-6)/2-6};
-		draw_string(page.right, rtext_pos, box_size.x-12, little_font, true, -1);
+		whitgl_iaabb rbutton_box = lbutton_box;
+		rbutton_box.a.x += box_size.x/2-1;
+		rbutton_box.b.x += box_size.x/2;
+
+		whitgl_iaabb right_box_fill = rbutton_box;
+		whitgl_int rwidth = rbutton_box.b.x - rbutton_box.a.x;
+		right_box_fill.b.x -= rwidth*(1-m.buttons[1]*m.buttons[1]);
+
+		if(rbutton_box.a.y > box.a.y)
+		{
+			whitgl_sys_draw_iaabb(right_box_fill, inner_col);
+			whitgl_sys_draw_hollow_iaabb(rbutton_box, 1, col);
+			whitgl_ivec rtext_pos = {rbutton_box.a.x+box_size.x/4, rbutton_box.b.y-(24-6)/2-6};
+			draw_string(page.right, rtext_pos, box_size.x-12, little_font, true, -1);
+		}
 	}
 }
