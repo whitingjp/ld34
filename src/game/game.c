@@ -153,6 +153,31 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 		_space_game_collide_handler(&g, &g.pirates[i].e, g.pirates[i].speed);
 	for(i=0; i<NUM_ASTEROIDS; i++)
 		_space_game_collide_handler(&g, &g.asteroids[i].e, g.asteroids[i].speed);
+
+	for(i=0; i<NUM_STATIONS; i++)
+	{
+		if(!g.stations[i].e.active)
+			continue;
+		g.stations[i].defensive = false;
+		whitgl_int j;
+		for(j=0; j<NUM_ASTEROIDS; j++)
+		{
+			if(!g.asteroids[j].e.active)
+				continue;
+			whitgl_float sqmag = whitgl_fvec_sqmagnitude(whitgl_fvec_sub(g.stations[i].e.pos, g.asteroids[j].e.pos));
+			if(sqmag < 5*5)
+				g.stations[i].defensive = true;
+		}
+		for(j=0; j<NUM_PIRATES; j++)
+		{
+			if(!g.pirates[j].e.active)
+				continue;
+			whitgl_float sqmag = whitgl_fvec_sqmagnitude(whitgl_fvec_sub(g.stations[i].e.pos, g.pirates[j].e.pos));
+			if(sqmag < 5*5)
+				g.stations[i].defensive = true;
+		}
+	}
+
 	return g;
 }
 

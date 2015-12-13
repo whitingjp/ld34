@@ -26,6 +26,7 @@ space_station space_station_zero(whitgl_int num_points, whitgl_fvec pos)
 	s.e.sprite = sprite;
 	s.e.pos = pos;
 	s.e.angle = whitgl_randfloat()*whitgl_pi*2;
+	s.angle_speed = 0.01;
 	return s;
 }
 
@@ -33,7 +34,9 @@ space_station space_station_update(space_station s)
 {
 	if(!s.e.active)
 		return s;
-	s.e.angle = whitgl_fwrap(s.e.angle += 0.01, 0, whitgl_pi*2);
+	whitgl_float target_angle_speed = s.defensive ? 0.2 : 0.01;
+	s.angle_speed = s.angle_speed*0.98 + target_angle_speed*0.02;
+	s.e.angle = whitgl_fwrap(s.e.angle + s.angle_speed, 0, whitgl_pi*2);
 	return s;
 }
 void space_station_draw(space_station s, space_camera camera)

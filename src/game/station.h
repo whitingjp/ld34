@@ -7,6 +7,8 @@
 typedef struct
 {
 	space_entity e;
+	whitgl_float angle_speed;
+	whitgl_bool defensive;
 } space_station;
 
 space_station space_station_zero(whitgl_int num_points, whitgl_fvec pos);
