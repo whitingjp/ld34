@@ -86,13 +86,18 @@ space_menu space_menu_update(space_menu m, space_game game, space_station* stati
 				{
 					m.state = STATE_REJECTED;
 				}
-				if(station && mission.replacement != NUM_MISSIONS)
+				if(station && mission.replacement != NUM_MISSIONS && !m.can_launch)
 				{
 					station->mission_id = mission.replacement;
 					m.state = STATE_QUESTION;
 				}
 				m.num_chars = 0;
 			}
+		}
+		if(station && mission.replacement != NUM_MISSIONS && m.can_launch && m.buttons[2] >= 1)
+		{
+			station->mission_id = mission.replacement;
+			m.state = STATE_QUESTION;
 		}
 	}
 

@@ -8,7 +8,7 @@
 
 whitgl_sprite big_font = {IMAGE_FONT, {36,0}, {12,12}};
 whitgl_sprite little_font = {IMAGE_FONT, {0,0}, {6,6}};
-whitgl_sprite little_bright_font = {IMAGE_FONT, {0,42}, {6,6}};
+whitgl_sprite little_bright_font = {IMAGE_FONT, {0,48}, {6,6}};
 
 void text_draw(const char* string, whitgl_ivec pos, whitgl_int max_width, text_font font, whitgl_bool centered, whitgl_int visible_chars)
 {
@@ -44,6 +44,10 @@ void text_draw(const char* string, whitgl_ivec pos, whitgl_int max_width, text_f
 			index = 40;
 		if(*string == '\'')
 			index = 41;
+		if(*string == '?')
+			index = 42;
+		if(*string == '-')
+			index = 43;
 		if(*string == '\n')
 			draw_pos.x += 10000;
 		whitgl_int chars_left_in_word = 0;
@@ -63,7 +67,9 @@ void text_draw(const char* string, whitgl_ivec pos, whitgl_int max_width, text_f
 			whitgl_ivec frame = {index%6, index/6};
 			whitgl_sys_draw_sprite(sprite, frame, draw_pos);
 		}
-		draw_pos.x += sprite.size.x;
+
+		if(*string != '\n')
+			draw_pos.x += sprite.size.x;
 		string++;
 		visible_chars--;
 	}

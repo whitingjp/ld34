@@ -54,6 +54,7 @@ typedef enum
 	MISSION_INTRO,
 	MISSION_LAUNCH,
 	MISSION_SNACK,
+	MISSION_FUNDS,
 	NUM_MISSIONS
 } mission_index;
 
@@ -61,7 +62,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 {
 	{ // MISSION_INTRO
 		{"","","",""},
-		{"Well howdy youngster. You want in on the ol' asteroid farming business do ya.\n\nWell suuure, I can help, but first, you wouldn't mind popping across the way to grab me some Calamari, would ya?\n\nThe diner is at Hutov, y'know, the nice place", "No problem", "Ugh, fine!", ""},
+		{"Well howdy youngster. You want in on the ol' asteroid farming business do ya?\n\nWell suuure, I can help, but first, you wouldn't mind popping across the way to grab me some Calamari, would ya?\n\nThe diner is at Hutov, y'know, the nice place", "No problem", "Ugh, fine!", ""},
 		{"","","","launch"},
 		{"","","","launch"},
 		{GOOD_NONE, 0},
@@ -71,13 +72,13 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 	},
 	{ // MISSION_LAUNCH
 		{"I hope someones taught you how to steer that old boat?\n\nNo?\n\nWell it's simple enough, left is left, and the other one is, uhh, y'know.. it's.. the other one\n\nOh, and yeah, you launch from a station by holding both directions at once. That one is pretty important too.\n\nStop dilly dallying, get yourself to Hutov", "", "", "launch"},
-		{"great, thanks, so what we're going to do now is...","","","launch"},
-		{"","","","launch"},
-		{"","","","launch"},
+		{"Do I smell Calamari? It's about time too!\n\nHere I am, all alone, hungry, and with a business to run\n\nHand it over then","here gran","get your own","launch"},
+		{"Okay, first you'll need to hire a big 'ol tractor beam to snag you an asteroid, but they cost big bucks\n\n$50 or so should be enough\n\nTry selling Calamari at Yutis, or if you're feeling adventurous run some space weed from Alclov to Seue\n\nI'll lend you $10 to get started. Come back when you have enough","","","launch"},
+		{"Not ever in my life. Come back when you got some manners girl.","","","launch"},
 		{GOOD_SNACK, 0},
 		{GOOD_NONE, 10},
-		NUM_MISSIONS,
-		true,
+		MISSION_FUNDS,
+		false,
 	},
 	{ // MISSION_SNACK
 		{"Darling, I'd really love to help, but you know how it is. I've got bills to pay, and Tracy isn't getting any better.\n\nSo it's 4 creds for calamari or nothing for nothing I'm afraid.\n\nI hope you can get that together somehow","","","launch"},
@@ -89,6 +90,26 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		NUM_MISSIONS,
 		false,
 	},
+	{ // MISSION_FUNDS
+		{"That's not enough!","","","launch"},
+		{"Okay, so", "", "", "launch"},
+		{"","","","launch"},
+		{"","","","launch"},
+		{GOOD_NONE, 50},
+		{GOOD_NONE, 40},
+		NUM_MISSIONS,
+		false,
+	},
+	// { // MISSION_
+	// 	{"","","","launch"},
+	// 	{"", "", "", "launch"},
+	// 	{"","","","launch"},
+	// 	{"","","","launch"},
+	// 	{GOOD_NONE, 0},
+	// 	{GOOD_NONE, 0},
+	// 	NUM_MISSIONS,
+	// 	false,
+	// },
 };
 
 
