@@ -151,12 +151,14 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 	g.hud.mark = space_hud_markers_zero;
 	for(i=0; i<NUM_STATIONS; i++)
 	{
-		if(whitgl_fvec_magnitude(whitgl_fvec_sub(g.player.e.pos, g.stations[i].e.pos)) > 15)
-		{
-			g.hud.mark.markers[g.hud.mark.num].e = g.stations[i].e;
-			g.hud.mark.markers[g.hud.mark.num].name = g.stations[i].name;
-			g.hud.mark.num++;
-		}
+		if(!g.stations[i].known)
+			continue;
+		if(whitgl_fvec_magnitude(whitgl_fvec_sub(g.player.e.pos, g.stations[i].e.pos)) < 15)
+			continue;
+
+		g.hud.mark.markers[g.hud.mark.num].e = g.stations[i].e;
+		g.hud.mark.markers[g.hud.mark.num].name = g.stations[i].name;
+		g.hud.mark.num++;
 	}
 
 	space_camera_focus focus;

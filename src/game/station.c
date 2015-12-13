@@ -30,6 +30,7 @@ space_station space_station_zero(const char* name, whitgl_int num_points, whitgl
 	s.e.angle = whitgl_randfloat()*whitgl_pi*2;
 	s.angle_speed = 0.01;
 	s.mission_id = mission_id;
+	s.known = false;
 	return s;
 }
 

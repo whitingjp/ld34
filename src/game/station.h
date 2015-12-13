@@ -12,6 +12,7 @@ typedef struct
 	whitgl_float angle_speed;
 	whitgl_bool defensive;
 	mission_index mission_id;
+	whitgl_bool known;
 } space_station;
 
 space_station space_station_zero(const char* name, whitgl_int num_points, whitgl_float x, whitgl_float y, mission_index mission_id);

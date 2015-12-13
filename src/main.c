@@ -91,6 +91,16 @@ int main(int argc, char* argv[])
 					save = space_game_save(save, game);
 			}
 			menu = space_menu_update(menu, game, station, &game.player, save.mission_ids[0]);
+			if(menu.mission_id != NUM_MISSIONS)
+			{
+				const whitgl_int* known = &kMissions[menu.mission_id].known_stations[0];
+				while(*known != -1)
+				{
+					game.stations[*known].known = true;
+					known++;
+				}
+			}
+
 
 			whitgl_bool l = whitgl_input_down(WHITGL_INPUT_LEFT);
 			whitgl_bool r = whitgl_input_down(WHITGL_INPUT_RIGHT);

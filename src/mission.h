@@ -1,6 +1,8 @@
 #ifndef MISSION_H_
 #define MISSION_H_
 
+#define NUM_STATIONS (6)
+
 typedef enum
 {
 	GOOD_NONE,
@@ -44,6 +46,7 @@ typedef struct
 	mission_trade have;
 	whitgl_int replacement;
 	mission_replacement_type replacement_type;
+	whitgl_int known_stations[NUM_STATIONS];
 } mission_mission;
 
 typedef enum
@@ -74,6 +77,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{GOOD_NONE, 0},
 		MISSION_LAUNCH,
 		REPLACE_ON_ANY_ANSWER,
+		{0,1,-1},
 	},
 	{ // MISSION_LAUNCH
 		{"I hope someones taught you how to steer that old boat?\n\nNo?\n\nWell it's simple enough, left is left, and the other one is, uhh, y'know.. it's.. the other one\n\nOh, and yeah, you launch from a station by holding both directions at once. That one is pretty important too.\n\nStop dilly dallying, get yourself to Hutov", "", "", "launch"},
@@ -84,6 +88,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{GOOD_NONE, 10},
 		MISSION_FUNDS,
 		REPLACE_ON_ACCEPTED_LAUNCH,
+		{-1},
 	},
 	{ // MISSION_SNACK
 		{"Darling, I'd really love to help, but you know how it is. I've got bills to pay, and Tracy isn't getting any better.\n\nSo it's 4 creds for calamari or nothing for nothing I'm afraid.\n\nI hope you can get that together somehow","","","launch"},
@@ -94,6 +99,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{GOOD_SNACK, 0},
 		NUM_MISSIONS,
 		NO_REPLACE,
+		{2,3,4,-1},
 	},
 	{ // MISSION_FUNDS
 		{"You'll need more than that to hire yourself a tractor beam!\n\n$50 or so should be enough\n\nTry selling Calamari at Yutis, or if you're feeling adventurous run some red crabs from Alclov to Oskao\n\nCome back when you have enough","","","launch"},
@@ -104,6 +110,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{GOOD_NONE, 50},
 		MISSION_TRACTOR,
 		REPLACE_ON_MET_NEED,
+		{-1},
 	},
 	{ // MISSION_RESTORED
 		{"","","","launch"},
@@ -114,6 +121,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{GOOD_NONE, 0},
 		MISSION_RESUME,
 		REPLACE_ON_ANY_ANSWER,
+		{-1},
 	},
 	{ // MISSION_YUCTIS
 		{"Yo! You live at Zunus station, near Hutov right?\n\nThe food here is super terrible. Hook us up with some of that good Hutov calamari and we'll pay well\n\nHow does $20 for a hold full sound to ya?","","","launch"},
@@ -123,7 +131,8 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{GOOD_SNACK, 0},
 		{GOOD_NONE, 20},
 		NUM_MISSIONS,
-		false,
+		NO_REPLACE,
+		{-1},
 	},
 	{ // MISSION_TRACTOR
 		{"Okay, so, the best heavy machinery place I knows is down in the old country.\n\nTry Tagawa\n\nThey know one end of a tractor from the other down there\n\nyeah, I know they're robots, but robots aint bad people","","","launch"},
@@ -133,7 +142,8 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{GOOD_TRACTOR, 0},
 		{GOOD_NONE, 0},
 		NUM_MISSIONS,
-		false,
+		NO_REPLACE,
+		{5,-1},
 	},
 	{ // MISSION_ALCLOV
 		{"Yeah cuz, we might have red crabs, or we might not. Show us some holobacked $$$ and we can talk\n\nIf you don't have ooh, at least $20, it's best you just leave now.\n\nif Pol finds me selling for less.. well.. she won't be happy\n\n","","","get out"},
@@ -144,6 +154,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{GOOD_CRAB, 0},
 		NUM_MISSIONS,
 		NO_REPLACE,
+		{-1},
 	},
 	{ // MISSION_OSKAO
 		{"Heyyyy, don't suppose you could hook me up with some of the red stuff\n\nCan't get enough these days\n\nYou can't?\n\nWell, if you ever can I can maybe pay $50 if it's good stuff","","","launch"},
@@ -154,6 +165,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{GOOD_NONE, 50},
 		NUM_MISSIONS,
 		NO_REPLACE,
+		{-1},
 	},
 	{ // MISSION_TAGAWA
 		{"hello flesh creature\n\ni sense that you would like to hire a tractor beam\n\nyou are currently unable to pay me\n\nit costs $50\n\ndo you have a fault?\n\n does your cpu need replacing?","","","back away"},
@@ -164,6 +176,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{GOOD_TRACTOR, 0},
 		NUM_MISSIONS,
 		NO_REPLACE,
+		{-1},
 	},
 	// { // MISSION_
 	// 	{"","","","launch"},

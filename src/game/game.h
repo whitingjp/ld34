@@ -10,7 +10,6 @@
 #include <game/starfield.h>
 #include <camera.h>
 
-#define NUM_STATIONS (6)
 #define NUM_ASTEROIDS (32)
 #define NUM_PIRATES (0)
 
