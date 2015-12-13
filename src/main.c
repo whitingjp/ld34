@@ -81,7 +81,9 @@ int main(int argc, char* argv[])
 			camera_offset.x = -0.2*menu.transition;
 			whitgl_bool in_menu = menu.transition > 0.5 && menu.buttons[2] < 1;
 			game = space_game_update(game, setup.size, camera_offset, in_menu);
-			menu = space_menu_update(menu, game);
+			space_station* station = NULL;
+			if(game.player.docked != -1) station = &game.stations[game.player.docked];
+			menu = space_menu_update(menu, game, station);
 		}
 		whitgl_sys_draw_init();
 

@@ -17,11 +17,11 @@ space_game space_game_zero(whitgl_ivec screen_size)
 		g.pirates[i].e.pos.x += i*4;
 	}
 	whitgl_fvec diso_pos = {0,0};
-	g.stations[0] = space_station_zero(5, diso_pos);
+	g.stations[0] = space_station_zero(5, diso_pos, MISSION_INTRO);
 	whitgl_fvec centurai_pos = {-10,-40};
-	g.stations[1] = space_station_zero(7, centurai_pos);
+	g.stations[1] = space_station_zero(7, centurai_pos, MISSION_INTRO);
 	whitgl_fvec alpha_pos = {-50,75};
-	g.stations[2] = space_station_zero(11, alpha_pos);
+	g.stations[2] = space_station_zero(11, alpha_pos, MISSION_LAUNCH);
 	for(i=0; i<NUM_ASTEROIDS; i++)
 		g.asteroids[i] = space_asteroid_zero();
 	g.starfield = space_starfield_zero();

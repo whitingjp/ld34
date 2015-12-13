@@ -2,7 +2,7 @@
 
 #include <whitgl/sys.h>
 
-space_station space_station_zero(whitgl_int num_points, whitgl_fvec pos)
+space_station space_station_zero(whitgl_int num_points, whitgl_fvec pos, mission_index mission_id)
 {
 	space_station s;
 	space_sprite sprite;
@@ -27,6 +27,7 @@ space_station space_station_zero(whitgl_int num_points, whitgl_fvec pos)
 	s.e.pos = pos;
 	s.e.angle = whitgl_randfloat()*whitgl_pi*2;
 	s.angle_speed = 0.01;
+	s.mission_id = mission_id;
 	return s;
 }
 

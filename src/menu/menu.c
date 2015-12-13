@@ -6,8 +6,11 @@
 #include <whitgl/input.h>
 #include <resource.h>
 
-space_menu space_menu_update(space_menu m, space_game game)
+space_menu space_menu_update(space_menu m, space_game game, space_station* station)
 {
+	if(station)
+		m.mission_id = station->mission_id;
+
 	if(game.player.docked != -1)
 		m.transition = whitgl_fclamp(m.transition + 0.05, 0, 1);
 	else
@@ -36,22 +39,26 @@ space_menu space_menu_update(space_menu m, space_game game)
 	for(i=0; i<3; i++)
 		m.buttons[i] = whitgl_fclamp(m.buttons[i], 0, 1);
 
-	mission_mission mission = kMissions[m.mission];
-	m.have_required = true;
-	if(mission.need.good != GOOD_NONE && game.player.hold.good != mission.need.good)
-		m.have_required = false;
-	if(mission.need.creds != 0 && game.player.hold.creds < mission.need.creds)
-		m.have_required = false;
-	mission_page page = m.have_required ? mission.have_page : mission.need_page;
-	m.has_choice = strlen(page.left) > 0;
-	m.can_launch = strlen(page.launch) > 0;
-
-	if(m.has_choice)
+	if(m.mission_id != NUM_MISSIONS)
 	{
-		if(m.buttons[0] >= 1 || m.buttons[1] >= 1)
+		mission_mission mission = kMissions[m.mission_id];
+		m.have_required = true;
+		if(mission.need.good != GOOD_NONE && game.player.hold.good != mission.need.good)
+			m.have_required = false;
+		if(mission.need.creds != 0 && game.player.hold.creds < mission.need.creds)
+			m.have_required = false;
+		mission_page page = m.have_required ? mission.have_page : mission.need_page;
+		m.has_choice = strlen(page.left) > 0;
+		m.can_launch = strlen(page.launch) > 0;
+
+		if(m.has_choice)
 		{
-			m.mission = mission.replacement;
-			m.num_chars = 0;
+			if(m.buttons[0] >= 1 || m.buttons[1] >= 1)
+			{
+				if(station)
+					station->mission_id = mission.replacement;
+				m.num_chars = 0;
+			}
 		}
 	}
 
@@ -114,7 +121,7 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 {
 	if(m.transition <= 0)
 		return;
-	mission_mission mission = kMissions[m.mission];
+	mission_mission mission = kMissions[m.mission_id];
 	mission_page page = m.have_required ? mission.have_page : mission.need_page;
 
 	whitgl_ivec box_size = {156, 180*m.transition*m.transition};
