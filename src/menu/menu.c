@@ -39,13 +39,13 @@ space_menu space_menu_update(space_menu m, space_game game)
 	return m;
 }
 
-void draw_string(const char* string, whitgl_ivec pos, whitgl_int max_width, whitgl_sprite sprite, whitgl_bool centered)
+void draw_string(const char* string, whitgl_ivec pos, whitgl_int max_width, whitgl_sprite sprite, whitgl_bool centered, whitgl_int visible_chars)
 {
 	whitgl_int len = strlen(string);
 	if(centered)
 		pos.x -= (sprite.size.x*len)/2;
 	whitgl_ivec draw_pos = pos;
-	while(*string)
+	while(*string && visible_chars)
 	{
 		int index = -1;
 		if(*string >= 'a' && *string <= 'z')
@@ -66,18 +66,26 @@ void draw_string(const char* string, whitgl_ivec pos, whitgl_int max_width, whit
 			index = 41;
 		if(*string == '\n')
 			draw_pos.x += 10000;
+		whitgl_int chars_left_in_word = 0;
+		const char* word = string;
+		while(*word && *word != ' ' && *word != '\n')
+		{
+			chars_left_in_word++;
+			word++;
+		}
+		if(draw_pos.x - pos.x + chars_left_in_word*sprite.size.x > max_width)
+		{
+			draw_pos.x = pos.x;
+			draw_pos.y += sprite.size.y;
+		}
 		if(index != -1)
 		{
 			whitgl_ivec frame = {index%6, index/6};
 			whitgl_sys_draw_sprite(sprite, frame, draw_pos);
 		}
 		draw_pos.x += sprite.size.x;
-		if(draw_pos.x - pos.x > max_width)
-		{
-			draw_pos.x = pos.x;
-			draw_pos.y += sprite.size.y;
-		}
 		string++;
+		visible_chars--;
 	}
 }
 
@@ -107,15 +115,12 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 	{
 
 		whitgl_ivec title_pos = {(title_box.a.x+title_box.b.x)/2, title_box.a.y};
-		draw_string("diso", title_pos, box_size.x, big_font, true);
+		draw_string("diso", title_pos, box_size.x, big_font, true, -1);
 	}
 	if(box_size.y == 180)
 	{
 		whitgl_ivec text_pos = {title_box.a.x+2, title_box.a.y+2+12};
-		const char* text = mission.need_page.text;
-		char buffer[1024];
-		snprintf(buffer, whitgl_imin(m.num_chars, 1024), "%s", text);
-		draw_string(buffer, text_pos, box_size.x-12, little_font, false);
+		draw_string(mission.need_page.text, text_pos, box_size.x-12, little_font, false, m.num_chars);
 	}
 
 	whitgl_int button_height = 16;
@@ -130,7 +135,7 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 		whitgl_sys_draw_iaabb(launch_box_fill, inner_col);
 		whitgl_sys_draw_hollow_iaabb(launch_box, 1, col);
 		whitgl_ivec ltext_pos = {launch_box.a.x+box_size.x/2, box.b.y-(button_height-6)/2-6};
-		draw_string("launch", ltext_pos, box_size.x-12, little_font, true);
+		draw_string("launch", ltext_pos, box_size.x-12, little_font, true, -1);
 	}
 
 
@@ -148,7 +153,7 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 		whitgl_sys_draw_iaabb(left_box_fill, inner_col);
 		whitgl_sys_draw_hollow_iaabb(lbutton_box, 1, col);
 		whitgl_ivec ltext_pos = {lbutton_box.a.x+box_size.x/4, lbutton_box.b.y-(24-6)/2-6};
-		draw_string(mission.need_page.left, ltext_pos, box_size.x-12, little_font, true);
+		draw_string(mission.need_page.left, ltext_pos, box_size.x-12, little_font, true, -1);
 	}
 
 	whitgl_iaabb rbutton_box = lbutton_box;
@@ -164,6 +169,6 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 		whitgl_sys_draw_iaabb(right_box_fill, inner_col);
 		whitgl_sys_draw_hollow_iaabb(rbutton_box, 1, col);
 		whitgl_ivec rtext_pos = {rbutton_box.a.x+box_size.x/4, rbutton_box.b.y-(24-6)/2-6};
-		draw_string(mission.need_page.right, rtext_pos, box_size.x-12, little_font, true);
+		draw_string(mission.need_page.right, rtext_pos, box_size.x-12, little_font, true, -1);
 	}
 }
