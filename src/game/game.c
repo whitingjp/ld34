@@ -21,6 +21,7 @@ space_game space_game_zero(whitgl_ivec screen_size)
 	g.stations[2] = space_station_zero("Yutis", 11, -50, 75, MISSION_YUCTIS);
 	g.stations[3] = space_station_zero("Alclov", 4, 50, 10, MISSION_ALCLOV);
 	g.stations[4] = space_station_zero("Oskao", 11, -5, -100, MISSION_OSKAO);
+	g.stations[5] = space_station_zero("Tagawa", 11, -50, -50, MISSION_TAGAWA);
 	for(i=0; i<NUM_ASTEROIDS; i++)
 		g.asteroids[i] = space_asteroid_zero();
 	g.starfield = space_starfield_zero();

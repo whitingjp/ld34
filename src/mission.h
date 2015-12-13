@@ -5,10 +5,8 @@ typedef enum
 {
 	GOOD_NONE,
 	GOOD_SNACK,
-	GOOD_WEED,
+	GOOD_CRAB,
 	GOOD_TRACTOR,
-	GOOD_SEED,
-	GOOD_PLANT,
 	NUM_GOODS,
 } mission_good;
 
@@ -16,10 +14,8 @@ static const char* mission_good_names[NUM_GOODS] =
 {
 	"Empty",
 	"Calamari",
-	"Trade2",
+	"Red Crabs",
 	"Tractor",
-	"Seed",
-	"Plant",
 };
 
 typedef struct
@@ -69,6 +65,7 @@ typedef enum
 	MISSION_TRACTOR,
 	MISSION_ALCLOV,
 	MISSION_OSKAO,
+	MISSION_TAGAWA,
 	NUM_MISSIONS,
 	MISSION_RESUME
 } mission_index;
@@ -78,7 +75,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 {
 	{ // MISSION_INTRO
 		{"","","",""},
-		{"Well howdy youngster. You want in on the ol' asteroid farming business do ya?\n\nWell suuure, I can help, but first, you wouldn't mind popping across the way to grab me some Calamari, would ya?\n\nThe diner is at Hutov, y'know, the nice place", "No problem", "Ugh, fine!", ""},
+		{"Well howdy youngster. You want in on the ol' asteroid mining business do ya?\n\nWell suuure, I can help, but first, you wouldn't mind popping across the way to grab me some Calamari, would ya?\n\nThe diner is at Hutov, y'know, the nice place", "No problem", "Ugh, fine!", ""},
 		{"","","","launch"},
 		{"","","","launch"},
 		{GOOD_NONE, 0},
@@ -89,7 +86,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 	{ // MISSION_LAUNCH
 		{"I hope someones taught you how to steer that old boat?\n\nNo?\n\nWell it's simple enough, left is left, and the other one is, uhh, y'know.. it's.. the other one\n\nOh, and yeah, you launch from a station by holding both directions at once. That one is pretty important too.\n\nStop dilly dallying, get yourself to Hutov", "", "", "launch"},
 		{"Do I smell Calamari? It's about time too!\n\nHere I am, all alone, hungry, and with a business to run\n\nHand it over then","here gran","get your own","launch"},
-		{"Okay, first you'll need to hire a big 'ol tractor beam to snag you an asteroid, but they cost big bucks\n\n$50 or so should be enough\n\nTry selling Calamari at Yutis, or if you're feeling adventurous run some red crabs from Alclov to Oskao\n\nI'll lend you $10 to get started. Come back when you have enough","","","launch"},
+		{"Okay, first you'll need to hire a big 'ol tractor beam to start snagging asteroids, but they cost big bucks\n\n$50 or so should be enough\n\nTry selling Calamari at Yutis, or if you're feeling adventurous run some red crabs from Alclov to Oskao\n\nI'll lend you $10 to get started. Come back when you have enough","","","launch"},
 		{"Not ever in my life. Come back when you got some manners girl.","","","launch"},
 		{GOOD_SNACK, 0},
 		{GOOD_NONE, 10},
@@ -152,7 +149,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{"Right, pleasure doing business with you\n\nI wouldn't stick around too long\n\nPol said she'd be getting back pretty soon, and she sounded pissed.","","","flee"},
 		{"Stop wasting my time cuz","","","launch"},
 		{GOOD_NONE, 20},
-		{GOOD_WEED, 0},
+		{GOOD_CRAB, 0},
 		NUM_MISSIONS,
 		NO_REPLACE,
 	},
@@ -161,8 +158,18 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{"You got crabs?\n\nYES!\n\nI can give you $50 now, or, like, if you're happy for me to owe you, maybe $70 next week", "$50 now", "nah", "launch"},
 		{"Hey, I owe you one. Come round any time, we can get cosy, watch some holos, share a claw?","","","ugh, no!"},
 		{"Hey, why'd you even come here?\n\nYou're no fun at all.\n\nDon't bother coming back","","","launch"},
-		{GOOD_WEED, 0},
+		{GOOD_CRAB, 0},
 		{GOOD_NONE, 50},
+		NUM_MISSIONS,
+		NO_REPLACE,
+	},
+	{ // MISSION_TAGAWA
+		{"hello flesh creature\n\ni sense that you would like to hire a tractor beam\n\nyou are currently unable to pay me\n\nit costs $50\n\ndo you have a fault?\n\n does your cpu need replacing?","","","back away"},
+		{"greetings fleshling\n\nif you are about to give us $50 we will have already installed a tractor beam to your ship", "ok..?", "umm, no", "launch"},
+		{"excellent\n\ni am certain you will find it satisfactory","","","launch"},
+		{"you will be back soon enough","","","launch"},
+		{GOOD_NONE, 50},
+		{GOOD_TRACTOR, 0},
 		NUM_MISSIONS,
 		NO_REPLACE,
 	},
