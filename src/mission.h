@@ -41,11 +41,11 @@ typedef enum
 	NUM_MISSIONS
 } mission_index;
 
-static const mission_mission missions[NUM_MISSIONS] =
+static const mission_mission kMissions[NUM_MISSIONS] =
 {
 	{ // INTRO
-		{"Hey, I want to get started, but first can you nip to xyz and get me a snack", "Ok", "No Way"},
-		{"Great, hand it over", "Ok", "No Way"},
+		{"hey, i want to get started, but first can you nip to xyz and get me a snack", "ok", "no way"},
+		{"great, hand it over", "ok", "no way"},
 		{GOOD_SNACK, 0},
 		{GOOD_NONE, 10},
 		-1,
@@ -53,4 +53,21 @@ static const mission_mission missions[NUM_MISSIONS] =
 	},
 };
 
+
+		// "the quick brown.\n"
+		// "fox stole all,\n"
+		// "of my cargo!\n"
+		// "\n"
+		// "dammit$\n"
+		// "\n"
+		// "hey\n"
+		// "\n"
+		// "i dont suppose\n"
+		// "you could help\n"
+		// "out\n"
+		// "\n"
+		// "i will' make it\n"
+		// "worthwhile\n";
+
 #endif // MISSION_H_
+

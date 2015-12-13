@@ -85,6 +85,8 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 {
 	if(m.transition <= 0)
 		return;
+	mission_mission mission = kMissions[m.mission];
+
 	whitgl_ivec box_size = {156, 180*m.transition*m.transition};
 	whitgl_iaabb box;
 	box.a.x = 12;
@@ -105,27 +107,12 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 	{
 
 		whitgl_ivec title_pos = {(title_box.a.x+title_box.b.x)/2, title_box.a.y};
-		draw_string("diso!!", title_pos, box_size.x, big_font, true);
+		draw_string("diso", title_pos, box_size.x, big_font, true);
 	}
 	if(box_size.y == 180)
 	{
 		whitgl_ivec text_pos = {title_box.a.x+2, title_box.a.y+2+12};
-		const char* text =
-	//  01234567890123456789012345
-		"the quick brown.\n"
-		"fox stole all,\n"
-		"of my cargo!\n"
-		"\n"
-		"dammit$\n"
-		"\n"
-		"hey\n"
-		"\n"
-		"i dont suppose\n"
-		"you could help\n"
-		"out\n"
-		"\n"
-		"i will' make it\n"
-		"worthwhile\n";
+		const char* text = mission.need_page.text;
 		char buffer[1024];
 		snprintf(buffer, whitgl_imin(m.num_chars, 1024), "%s", text);
 		draw_string(buffer, text_pos, box_size.x-12, little_font, false);
@@ -161,7 +148,7 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 		whitgl_sys_draw_iaabb(left_box_fill, inner_col);
 		whitgl_sys_draw_hollow_iaabb(lbutton_box, 1, col);
 		whitgl_ivec ltext_pos = {lbutton_box.a.x+box_size.x/4, lbutton_box.b.y-(24-6)/2-6};
-		draw_string("sure", ltext_pos, box_size.x-12, little_font, true);
+		draw_string(mission.need_page.left, ltext_pos, box_size.x-12, little_font, true);
 	}
 
 	whitgl_iaabb rbutton_box = lbutton_box;
@@ -177,6 +164,6 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 		whitgl_sys_draw_iaabb(right_box_fill, inner_col);
 		whitgl_sys_draw_hollow_iaabb(rbutton_box, 1, col);
 		whitgl_ivec rtext_pos = {rbutton_box.a.x+box_size.x/4, rbutton_box.b.y-(24-6)/2-6};
-		draw_string("no way", rtext_pos, box_size.x-12, little_font, true);
+		draw_string(mission.need_page.right, rtext_pos, box_size.x-12, little_font, true);
 	}
 }
