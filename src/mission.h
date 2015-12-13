@@ -99,7 +99,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{GOOD_SNACK, 0},
 		NUM_MISSIONS,
 		NO_REPLACE,
-		{2,3,4,-1},
+		{-1},
 	},
 	{ // MISSION_FUNDS
 		{"You'll need more than that to hire yourself a tractor beam!\n\n$50 or so should be enough\n\nTry selling Calamari at Yutis, or if you're feeling adventurous run some red crabs from Alclov to Oskao\n\nCome back when you have enough","","","launch"},
@@ -110,7 +110,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{GOOD_NONE, 50},
 		MISSION_TRACTOR,
 		REPLACE_ON_MET_NEED,
-		{-1},
+		{2,3,4,-1},
 	},
 	{ // MISSION_RESTORED
 		{"","","","launch"},

@@ -66,6 +66,7 @@ space_menu space_menu_update(space_menu m, space_game game, space_station* stati
 		if(station && mission.replacement != NUM_MISSIONS && m.have_required && mission.replacement_type == REPLACE_ON_MET_NEED)
 		{
 			station->mission_id = mission.replacement;
+			m.mission_id = mission.replacement;
 			m.state = STATE_QUESTION;
 			m.num_chars = 0;
 			return m;
@@ -104,6 +105,7 @@ space_menu space_menu_update(space_menu m, space_game game, space_station* stati
 				if(station && mission.replacement != NUM_MISSIONS && mission.replacement_type == REPLACE_ON_ANY_ANSWER)
 				{
 					station->mission_id = mission.replacement;
+					m.mission_id = mission.replacement;
 					m.state = STATE_QUESTION;
 					m.num_chars = 0;
 					return m;
@@ -117,6 +119,7 @@ space_menu space_menu_update(space_menu m, space_game game, space_station* stati
 		if(station && mission.replacement != NUM_MISSIONS && replace_on_leave && m.buttons[2] >= 1)
 		{
 			station->mission_id = mission.replacement;
+			m.mission_id = mission.replacement;
 			m.state = STATE_QUESTION;
 			m.num_chars = 0;
 			return m;
