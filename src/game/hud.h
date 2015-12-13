@@ -4,10 +4,16 @@
 #include <camera.h>
 #include <sprite.h>
 
+typedef struct
+{
+	space_entity e;
+	const char* name;
+} space_hud_marker;
+
 #define MAX_MARKERS (8)
 typedef struct
 {
-	space_entity markers[MAX_MARKERS];
+	space_hud_marker markers[MAX_MARKERS];
 	whitgl_int num;
 } space_hud_markers;
 static const space_hud_markers space_hud_markers_zero = {{}, 0};

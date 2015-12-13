@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <menu/text.h>
 #include <whitgl/input.h>
 #include <resource.h>
 
@@ -98,58 +99,6 @@ space_menu space_menu_update(space_menu m, space_game game, space_station* stati
 	return m;
 }
 
-void draw_string(const char* string, whitgl_ivec pos, whitgl_int max_width, whitgl_sprite sprite, whitgl_bool centered, whitgl_int visible_chars)
-{
-	whitgl_int len = strlen(string);
-	if(centered)
-		pos.x -= (sprite.size.x*len)/2;
-	whitgl_ivec draw_pos = pos;
-	while(*string && visible_chars)
-	{
-		int index = -1;
-		if(*string >= 'a' && *string <= 'z')
-			index = *string-'a';
-		if(*string >= 'A' && *string <= 'Z')
-			index = *string-'A';
-		if(*string >= '0' && *string <= '9')
-			index = *string-'0'+26;
-		if(*string == ',')
-			index = 36;
-		if(*string == '.')
-			index = 37;
-		if(*string == ':')
-			index = 38;
-		if(*string == '$')
-			index = 39;
-		if(*string == '!')
-			index = 40;
-		if(*string == '\'')
-			index = 41;
-		if(*string == '\n')
-			draw_pos.x += 10000;
-		whitgl_int chars_left_in_word = 0;
-		const char* word = string;
-		while(*word && *word != ' ' && *word != '\n')
-		{
-			chars_left_in_word++;
-			word++;
-		}
-		if(draw_pos.x - pos.x + chars_left_in_word*sprite.size.x > max_width)
-		{
-			draw_pos.x = pos.x;
-			draw_pos.y += sprite.size.y;
-		}
-		if(index != -1)
-		{
-			whitgl_ivec frame = {index%6, index/6};
-			whitgl_sys_draw_sprite(sprite, frame, draw_pos);
-		}
-		draw_pos.x += sprite.size.x;
-		string++;
-		visible_chars--;
-	}
-}
-
 void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 {
 	if(m.transition <= 0)
@@ -177,18 +126,16 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 	if(title_box.b.y-title_box.a.y > 12) title_box.b.y = title_box.a.y+12;
 	whitgl_sys_draw_iaabb(title_box, col);
 
-	whitgl_sprite big_font = {IMAGE_FONT, {36,0}, {12,12}};
-	whitgl_sprite little_font = {IMAGE_FONT, {0,0}, {6,6}};
 	if(title_box.b.y-title_box.a.y == 12)
 	{
 
 		whitgl_ivec title_pos = {(title_box.a.x+title_box.b.x)/2, title_box.a.y};
-		draw_string(m.name, title_pos, box_size.x, big_font, true, -1);
+		text_draw(m.name, title_pos, box_size.x, FONT_BIG, true, -1);
 	}
 	if(box_size.y == 180)
 	{
 		whitgl_ivec text_pos = {title_box.a.x+2, title_box.a.y+2+12};
-		draw_string(page.text, text_pos, box_size.x-12, little_font, false, m.num_chars);
+		text_draw(page.text, text_pos, box_size.x-12, FONT_SMALL, false, m.num_chars);
 	}
 
 	whitgl_int button_height = 16;
@@ -206,7 +153,7 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 			whitgl_sys_draw_iaabb(launch_box_fill, inner_col);
 			whitgl_sys_draw_hollow_iaabb(launch_box, 1, col);
 			whitgl_ivec ltext_pos = {launch_box.a.x+box_size.x/2, box.b.y-(button_height-6)/2-6};
-			draw_string(page.launch, ltext_pos, box_size.x-12, little_font, true, -1);
+			text_draw(page.launch, ltext_pos, box_size.x-12, FONT_SMALL, true, -1);
 		}
 		launch_box.a.y+=1;
 	}
@@ -228,7 +175,7 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 			whitgl_sys_draw_iaabb(left_box_fill, inner_col);
 			whitgl_sys_draw_hollow_iaabb(lbutton_box, 1, col);
 			whitgl_ivec ltext_pos = {lbutton_box.a.x+box_size.x/4, lbutton_box.b.y-(24-6)/2-6};
-			draw_string(page.left, ltext_pos, box_size.x-12, little_font, true, -1);
+			text_draw(page.left, ltext_pos, box_size.x-12, FONT_SMALL, true, -1);
 		}
 
 		whitgl_iaabb rbutton_box = lbutton_box;
@@ -244,7 +191,7 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 			whitgl_sys_draw_iaabb(right_box_fill, inner_col);
 			whitgl_sys_draw_hollow_iaabb(rbutton_box, 1, col);
 			whitgl_ivec rtext_pos = {rbutton_box.a.x+box_size.x/4, rbutton_box.b.y-(24-6)/2-6};
-			draw_string(page.right, rtext_pos, box_size.x-12, little_font, true, -1);
+			text_draw(page.right, rtext_pos, box_size.x-12, FONT_SMALL, true, -1);
 		}
 	}
 }
