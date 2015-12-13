@@ -6,6 +6,9 @@
 
 space_player space_player_update(space_player p, whitgl_bool can_thrust)
 {
+	if(can_thrust && p.was_in_menu)
+		p.launch_timer = 1;
+	p.was_in_menu = !can_thrust;
 	if(!p.e.active)
 	{
 		whitgl_loop_volume(SOUND_POWER_L, 0);
@@ -14,6 +17,12 @@ space_player space_player_update(space_player p, whitgl_bool can_thrust)
 	}
 	whitgl_bool l = whitgl_input_down(WHITGL_INPUT_LEFT);
 	whitgl_bool r = whitgl_input_down(WHITGL_INPUT_RIGHT);
+	p.launch_timer = whitgl_fclamp(p.launch_timer-0.02, 0, 1);
+	if(p.launch_timer > 0)
+	{
+		l = true;
+		r = true;
+	}
 	if(!can_thrust)
 	{
 		l = false;

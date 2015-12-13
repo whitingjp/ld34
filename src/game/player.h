@@ -15,6 +15,8 @@ typedef struct
 	whitgl_float engine_thrust[2];
 	whitgl_int docked;
 	mission_trade hold;
+	whitgl_float launch_timer;
+	whitgl_float was_in_menu;
 } space_player;
 static const space_player space_player_zero =
 {
@@ -30,6 +32,8 @@ static const space_player space_player_zero =
 		{0,0},0,false,
 	}, {0,0}, 0, {false,false}, {0,0}, -1,
 	{GOOD_NONE, 5},
+	0,
+	false,
 };
 
 space_player space_player_update(space_player player, whitgl_bool can_thrust);

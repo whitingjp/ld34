@@ -16,7 +16,7 @@ space_game space_game_zero(whitgl_ivec screen_size)
 		g.pirates[i] = space_pirate_zero;
 		g.pirates[i].e.pos.x += i*4;
 	}
-	whitgl_fvec diso_pos = {10,0};
+	whitgl_fvec diso_pos = {0,0};
 	g.stations[0] = space_station_zero(5, diso_pos, MISSION_INTRO);
 	whitgl_fvec centurai_pos = {-10,-40};
 	g.stations[1] = space_station_zero(7, centurai_pos, MISSION_SNACK);
@@ -119,7 +119,7 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 	for(i=0; i<NUM_STATIONS; i++)
 	{
 		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(g.player.e.pos, g.stations[i].e.pos));
-		if(diff < 1 && g.player.engine_thrust[0]+g.player.engine_thrust[1] < 1.8)
+		if(diff < 1 && g.player.engine_thrust[0]+g.player.engine_thrust[1] < 2.0 && g.player.launch_timer == 0)
 			g.player.docked = i;
 	}
 	if(g.player.docked != -1)
