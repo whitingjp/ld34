@@ -67,6 +67,7 @@ space_menu space_menu_update(space_menu m, space_game game, space_station* stati
 		{
 			station->mission_id = mission.replacement;
 			m.state = STATE_QUESTION;
+			m.num_chars = 0;
 			return m;
 		}
 		mission_page page;
@@ -104,6 +105,7 @@ space_menu space_menu_update(space_menu m, space_game game, space_station* stati
 				{
 					station->mission_id = mission.replacement;
 					m.state = STATE_QUESTION;
+					m.num_chars = 0;
 					return m;
 				}
 				m.has_accepted = accepted;
@@ -116,6 +118,7 @@ space_menu space_menu_update(space_menu m, space_game game, space_station* stati
 		{
 			station->mission_id = mission.replacement;
 			m.state = STATE_QUESTION;
+			m.num_chars = 0;
 			return m;
 		}
 	}
