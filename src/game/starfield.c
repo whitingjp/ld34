@@ -2,6 +2,8 @@
 
 #include <whitgl/sys.h>
 
+#include <resource.h>
+
 whitgl_faabb bounds = {{-30,-20},{30,20}};
 
 space_starfield space_starfield_zero()
@@ -36,10 +38,8 @@ void space_starfield_draw(space_starfield s, space_camera camera)
 	for(i=0; i<NUM_STARS; i++)
 	{
 		whitgl_fvec pos = space_camera_point(s.stars[i].pos, camera);
-		whitgl_iaabb box;
-		box.a = whitgl_fvec_to_ivec(pos);
-		box.b = whitgl_ivec_add(box.a, whitgl_ivec_val(1));
-		whitgl_sys_color col = {0x59, 0xc3, 0x49, 0xff*s.stars[i].alpha};
-		whitgl_sys_draw_iaabb(box, col);
+		whitgl_sprite pixel_sprite = {IMAGE_FONT, {0,96}, {1,1}};
+		whitgl_ivec frame = {s.stars[i].alpha*10, 0};
+		whitgl_sys_draw_sprite(pixel_sprite, frame, whitgl_fvec_to_ivec(pos));
 	}
 }
