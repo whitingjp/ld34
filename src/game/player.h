@@ -4,6 +4,8 @@
 #include <camera.h>
 #include <sprite.h>
 
+#include <mission.h>
+
 typedef struct
 {
 	space_entity e;
@@ -12,6 +14,7 @@ typedef struct
 	whitgl_float was_on[2];
 	whitgl_float engine_thrust[2];
 	whitgl_int docked;
+	mission_trade hold;
 } space_player;
 static const space_player space_player_zero =
 {
@@ -26,6 +29,7 @@ static const space_player space_player_zero =
 		},
 		{0,0},0,false,
 	}, {0,0}, 0, {false,false}, {0,0}, -1,
+	{GOOD_NONE, 5},
 };
 
 space_player space_player_update(space_player player, whitgl_bool can_thrust);

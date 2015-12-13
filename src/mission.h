@@ -23,6 +23,7 @@ typedef struct
 	char text[MAX_TEXT_LEN];
 	char left[MAX_TEXT_LEN];
 	char right[MAX_TEXT_LEN];
+	char launch[MAX_TEXT_LEN];
 } mission_page;
 
 typedef struct
@@ -31,26 +32,35 @@ typedef struct
 	mission_page have_page;
 	mission_trade need;
 	mission_trade have;
-	whitgl_int yes_replacement;
-	whitgl_int no_replacement;
+	whitgl_int replacement;
+	whitgl_bool always_yes;
 } mission_mission;
 
 typedef enum
 {
-	INTRO,
+	MISSION_INTRO,
+	MISSION_LAUNCH,
 	NUM_MISSIONS
 } mission_index;
 
 static const mission_mission kMissions[NUM_MISSIONS] =
 {
-	{ // INTRO
-		{"hey, i want to get started, but first can you nip to xyz and get me a snack", "ok", "no way"},
-		{"great, hand it over", "ok", "no way"},
+	{ // MISSION_INTRO
+		{"","","",""},
+		{"Hey, I want to get started, but first can you nip to xyz and get me a snack.", "Sure thing", "Ugh fine!", ""},
+		{GOOD_NONE, 0},
+		{GOOD_NONE, 0},
+		-1,
+		true,
+	},
+	{ // MISSION_LAUNCH
+		{"you need to get yourself to xyz and pick me up a snack\n\nto leave the station hold left and right", "", "", "launch"},
+		{"","","",""},
 		{GOOD_SNACK, 0},
 		{GOOD_NONE, 10},
 		-1,
-		-1,
-	},
+		true,
+	}
 };
 
 

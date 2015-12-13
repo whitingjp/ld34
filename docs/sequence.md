@@ -30,3 +30,4 @@ Station template:
   Thing you gain in trade for the initial thing
 
 Player has one inventory space
+
