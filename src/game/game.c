@@ -218,6 +218,8 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 			target = 0;
 		if(!g.player.e.active)
 			target = 0;
+		if(g.player.hold.good != GOOD_TRACTOR)
+			target = 0;
 		if(g.player.docked != -1)
 			target = 0;
 		whitgl_fvec diff = whitgl_fvec_sub(g.player.e.pos, g.asteroids[i].e.pos);
