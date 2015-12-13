@@ -28,6 +28,44 @@ space_game space_game_zero(whitgl_ivec screen_size)
 	g.debris = space_debris_zero();
 	return g;
 }
+
+
+void _space_game_collide_handler(space_game* g, space_entity* e, whitgl_fvec speed)
+{
+	whitgl_int i;
+
+	if(!e->active)
+		return;
+	whitgl_bool colliding = false;
+	for(i=0; i<NUM_STATIONS; i++)
+		colliding |= space_entity_colliding(*e, g->stations[i].e);
+	for(i=0; i<NUM_ASTEROIDS; i++)
+		colliding |= space_entity_colliding(*e, g->asteroids[i].e);
+	if(colliding)
+	{
+		g->debris = space_debris_create(g->debris, *e, speed);
+		e->active = false;
+		whitgl_sound_play(SOUND_EXPLODE, whitgl_randfloat()/2+0.75);
+	}
+	for(i=0; i<NUM_PIRATES; i++)
+	{
+		if(&g->pirates[i].e == e)
+			continue;
+		if(!g->pirates[i].e.active)
+			continue;
+		if(space_entity_colliding(*e, g->pirates[i].e))
+		{
+			g->debris = space_debris_create(g->debris, *e, speed);
+			e->active = false;
+			g->debris = space_debris_create(g->debris, g->pirates[i].e, g->player.speed);
+			g->pirates[i].e.active = false;
+			whitgl_sound_play(SOUND_EXPLODE, whitgl_randfloat()/2+0.75);
+			whitgl_sound_play(SOUND_EXPLODE, whitgl_randfloat()/2+0.75);
+		}
+	}
+}
+
+
 space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec camera_offset)
 {
 	whitgl_int i;
@@ -131,57 +169,10 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 		g.player.e.active = false;
 		whitgl_sound_play(SOUND_EXPLODE, 1);
 	}
-	whitgl_int j;
-	for(j=0; j<NUM_PIRATES; j++)
-	{
-		colliding = false;
-		for(i=0; i<NUM_STATIONS; i++)
-			colliding |= space_entity_colliding(g.pirates[j].e, g.stations[i].e);
-		for(i=0; i<NUM_ASTEROIDS; i++)
-			colliding |= space_entity_colliding(g.pirates[j].e, g.asteroids[i].e);
-		if(colliding && g.pirates[j].e.active)
-		{
-			g.debris = space_debris_create(g.debris, g.pirates[j].e, g.player.speed);
-			g.pirates[j].e.active = false;
-			whitgl_sound_play(SOUND_EXPLODE, 1.5);
-		}
-	}
-	for(j=0; j<NUM_PIRATES; j++)
-	{
-		if(!g.pirates[j].e.active)
-			continue;
-		for(i=0; i<NUM_PIRATES; i++)
-		{
-			if(i==j)
-				continue;
-			if(!g.pirates[i].e.active)
-				continue;
-			if(space_entity_colliding(g.pirates[j].e, g.pirates[i].e))
-			{
-				g.debris = space_debris_create(g.debris, g.pirates[j].e, g.player.speed);
-				g.pirates[j].e.active = false;
-				g.debris = space_debris_create(g.debris, g.pirates[i].e, g.player.speed);
-				g.pirates[i].e.active = false;
-				whitgl_sound_play(SOUND_EXPLODE, 1.5);
-			}
-		}
-	}
+
+	_space_game_collide_handler(&g, &g.player.e, g.player.speed);
 	for(i=0; i<NUM_PIRATES; i++)
-	{
-		if(!g.player.e.active)
-			continue;
-		if(!g.pirates[i].e.active)
-			continue;
-		if(space_entity_colliding(g.player.e, g.pirates[i].e))
-		{
-			g.debris = space_debris_create(g.debris, g.player.e, g.player.speed);
-			g.player.e.active = false;
-			g.debris = space_debris_create(g.debris, g.pirates[i].e, g.player.speed);
-			g.pirates[i].e.active = false;
-			whitgl_sound_play(SOUND_EXPLODE, 1);
-			whitgl_sound_play(SOUND_EXPLODE, 1.5);
-		}
-	}
+		_space_game_collide_handler(&g, &g.pirates[i].e, g.pirates[i].speed);
 	return g;
 }
 
