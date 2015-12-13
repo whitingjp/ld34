@@ -211,6 +211,28 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 		}
 	}
 
+	for(i=0; i<NUM_ASTEROIDS; i++)
+	{
+		whitgl_float target = 1;
+		if(!g.asteroids[i].e.active)
+			target = 0;
+		if(!g.player.e.active)
+			target = 0;
+		if(g.player.docked != -1)
+			target = 0;
+		whitgl_fvec diff = whitgl_fvec_sub(g.player.e.pos, g.asteroids[i].e.pos);
+		whitgl_float sqmagnitude = whitgl_fvec_sqmagnitude(diff);
+		if(sqmagnitude > 10*10)
+			target = 0;
+		g.asteroids[i].tractor = g.asteroids[i].tractor*0.8 + target*0.2;
+		if(sqmagnitude > 10*10)
+			continue;
+		whitgl_fvec dir = whitgl_fvec_normalize(diff);
+		whitgl_fvec thrust = whitgl_fvec_scale_val(dir, g.asteroids[i].tractor*0.001);
+		g.asteroids[i].speed = whitgl_fvec_add(g.asteroids[i].speed, thrust);
+		g.asteroids[i].speed = whitgl_fvec_interpolate(g.asteroids[i].speed, whitgl_fvec_zero, 0.01);
+	}
+
 	return g;
 }
 
@@ -227,5 +249,15 @@ void space_game_draw(space_game g)
 		space_asteroid_draw(g.asteroids[i], g.camera);
 	space_starfield_draw(g.starfield, g.camera);
 	space_hud_draw(g.player.e, g.hud, g.camera);
+	for(i=0; i<NUM_ASTEROIDS; i++)
+	{
+		if(g.asteroids[i].tractor <= 0)
+			continue;
 
+		whitgl_faabb line;
+		line.a = space_camera_point(g.player.e.pos, g.camera);
+		line.b = space_camera_point(g.asteroids[i].e.pos, g.camera);
+		whitgl_sys_color tractor_col = {0x27,0xd0,0xaa,0xff*g.asteroids[i].tractor};
+		whitgl_sys_draw_line(whitgl_faabb_to_iaabb(line), tractor_col);
+	}
 }

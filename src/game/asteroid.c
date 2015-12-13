@@ -31,6 +31,7 @@ space_asteroid space_asteroid_zero()
 	a.angle_speed = (whitgl_randfloat()-0.5)/12;
 	a.speed.x = (whitgl_randfloat()-0.5)/12.0;
 	a.speed.y = (whitgl_randfloat()-0.5)/12.0;
+	a.tractor = 0;
 	return a;
 }
 space_asteroid space_asteroid_update(space_asteroid a, whitgl_fvec player_pos)

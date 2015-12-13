@@ -9,6 +9,7 @@ typedef struct
 	space_entity e;
 	whitgl_fvec speed;
 	whitgl_float angle_speed;
+	whitgl_float tractor;
 } space_asteroid;
 
 space_asteroid space_asteroid_zero();
