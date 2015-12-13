@@ -10,14 +10,6 @@ typedef enum
 	NUM_GOODS,
 } mission_good;
 
-static const char* mission_good_names[NUM_GOODS] =
-{
-	"Empty",
-	"Calamari",
-	"Red Crabs",
-	"Tractor",
-};
-
 typedef struct
 {
 	mission_good good;

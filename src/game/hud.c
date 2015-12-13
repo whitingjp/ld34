@@ -6,6 +6,16 @@
 
 #include <menu/text.h>
 
+
+static const char* mission_good_names[NUM_GOODS] =
+{
+	"Empty",
+	"Calamari",
+	"Red Crabs",
+	"Tractor",
+};
+
+
 space_hud space_hud_update(space_hud h, mission_trade hold)
 {
 	h.bounce_timer = whitgl_fclamp(h.bounce_timer-0.05, 0, 1);
