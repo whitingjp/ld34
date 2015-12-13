@@ -16,7 +16,7 @@ space_game space_game_zero(whitgl_ivec screen_size)
 		g.pirates[i] = space_pirate_zero;
 		g.pirates[i].e.pos.x += i*4;
 	}
-	whitgl_fvec diso_pos = {30,10};
+	whitgl_fvec diso_pos = {0,0};
 	g.stations[0] = space_station_zero(5, diso_pos);
 	whitgl_fvec centurai_pos = {-10,-40};
 	g.stations[1] = space_station_zero(7, centurai_pos);
