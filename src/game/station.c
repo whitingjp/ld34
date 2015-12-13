@@ -2,24 +2,28 @@
 
 #include <whitgl/sys.h>
 
-space_station space_station_zero(const char* name, whitgl_int num_points, whitgl_float x, whitgl_float y, mission_index mission_id)
+space_station space_station_zero(const char* name, space_station_style style, whitgl_float x, whitgl_float y, mission_index mission_id)
 {
 	space_station s;
 	s.name = name;
 	space_sprite sprite;
 	whitgl_int i;
-	for(i=0; i<num_points; i++)
+	whitgl_int line_count = 0;
+	for(i=0; i<style.num_points; i++)
 	{
-		whitgl_fvec point = {0, -2};
-		sprite.points[i] = whitgl_rotate_point_around_point(point, whitgl_fvec_zero, (whitgl_pi*2)*((float)i/num_points));
+		whitgl_fvec point = {0, -2.5};
+		sprite.points[i] = whitgl_rotate_point_around_point(point, whitgl_fvec_zero, (whitgl_pi*2)*((float)i/style.num_points));
 	}
-	for(i=0; i<num_points-2; i++)
+	for(i=0; i<style.num_points; i++)
 	{
-		whitgl_ivec line = {i, i+1};
-		sprite.lines[i] = line;
+		if(!style.segment_used[i])
+			continue;
+		whitgl_ivec line = {i, (i+1)%style.num_points};
+		sprite.lines[line_count] = line;
+		line_count++;
 	}
-	sprite.num_points = num_points;
-	sprite.num_lines = num_points-2;
+	sprite.num_points = style.num_points;
+	sprite.num_lines = line_count;
 	whitgl_sys_color col = {0x9f,0xfd,0x3b,0xff};
 	sprite.col = col;
 	s.e = space_entity_zero;
