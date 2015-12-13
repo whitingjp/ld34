@@ -10,7 +10,7 @@ typedef struct
 	whitgl_float alpha;
 } space_star;
 
-#define NUM_STARS (512)
+#define NUM_STARS (2048)
 typedef struct
 {
 	space_star stars[NUM_STARS];
