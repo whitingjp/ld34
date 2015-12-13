@@ -23,7 +23,7 @@ typedef struct
 	space_asteroid asteroids[NUM_ASTEROIDS];
 	space_camera camera;
 	space_debris debris;
-	space_hud_markers hud;
+	space_hud hud;
 } space_game;
 
 space_game space_game_zero(whitgl_ivec screen_size);

@@ -26,6 +26,7 @@ space_game space_game_zero(whitgl_ivec screen_size)
 		g.asteroids[i] = space_asteroid_zero();
 	g.starfield = space_starfield_zero();
 	g.debris = space_debris_zero();
+	g.hud = space_hud_zero;
 	return g;
 }
 
@@ -105,6 +106,7 @@ void _space_game_collide_handler(space_game* g, space_entity* e, whitgl_fvec spe
 space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec camera_offset, whitgl_bool in_menu)
 {
 	whitgl_int i;
+	g.hud = space_hud_update(g.hud, g.player.hold);
 	g.player = space_player_update(g.player, !in_menu);
 	for(i=0; i<NUM_PIRATES; i++)
 		g.pirates[i] = space_pirate_update(g.pirates[i], g.player.e.pos);
@@ -128,14 +130,14 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 		g.player.e.angle = whitgl_angle_lerp(g.player.e.angle, g.stations[g.player.docked].e.angle, 0.1);
 	}
 
-	g.hud = space_hud_markers_zero;
+	g.hud.mark = space_hud_markers_zero;
 	for(i=0; i<NUM_STATIONS; i++)
 	{
 		if(whitgl_fvec_magnitude(whitgl_fvec_sub(g.player.e.pos, g.stations[i].e.pos)) > 15)
 		{
-			g.hud.markers[g.hud.num].e = g.stations[i].e;
-			g.hud.markers[g.hud.num].name = g.stations[i].name;
-			g.hud.num++;
+			g.hud.mark.markers[g.hud.mark.num].e = g.stations[i].e;
+			g.hud.mark.markers[g.hud.mark.num].name = g.stations[i].name;
+			g.hud.mark.num++;
 		}
 	}
 
@@ -206,6 +208,6 @@ void space_game_draw(space_game g)
 	for(i=0; i<NUM_ASTEROIDS; i++)
 		space_asteroid_draw(g.asteroids[i], g.camera);
 	space_starfield_draw(g.starfield, g.camera);
-	space_hud_draw(g.player.e, g.hud, g.player.hold, g.camera);
+	space_hud_draw(g.player.e, g.hud, g.camera);
 
 }
