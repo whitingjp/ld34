@@ -158,18 +158,6 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 	}
 	g.camera = space_camera_update(g.camera, focus, screen_size, camera_offset);
 
-	whitgl_bool colliding = false;
-	for(i=0; i<NUM_STATIONS; i++)
-		colliding |= space_entity_colliding(g.player.e, g.stations[i].e);
-	for(i=0; i<NUM_ASTEROIDS; i++)
-		colliding |= space_entity_colliding(g.player.e, g.asteroids[i].e);
-	if(colliding && g.player.e.active)
-	{
-		g.debris = space_debris_create(g.debris, g.player.e, g.player.speed);
-		g.player.e.active = false;
-		whitgl_sound_play(SOUND_EXPLODE, 1);
-	}
-
 	_space_game_collide_handler(&g, &g.player.e, g.player.speed);
 	for(i=0; i<NUM_PIRATES; i++)
 		_space_game_collide_handler(&g, &g.pirates[i].e, g.pirates[i].speed);
