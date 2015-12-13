@@ -131,17 +131,20 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 	focus.num_foci = 0;
 	_space_game_consider_focus(&g, &focus, &g.player.e, 10000000, 3, 25);
 	_space_game_consider_focus(&g, &focus, &g.player.e, 10000000, 3, 25);
-	for(i=0; i<NUM_PIRATES; i++)
-		_space_game_consider_focus(&g, &focus, &g.pirates[i].e, 20, 3, 55);
-	for(i=0; i<NUM_STATIONS; i++)
-		_space_game_consider_focus(&g, &focus, &g.stations[i].e, 20, 2, 55);
-	for(i=0; i<NUM_ASTEROIDS; i++)
-		_space_game_consider_focus(&g, &focus, &g.asteroids[i].e, 12, 1, 55);
-	for(i=0; i<MAX_PIECES; i++)
+	if(!in_menu)
 	{
-		if(g.debris.pieces[i].timer < 0.9)
-			continue;
-		_space_game_consider_focus(&g, &focus, &g.debris.pieces[i].e, 8, 1, 0);
+		for(i=0; i<NUM_PIRATES; i++)
+			_space_game_consider_focus(&g, &focus, &g.pirates[i].e, 20, 3, 55);
+		for(i=0; i<NUM_STATIONS; i++)
+			_space_game_consider_focus(&g, &focus, &g.stations[i].e, 20, 2, 55);
+		for(i=0; i<NUM_ASTEROIDS; i++)
+			_space_game_consider_focus(&g, &focus, &g.asteroids[i].e, 12, 1, 55);
+		for(i=0; i<MAX_PIECES; i++)
+		{
+			if(g.debris.pieces[i].timer < 0.9)
+				continue;
+			_space_game_consider_focus(&g, &focus, &g.debris.pieces[i].e, 8, 1, 0);
+		}
 	}
 	g.camera = space_camera_update(g.camera, focus, screen_size, camera_offset);
 
