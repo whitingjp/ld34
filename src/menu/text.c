@@ -8,10 +8,17 @@
 
 whitgl_sprite big_font = {IMAGE_FONT, {36,0}, {12,12}};
 whitgl_sprite little_font = {IMAGE_FONT, {0,0}, {6,6}};
+whitgl_sprite little_bright_font = {IMAGE_FONT, {0,42}, {6,6}};
 
 void text_draw(const char* string, whitgl_ivec pos, whitgl_int max_width, text_font font, whitgl_bool centered, whitgl_int visible_chars)
 {
-	whitgl_sprite sprite = font == FONT_BIG ? big_font : little_font;
+	whitgl_sprite sprite;
+	if(font == FONT_BIG)
+		sprite = big_font;
+	else if(font == FONT_SMALL)
+		sprite = little_font;
+	else
+		sprite = little_bright_font;
 	whitgl_int len = strlen(string);
 	if(centered)
 		pos.x -= (sprite.size.x*len)/2;

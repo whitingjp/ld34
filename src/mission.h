@@ -9,7 +9,18 @@ typedef enum
 	GOOD_TRACTOR,
 	GOOD_SEED,
 	GOOD_PLANT,
+	NUM_GOODS,
 } mission_good;
+
+static const char* mission_good_names[NUM_GOODS] =
+{
+	"Empty",
+	"Snack",
+	"Trade2",
+	"Tractor",
+	"Seed",
+	"Plant",
+};
 
 typedef struct
 {

@@ -206,6 +206,6 @@ void space_game_draw(space_game g)
 	for(i=0; i<NUM_ASTEROIDS; i++)
 		space_asteroid_draw(g.asteroids[i], g.camera);
 	space_starfield_draw(g.starfield, g.camera);
-	space_hud_draw(g.player.e, g.hud, g.camera);
+	space_hud_draw(g.player.e, g.hud, g.player.hold, g.camera);
 
 }

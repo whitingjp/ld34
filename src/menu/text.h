@@ -6,6 +6,7 @@
 typedef enum
 {
 	FONT_SMALL,
+	FONT_SMALL_BRIGHT,
 	FONT_BIG,
 } text_font;
 

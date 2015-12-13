@@ -1,10 +1,12 @@
 #include "hud.h"
 
+#include <stdio.h>
+
 #include <whitgl/logging.h>
 
 #include <menu/text.h>
 
-void space_hud_draw(space_entity src, space_hud_markers m, space_camera camera)
+void space_hud_draw(space_entity src, space_hud_markers m, mission_trade hold, space_camera camera)
 {
 
 	space_sprite hud_sprite = {
@@ -34,6 +36,18 @@ void space_hud_draw(space_entity src, space_hud_markers m, space_camera camera)
 		text_pos = space_camera_point(text_pos, camera);
 
 		text_draw(m.markers[i].name, whitgl_fvec_to_ivec(text_pos), 10000, FONT_SMALL, true, 10000);
-
 	}
+
+	(void)hold;
+	whitgl_ivec text_pos = {camera.screen_size.x-64+30, 2};
+	text_draw("hold", text_pos, 10000, FONT_SMALL, true, 10000);
+	const char* good_name = mission_good_names[hold.good];
+	text_pos.y += 8;
+	text_draw(good_name, text_pos, 10000, FONT_SMALL_BRIGHT, true, 10000);
+	text_pos.y += 12;
+	text_draw("credits", text_pos, 10000, FONT_SMALL, true, 10000);
+	text_pos.y += 8;
+	char buffer[128];
+	snprintf(buffer, 128, "$%d", (int)hold.creds);
+	text_draw(buffer, text_pos, 10000, FONT_SMALL_BRIGHT, true, 10000);
 }
