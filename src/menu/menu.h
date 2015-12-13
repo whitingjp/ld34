@@ -3,6 +3,7 @@
 
 #include <whitgl/math.h>
 #include <game/game.h>
+#include <mission.h>
 
 typedef struct
 {

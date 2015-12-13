@@ -12,7 +12,7 @@
 
 #define NUM_STATIONS (3)
 #define NUM_ASTEROIDS (32)
-#define NUM_PIRATES (4)
+#define NUM_PIRATES (0)
 
 typedef struct
 {
