@@ -98,6 +98,7 @@ int main(int argc, char* argv[])
 			{
 				game.player = space_player_zero;
 				game = space_game_load(game, save);
+				menu = space_menu_zero;
 				game.stations[0].mission_id = MISSION_RESTORED;
 			}
 		}

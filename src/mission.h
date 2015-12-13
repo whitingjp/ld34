@@ -93,8 +93,8 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		false,
 	},
 	{ // MISSION_FUNDS
-		{"That's not enough!","","","launch"},
-		{"Okay, so", "", "", "launch"},
+		{"You'll need more than that to hire yourself a tractor beam!\n\n$50 or so should be enough\n\nTry selling Calamari at Yutis, or if you're feeling adventurous run some space weed from Alclov to Seue\n\nCome back when you have enough","","","launch"},
+		{"Okay, so, the best heavy machinery place I knows is down in the old country.\n\nTry Tagawa\n\nThey know one end of a tractor from the other down there\n\nyeah, I know they're robots, but robots aint bad people", "", "", "launch"},
 		{"","","","launch"},
 		{"","","","launch"},
 		{GOOD_NONE, 50},
