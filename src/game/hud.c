@@ -15,11 +15,11 @@ void space_hud_draw(space_entity src, space_hud_markers m, space_camera camera)
 	whitgl_int i;
 	for(i=0; i<m.num; i++)
 	{
-		whitgl_fvec diff = whitgl_fvec_sub(m.marker[i].pos, src.pos);
+		whitgl_fvec diff = whitgl_fvec_sub(m.markers[i].pos, src.pos);
 		whitgl_float ang = whitgl_fvec_to_angle(diff)+whitgl_pi/2;
 		whitgl_fvec dir = whitgl_fvec_normalize(diff);
 		space_sprite_draw(hud_sprite, src.pos, ang, camera);
-		space_entity mini = m.marker[i];
+		space_entity mini = m.markers[i];
 		mini.pos = whitgl_fvec_add(src.pos, whitgl_fvec_scale_val(dir, 1.5));
 		whitgl_int j;
 		for(j=0; j<mini.sprite.num_points; j++)

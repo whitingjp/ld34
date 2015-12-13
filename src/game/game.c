@@ -109,8 +109,13 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 		g.player.e.angle = whitgl_angle_lerp(g.player.e.angle, g.stations[g.player.docked].e.angle, 0.1);
 	}
 
-	space_camera_focus focus;
 	g.hud = space_hud_markers_zero;
+	for(i=0; i<NUM_STATIONS; i++)
+		if(whitgl_fvec_magnitude(whitgl_fvec_sub(g.player.e.pos, g.stations[i].e.pos)) > 15)
+			g.hud.markers[g.hud.num++] = g.stations[i].e;
+
+	space_camera_focus focus;
+
 	focus.num_foci = 0;
 	_space_game_consider_focus(&g, &focus, &g.player.e, 10000000, 3, 25);
 	_space_game_consider_focus(&g, &focus, &g.player.e, 10000000, 3, 25);

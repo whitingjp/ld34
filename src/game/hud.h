@@ -7,7 +7,7 @@
 #define MAX_MARKERS (8)
 typedef struct
 {
-	space_entity marker[MAX_MARKERS];
+	space_entity markers[MAX_MARKERS];
 	whitgl_int num;
 } space_hud_markers;
 static const space_hud_markers space_hud_markers_zero = {{}, 0};
