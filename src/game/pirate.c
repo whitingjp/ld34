@@ -6,10 +6,8 @@
 
 space_pirate space_pirate_update(space_pirate p, whitgl_fvec target)
 {
-	if(!p.active)
-	{
+	if(!p.e.active)
 		return p;
-	}
 	whitgl_fvec diff = whitgl_fvec_sub(target, p.e.pos);
 	whitgl_float target_angle = whitgl_fvec_to_angle(diff)+whitgl_pi/2;
 	whitgl_float ang_diff = whitgl_fwrap(target_angle-p.e.angle, -whitgl_pi, whitgl_pi);
@@ -59,7 +57,7 @@ space_pirate space_pirate_update(space_pirate p, whitgl_fvec target)
 }
 void space_pirate_draw(space_pirate p, space_camera camera)
 {
-	if(!p.active)
+	if(!p.e.active)
 		return;
 
 	const space_sprite ship_lengine =

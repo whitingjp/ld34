@@ -6,7 +6,7 @@
 
 space_player space_player_update(space_player p)
 {
-	if(!p.active)
+	if(!p.e.active)
 	{
 		whitgl_loop_volume(SOUND_POWER_L, 0);
 		whitgl_loop_volume(SOUND_POWER_R, 0);
@@ -55,7 +55,7 @@ space_player space_player_update(space_player p)
 }
 void space_player_draw(space_player p, space_camera camera)
 {
-	if(!p.active)
+	if(!p.e.active)
 		return;
 
 	const space_sprite ship_lengine =

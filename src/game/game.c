@@ -58,7 +58,7 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 	g.hud = space_hud_markers_zero;
 	focus.num_foci = 0;
 	whitgl_fvec focus_pos = whitgl_fvec_add(g.player.e.pos, whitgl_fvec_scale_val(g.player.speed, 25));
-	if(g.player.active)
+	if(g.player.e.active)
 	{
 		focus.foci[focus.num_foci].a = whitgl_fvec_sub(focus_pos, whitgl_fvec_val(3));
 		focus.foci[focus.num_foci].b = whitgl_fvec_add(focus_pos, whitgl_fvec_val(3));
@@ -73,7 +73,7 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(focus_pos, g.pirates[i].e.pos));
 		whitgl_float mult = g.pirates[i].e.seen ? 1.25 : 1;
 		g.pirates[i].e.seen = false;
-		if(diff < 20*mult && g.player.active)
+		if(diff < 20*mult && g.player.e.active)
 		{
 			g.pirates[i].e.seen = true;
 			focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.pirates[i].e.pos, whitgl_fvec_val(3));
@@ -86,7 +86,7 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(focus_pos, g.stations[i].e.pos));
 		whitgl_float mult = g.stations[i].e.seen ? 1.25 : 1;
 		g.stations[i].e.seen = false;
-		if(diff < 20*mult && g.player.active)
+		if(diff < 20*mult && g.player.e.active)
 		{
 			g.stations[i].e.seen = true;
 			focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.stations[i].e.pos, whitgl_fvec_val(2));
@@ -102,7 +102,7 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(focus_pos, g.asteroids[i].e.pos));
 		whitgl_float mult = g.asteroids[i].e.seen ? 1.25 : 1;
 		g.asteroids[i].e.seen = false;
-		if(diff < 12*mult && g.player.active)
+		if(diff < 12*mult && g.player.e.active)
 		{
 			g.asteroids[i].e.seen = true;
 			focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.asteroids[i].e.pos, whitgl_fvec_val(1));
@@ -112,7 +112,7 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 	}
 	for(i=0; i<MAX_PIECES; i++)
 	{
-		if(g.player.active || !g.debris.pieces[i].active)
+		if(g.player.e.active || !g.debris.pieces[i].e.active)
 			continue;
 		focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.debris.pieces[i].e.pos, whitgl_fvec_val(1));
 		focus.foci[focus.num_foci].b = whitgl_fvec_add(g.debris.pieces[i].e.pos, whitgl_fvec_val(1));
@@ -125,10 +125,10 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 		colliding |= space_entity_colliding(g.player.e, g.stations[i].e);
 	for(i=0; i<NUM_ASTEROIDS; i++)
 		colliding |= space_entity_colliding(g.player.e, g.asteroids[i].e);
-	if(colliding && g.player.active)
+	if(colliding && g.player.e.active)
 	{
 		g.debris = space_debris_create(g.debris, g.player.e, g.player.speed);
-		g.player.active = false;
+		g.player.e.active = false;
 		whitgl_sound_play(SOUND_EXPLODE, 1);
 	}
 	whitgl_int j;
@@ -139,51 +139,52 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 			colliding |= space_entity_colliding(g.pirates[j].e, g.stations[i].e);
 		for(i=0; i<NUM_ASTEROIDS; i++)
 			colliding |= space_entity_colliding(g.pirates[j].e, g.asteroids[i].e);
-		if(colliding && g.pirates[j].active)
+		if(colliding && g.pirates[j].e.active)
 		{
 			g.debris = space_debris_create(g.debris, g.pirates[j].e, g.player.speed);
-			g.pirates[j].active = false;
+			g.pirates[j].e.active = false;
 			whitgl_sound_play(SOUND_EXPLODE, 1.5);
 		}
 	}
 	for(j=0; j<NUM_PIRATES; j++)
 	{
-		if(!g.pirates[j].active)
+		if(!g.pirates[j].e.active)
 			continue;
 		for(i=0; i<NUM_PIRATES; i++)
 		{
 			if(i==j)
 				continue;
-			if(!g.pirates[i].active)
+			if(!g.pirates[i].e.active)
 				continue;
 			if(space_entity_colliding(g.pirates[j].e, g.pirates[i].e))
 			{
 				g.debris = space_debris_create(g.debris, g.pirates[j].e, g.player.speed);
-				g.pirates[j].active = false;
+				g.pirates[j].e.active = false;
 				g.debris = space_debris_create(g.debris, g.pirates[i].e, g.player.speed);
-				g.pirates[i].active = false;
+				g.pirates[i].e.active = false;
 				whitgl_sound_play(SOUND_EXPLODE, 1.5);
 			}
 		}
 	}
 	for(i=0; i<NUM_PIRATES; i++)
 	{
-		if(!g.player.active)
+		if(!g.player.e.active)
 			continue;
-		if(!g.pirates[i].active)
+		if(!g.pirates[i].e.active)
 			continue;
 		if(space_entity_colliding(g.player.e, g.pirates[i].e))
 		{
 			g.debris = space_debris_create(g.debris, g.player.e, g.player.speed);
-			g.player.active = false;
+			g.player.e.active = false;
 			g.debris = space_debris_create(g.debris, g.pirates[i].e, g.player.speed);
-			g.pirates[i].active = false;
+			g.pirates[i].e.active = false;
 			whitgl_sound_play(SOUND_EXPLODE, 1);
 			whitgl_sound_play(SOUND_EXPLODE, 1.5);
 		}
 	}
 	return g;
 }
+
 void space_game_draw(space_game g)
 {
 	whitgl_int i;

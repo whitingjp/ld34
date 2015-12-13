@@ -23,6 +23,7 @@ space_asteroid space_asteroid_zero()
 	whitgl_sys_color col = {0x9f,0xfd,0x3b,0xff};
 	sprite.col = col;
 	a.e = space_entity_zero;
+	a.e.active = true;
 	a.e.sprite = sprite;
 	a.e.pos.x = (whitgl_randfloat()-0.5)*200;
 	a.e.pos.y = (whitgl_randfloat()-0.5)*200;
@@ -34,6 +35,8 @@ space_asteroid space_asteroid_zero()
 }
 space_asteroid space_asteroid_update(space_asteroid a, whitgl_fvec player_pos)
 {
+	if(!a.e.active)
+		return a;
 	a.e.angle = whitgl_fwrap(a.e.angle + a.angle_speed, 0, whitgl_pi*2);
 	a.e.pos = whitgl_fvec_add(a.e.pos, a.speed);
 	whitgl_int bound = 100;
@@ -43,5 +46,7 @@ space_asteroid space_asteroid_update(space_asteroid a, whitgl_fvec player_pos)
 }
 void space_asteroid_draw(space_asteroid a, space_camera camera)
 {
+	if(!a.e.active)
+		return;
 	space_entity_draw(a.e, camera);
 }

@@ -6,7 +6,6 @@
 
 typedef struct
 {
-	bool active;
 	space_entity e;
 	whitgl_fvec speed;
 	whitgl_float angle_speed;
@@ -16,8 +15,8 @@ typedef struct
 } space_player;
 static const space_player space_player_zero =
 {
-	true,
 	{
+		true,
 		{
 			{{0.0,-0.5},{0.5,0.5},{-0.5,0.5},{0.0,0.3}},
 			{{0,1},{1,2},{0,2},{1,3},{2,3},{0,3}},

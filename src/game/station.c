@@ -22,6 +22,7 @@ space_station space_station_zero(whitgl_int num_points, whitgl_fvec pos)
 	whitgl_sys_color col = {0x9f,0xfd,0x3b,0xff};
 	sprite.col = col;
 	s.e = space_entity_zero;
+	s.e.active = true;
 	s.e.sprite = sprite;
 	s.e.pos = pos;
 	s.e.angle = whitgl_randfloat()*whitgl_pi*2;
@@ -30,11 +31,15 @@ space_station space_station_zero(whitgl_int num_points, whitgl_fvec pos)
 
 space_station space_station_update(space_station s)
 {
+	if(!s.e.active)
+		return s;
 	s.e.angle = whitgl_fwrap(s.e.angle += 0.01, 0, whitgl_pi*2);
 	return s;
 }
 void space_station_draw(space_station s, space_camera camera)
 {
+	if(!s.e.active)
+		return;
 	space_entity_draw(s.e, camera);
 	whitgl_fcircle circle;
 	circle.pos = space_camera_point(s.e.pos, camera);
