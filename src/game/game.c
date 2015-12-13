@@ -29,6 +29,24 @@ space_game space_game_zero(whitgl_ivec screen_size)
 	return g;
 }
 
+void _space_game_consider_focus(space_game* g, space_camera_focus* focus, space_entity* e, whitgl_float range, whitgl_float size, whitgl_float focus_dist)
+{
+	if(!e->active)
+		return;
+	whitgl_fvec focus_pos = whitgl_fvec_add(g->player.e.pos, whitgl_fvec_scale_val(g->player.speed, focus_dist));
+	whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(focus_pos, e->pos));
+	whitgl_float mult = e->seen ? 1.25 : 1;
+	e->seen = false;
+	if(diff < range*mult)
+	{
+		if(focus->num_foci >= MAX_FOCI)
+			WHITGL_PANIC("Run out of foci");
+		e->seen = true;
+		focus->foci[focus->num_foci].a = whitgl_fvec_sub(e->pos, whitgl_fvec_val(size));
+		focus->foci[focus->num_foci].b = whitgl_fvec_add(e->pos, whitgl_fvec_val(size));
+		focus->num_foci++;
+	}
+}
 
 void _space_game_collide_handler(space_game* g, space_entity* e, whitgl_fvec speed)
 {
@@ -65,7 +83,6 @@ void _space_game_collide_handler(space_game* g, space_entity* e, whitgl_fvec spe
 	}
 }
 
-
 space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec camera_offset)
 {
 	whitgl_int i;
@@ -95,67 +112,16 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 	space_camera_focus focus;
 	g.hud = space_hud_markers_zero;
 	focus.num_foci = 0;
-	whitgl_fvec focus_pos = whitgl_fvec_add(g.player.e.pos, whitgl_fvec_scale_val(g.player.speed, 25));
-	if(g.player.e.active)
-	{
-		focus.foci[focus.num_foci].a = whitgl_fvec_sub(focus_pos, whitgl_fvec_val(3));
-		focus.foci[focus.num_foci].b = whitgl_fvec_add(focus_pos, whitgl_fvec_val(3));
-		focus.num_foci++;
-		focus.foci[focus.num_foci].a = whitgl_fvec_sub(focus_pos, whitgl_fvec_val(3));
-		focus.foci[focus.num_foci].b = whitgl_fvec_add(focus_pos, whitgl_fvec_val(3));
-		focus.num_foci++;
-	}
-	focus_pos = whitgl_fvec_add(focus_pos, whitgl_fvec_scale_val(g.player.speed, 30));
+	_space_game_consider_focus(&g, &focus, &g.player.e, 10000000, 3, 25);
+	_space_game_consider_focus(&g, &focus, &g.player.e, 10000000, 3, 25);
 	for(i=0; i<NUM_PIRATES; i++)
-	{
-		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(focus_pos, g.pirates[i].e.pos));
-		whitgl_float mult = g.pirates[i].e.seen ? 1.25 : 1;
-		g.pirates[i].e.seen = false;
-		if(diff < 20*mult && g.player.e.active)
-		{
-			g.pirates[i].e.seen = true;
-			focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.pirates[i].e.pos, whitgl_fvec_val(3));
-			focus.foci[focus.num_foci].b = whitgl_fvec_add(g.pirates[i].e.pos, whitgl_fvec_val(3));
-			focus.num_foci++;
-		}
-	}
+		_space_game_consider_focus(&g, &focus, &g.pirates[i].e, 20, 3, 55);
 	for(i=0; i<NUM_STATIONS; i++)
-	{
-		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(focus_pos, g.stations[i].e.pos));
-		whitgl_float mult = g.stations[i].e.seen ? 1.25 : 1;
-		g.stations[i].e.seen = false;
-		if(diff < 20*mult && g.player.e.active)
-		{
-			g.stations[i].e.seen = true;
-			focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.stations[i].e.pos, whitgl_fvec_val(2));
-			focus.foci[focus.num_foci].b = whitgl_fvec_add(g.stations[i].e.pos, whitgl_fvec_val(2));
-			focus.num_foci++;
-		} else
-		{
-			g.hud.marker[g.hud.num++] = g.stations[i].e;
-		}
-	}
+		_space_game_consider_focus(&g, &focus, &g.stations[i].e, 20, 2, 55);
 	for(i=0; i<NUM_ASTEROIDS; i++)
-	{
-		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(focus_pos, g.asteroids[i].e.pos));
-		whitgl_float mult = g.asteroids[i].e.seen ? 1.25 : 1;
-		g.asteroids[i].e.seen = false;
-		if(diff < 12*mult && g.player.e.active)
-		{
-			g.asteroids[i].e.seen = true;
-			focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.asteroids[i].e.pos, whitgl_fvec_val(1));
-			focus.foci[focus.num_foci].b = whitgl_fvec_add(g.asteroids[i].e.pos, whitgl_fvec_val(1));
-			focus.num_foci++;
-		}
-	}
+		_space_game_consider_focus(&g, &focus, &g.asteroids[i].e, 12, 1, 55);
 	for(i=0; i<MAX_PIECES; i++)
-	{
-		if(g.player.e.active || !g.debris.pieces[i].e.active)
-			continue;
-		focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.debris.pieces[i].e.pos, whitgl_fvec_val(1));
-		focus.foci[focus.num_foci].b = whitgl_fvec_add(g.debris.pieces[i].e.pos, whitgl_fvec_val(1));
-		focus.num_foci++;
-	}
+		_space_game_consider_focus(&g, &focus, &g.debris.pieces[i].e, 8, 1, 0);
 	g.camera = space_camera_update(g.camera, focus, screen_size, camera_offset);
 
 	_space_game_collide_handler(&g, &g.player.e, g.player.speed);
