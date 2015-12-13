@@ -12,11 +12,12 @@
 
 #define NUM_STATIONS (3)
 #define NUM_ASTEROIDS (32)
+#define NUM_PIRATES (4)
 
 typedef struct
 {
 	space_player player;
-	space_pirate pirate;
+	space_pirate pirates[NUM_PIRATES];
 	space_station stations[NUM_STATIONS];
 	space_starfield starfield;
 	space_asteroid asteroids[NUM_ASTEROIDS];

@@ -6,18 +6,22 @@
 
 space_game space_game_zero(whitgl_ivec screen_size)
 {
+	whitgl_int i;
 	space_game g;
 	space_camera camera = {{0.0,0.0}, 8, whitgl_ivec_to_fvec(screen_size), {0,0}};
 	g.camera = camera;
 	g.player = space_player_zero;
-	g.pirate = space_pirate_zero;
+	for(i=0; i<NUM_PIRATES; i++)
+	{
+		g.pirates[i] = space_pirate_zero;
+		g.pirates[i].e.pos.x += i*4;
+	}
 	whitgl_fvec diso_pos = {30,10};
 	g.stations[0] = space_station_zero(5, diso_pos);
 	whitgl_fvec centurai_pos = {-10,-40};
 	g.stations[1] = space_station_zero(7, centurai_pos);
 	whitgl_fvec alpha_pos = {-50,75};
 	g.stations[2] = space_station_zero(11, alpha_pos);
-	whitgl_int i;
 	for(i=0; i<NUM_ASTEROIDS; i++)
 		g.asteroids[i] = space_asteroid_zero();
 	g.starfield = space_starfield_zero();
@@ -28,7 +32,8 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 {
 	whitgl_int i;
 	g.player = space_player_update(g.player);
-	g.pirate = space_pirate_update(g.pirate, g.player.e.pos);
+	for(i=0; i<NUM_PIRATES; i++)
+		g.pirates[i] = space_pirate_update(g.pirates[i], g.player.e.pos);
 	for(i=0; i<NUM_STATIONS; i++)
 		g.stations[i] = space_station_update(g.stations[i]);
 	for(i=0; i<NUM_ASTEROIDS; i++)
@@ -63,15 +68,16 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 		focus.num_foci++;
 	}
 	focus_pos = whitgl_fvec_add(focus_pos, whitgl_fvec_scale_val(g.player.speed, 30));
+	for(i=0; i<NUM_PIRATES; i++)
 	{
-		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(focus_pos, g.pirate.e.pos));
-		whitgl_float mult = g.pirate.e.seen ? 1.25 : 1;
-		g.pirate.e.seen = false;
+		whitgl_float diff = whitgl_fvec_magnitude(whitgl_fvec_sub(focus_pos, g.pirates[i].e.pos));
+		whitgl_float mult = g.pirates[i].e.seen ? 1.25 : 1;
+		g.pirates[i].e.seen = false;
 		if(diff < 20*mult && g.player.active)
 		{
-			g.pirate.e.seen = true;
-			focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.pirate.e.pos, whitgl_fvec_val(3));
-			focus.foci[focus.num_foci].b = whitgl_fvec_add(g.pirate.e.pos, whitgl_fvec_val(3));
+			g.pirates[i].e.seen = true;
+			focus.foci[focus.num_foci].a = whitgl_fvec_sub(g.pirates[i].e.pos, whitgl_fvec_val(3));
+			focus.foci[focus.num_foci].b = whitgl_fvec_add(g.pirates[i].e.pos, whitgl_fvec_val(3));
 			focus.num_foci++;
 		}
 	}
@@ -125,16 +131,20 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 		g.player.active = false;
 		whitgl_sound_play(SOUND_EXPLODE, 1);
 	}
-	colliding = false;
-	for(i=0; i<NUM_STATIONS; i++)
-		colliding |= space_entity_colliding(g.pirate.e, g.stations[i].e);
-	for(i=0; i<NUM_ASTEROIDS; i++)
-		colliding |= space_entity_colliding(g.pirate.e, g.asteroids[i].e);
-	if(colliding && g.pirate.active)
+	whitgl_int j;
+	for(j=0; j<NUM_PIRATES; j++)
 	{
-		g.debris = space_debris_create(g.debris, g.pirate.e, g.player.speed);
-		g.pirate.active = false;
-		whitgl_sound_play(SOUND_EXPLODE, 1);
+		colliding = false;
+		for(i=0; i<NUM_STATIONS; i++)
+			colliding |= space_entity_colliding(g.pirates[j].e, g.stations[i].e);
+		for(i=0; i<NUM_ASTEROIDS; i++)
+			colliding |= space_entity_colliding(g.pirates[j].e, g.asteroids[i].e);
+		if(colliding && g.pirates[j].active)
+		{
+			g.debris = space_debris_create(g.debris, g.pirates[j].e, g.player.speed);
+			g.pirates[j].active = false;
+			whitgl_sound_play(SOUND_EXPLODE, 1);
+		}
 	}
 	return g;
 }
@@ -143,7 +153,8 @@ void space_game_draw(space_game g)
 	whitgl_int i;
 	space_debris_draw(g.debris, g.camera);
 	space_player_draw(g.player, g.camera);
-	space_pirate_draw(g.pirate, g.camera);
+	for(i=0; i<NUM_PIRATES; i++)
+		space_pirate_draw(g.pirates[i], g.camera);
 	for(i=0; i<NUM_STATIONS; i++)
 		space_station_draw(g.stations[i], g.camera);
 	for(i=0; i<NUM_ASTEROIDS; i++)
