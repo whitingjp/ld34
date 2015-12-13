@@ -55,7 +55,9 @@ typedef enum
 	MISSION_LAUNCH,
 	MISSION_SNACK,
 	MISSION_FUNDS,
-	NUM_MISSIONS
+	MISSION_RESTORED,
+	NUM_MISSIONS,
+	MISSION_RESUME
 } mission_index;
 
 static const mission_mission kMissions[NUM_MISSIONS] =
@@ -82,7 +84,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 	},
 	{ // MISSION_SNACK
 		{"Darling, I'd really love to help, but you know how it is. I've got bills to pay, and Tracy isn't getting any better.\n\nSo it's 4 creds for calamari or nothing for nothing I'm afraid.\n\nI hope you can get that together somehow","","","launch"},
-		{"Helloooo! It's been too long xxx\n\nCalamari eh? Your gran sure does love that stuff\n\nThat'll be $4 for you darling.\n\n", "thanks kate", "oh! brb", "launch"},
+		{"Helloooo! It's been too long xxx\n\nCalamari eh? Your gran sure does love that stuff\n\nThat'll be $4 for you darling.\n\n", "thanks kate", "oh! brb", "just leave"},
 		{"Come back soon girl, we need a proper catch up sometime soon xxx\n\n","","","launch"},
 		{"Ok, laterz","","","launch"},
 		{GOOD_NONE, 4},
@@ -98,6 +100,16 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{GOOD_NONE, 50},
 		{GOOD_NONE, 40},
 		NUM_MISSIONS,
+		false,
+	},
+	{ // MISSION_RESTORED
+		{"","","","launch"},
+		{"Oh jeez. Why'd you have to go and smear your dead body all over the system? Well why'd'ya?\n\nI know I know, you don't remember nothing. It wasn't -you- that did it\n\nGood thing we have a clone-o-mat! Take care o'yourself this time whydontcha?", "", "", "launch"},
+		{"","","","launch"},
+		{"","","","launch"},
+		{GOOD_NONE, 0},
+		{GOOD_NONE, 0},
+		MISSION_RESUME,
 		false,
 	},
 	// { // MISSION_

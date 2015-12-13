@@ -61,6 +61,8 @@ int main(int argc, char* argv[])
 
 	space_game game = space_game_zero(setup.size);
 	space_menu menu = space_menu_zero;
+	space_save save;
+	save = space_game_save(save, game);
 
 	capture_info capture = capture_info_zero;
 	bool running = true;
@@ -82,8 +84,22 @@ int main(int argc, char* argv[])
 			whitgl_bool in_menu = menu.transition > 0.5 && menu.buttons[2] < 1;
 			game = space_game_update(game, setup.size, camera_offset, in_menu);
 			space_station* station = NULL;
-			if(game.player.docked != -1) station = &game.stations[game.player.docked];
-			menu = space_menu_update(menu, game, station, &game.player);
+			if(game.player.docked != -1)
+			{
+				station = &game.stations[game.player.docked];
+				if(game.player.docked == 0)
+					save = space_game_save(save, game);
+			}
+			menu = space_menu_update(menu, game, station, &game.player, save.mission_ids[0]);
+
+			whitgl_bool l = whitgl_input_down(WHITGL_INPUT_LEFT);
+			whitgl_bool r = whitgl_input_down(WHITGL_INPUT_RIGHT);
+			if(game.player.dead_timer >= 1 && (r || l))
+			{
+				game.player = space_player_zero;
+				game = space_game_load(game, save);
+				game.stations[0].mission_id = MISSION_RESTORED;
+			}
 		}
 		whitgl_sys_draw_init();
 

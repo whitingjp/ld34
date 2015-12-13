@@ -7,7 +7,7 @@
 #include <whitgl/input.h>
 #include <resource.h>
 
-space_menu space_menu_update(space_menu m, space_game game, space_station* station, space_player* player)
+space_menu space_menu_update(space_menu m, space_game game, space_station* station, space_player* player, mission_index mission_resume)
 {
 	if(station)
 		m.mission_id = station->mission_id;
@@ -51,6 +51,8 @@ space_menu space_menu_update(space_menu m, space_game game, space_station* stati
 	if(m.mission_id != NUM_MISSIONS)
 	{
 		mission_mission mission = kMissions[m.mission_id];
+		if(mission.replacement == MISSION_RESUME)
+			mission.replacement = mission_resume;
 		m.have_required = true;
 		if(mission.need.good != GOOD_NONE && game.player.hold.good != mission.need.good)
 			m.have_required = false;

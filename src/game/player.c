@@ -13,6 +13,7 @@ space_player space_player_update(space_player p, whitgl_bool can_thrust)
 	{
 		whitgl_loop_volume(SOUND_POWER_L, 0);
 		whitgl_loop_volume(SOUND_POWER_R, 0);
+		p.dead_timer = whitgl_fclamp(p.dead_timer + 0.01, 0, 1);
 		return p;
 	}
 	whitgl_bool l = whitgl_input_down(WHITGL_INPUT_LEFT);
@@ -60,6 +61,7 @@ space_player space_player_update(space_player p, whitgl_bool can_thrust)
 
 	whitgl_loop_volume(SOUND_POWER_L, p.engine_thrust[0]*0.5);
 	whitgl_loop_volume(SOUND_POWER_R, p.engine_thrust[1]*0.5);
+
 
 	return p;
 }

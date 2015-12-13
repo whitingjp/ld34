@@ -30,6 +30,24 @@ space_game space_game_zero(whitgl_ivec screen_size)
 	return g;
 }
 
+space_save space_game_save(space_save save, space_game game)
+{
+	save.hold = game.player.hold;
+	whitgl_int i;
+	for(i=0; i<NUM_STATIONS; i++)
+		if(game.stations[i].mission_id != MISSION_RESTORED)
+			save.mission_ids[i] = game.stations[i].mission_id;
+	return save;
+}
+space_game space_game_load(space_game game, space_save save)
+{
+	game.player.hold = save.hold;
+	whitgl_int i;
+	for(i=0; i<NUM_STATIONS; i++)
+		game.stations[i].mission_id = save.mission_ids[i];
+	return game;
+}
+
 void _space_game_consider_focus(space_game* g, space_camera_focus* focus, space_entity* e, whitgl_float range, whitgl_float size, whitgl_float focus_dist)
 {
 	if(!e->active)
