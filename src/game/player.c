@@ -28,6 +28,8 @@ space_player space_player_update(space_player p, whitgl_bool can_thrust)
 	{
 		l = false;
 		r = false;
+		p.speed = whitgl_fvec_interpolate(p.speed, whitgl_fvec_zero, 0.2);
+		p.angle_speed *= 0.8;
 	}
 	if(l&&r)
 	{
