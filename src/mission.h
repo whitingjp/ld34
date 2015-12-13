@@ -15,7 +15,7 @@ typedef enum
 static const char* mission_good_names[NUM_GOODS] =
 {
 	"Empty",
-	"Snack",
+	"Calamari",
 	"Trade2",
 	"Tractor",
 	"Seed",
@@ -61,7 +61,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 {
 	{ // MISSION_INTRO
 		{"","","",""},
-		{"Hey, I want to get started, but first can you nip to Zunus and get me a snack.", "Sure thing", "Ugh fine!", ""},
+		{"Well howdy youngster. You want in on the ol' asteroid farming business do ya.\n\nWell suuure, I can help, but first, you wouldn't mind popping across the way to grab me some Calamari, would ya?\n\nThe diner is at Hutov, y'know, the nice place", "No problem", "Ugh, fine!", ""},
 		{"","","","launch"},
 		{"","","","launch"},
 		{GOOD_NONE, 0},
@@ -70,7 +70,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		true,
 	},
 	{ // MISSION_LAUNCH
-		{"you need to get yourself to Zunus and pick me up a snack\n\nto leave the station hold left and right", "", "", "launch"},
+		{"I hope someones taught you how to steer that old boat?\n\nNo?\n\nWell it's simple enough, left is left, and the other one is, uhh, y'know.. it's.. the other one\n\nOh, and yeah, you launch from a station by holding both directions at once. That one is pretty important too.\n\nStop dilly dallying, get yourself to Hutov", "", "", "launch"},
 		{"great, thanks, so what we're going to do now is...","","","launch"},
 		{"","","","launch"},
 		{"","","","launch"},
@@ -80,10 +80,10 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		true,
 	},
 	{ // MISSION_SNACK
-		{"not even 4 creds to your name, youre gonna need some more","","","launch"},
-		{"get your snacks, only 4 creds!", "yes please", "bit steep", "launch"},
-		{"pleasure doing buisness with you","","","launch"},
-		{"well, come back later if you scrapes some pennies together","","","launch"},
+		{"Darling, I'd really love to help, but you know how it is. I've got bills to pay, and Tracy isn't getting any better.\n\nSo it's 4 creds for calamari or nothing for nothing I'm afraid.\n\nI hope you can get that together somehow","","","launch"},
+		{"Helloooo! It's been too long xxx\n\nCalamari eh? Your gran sure does love that stuff\n\nThat'll be $4 for you darling.\n\n", "thanks kate", "oh! brb", "launch"},
+		{"Come back soon girl, we need a proper catch up sometime soon xxx\n\n","","","launch"},
+		{"Ok, laterz","","","launch"},
 		{GOOD_NONE, 4},
 		{GOOD_SNACK, 0},
 		NUM_MISSIONS,
