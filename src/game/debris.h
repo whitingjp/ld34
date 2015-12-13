@@ -8,10 +8,11 @@ typedef struct
 {
 	space_entity e;
 	whitgl_float timer;
+	whitgl_float timer_speed;
 	whitgl_float angle_speed;
 	whitgl_fvec speed;
 } space_debris_piece;
-static const space_debris_piece space_debris_piece_zero = {{false,{},{},0,false}, 0, 0, {0,0}};
+static const space_debris_piece space_debris_piece_zero = {{false,{},{},0,false}, 0, 1, 0, {0,0}};
 #define MAX_PIECES (64)
 typedef struct
 {
