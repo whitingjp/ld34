@@ -42,8 +42,15 @@ void _space_game_consider_focus(space_game* g, space_camera_focus* focus, space_
 		if(focus->num_foci >= MAX_FOCI)
 			WHITGL_PANIC("Run out of foci");
 		e->seen = true;
-		focus->foci[focus->num_foci].a = whitgl_fvec_sub(e->pos, whitgl_fvec_val(size));
-		focus->foci[focus->num_foci].b = whitgl_fvec_add(e->pos, whitgl_fvec_val(size));
+		if(e == &g->player.e)
+		{
+			focus->foci[focus->num_foci].a = whitgl_fvec_sub(focus_pos, whitgl_fvec_val(size));
+			focus->foci[focus->num_foci].b = whitgl_fvec_add(focus_pos, whitgl_fvec_val(size));
+		} else
+		{
+			focus->foci[focus->num_foci].a = whitgl_fvec_sub(e->pos, whitgl_fvec_val(size));
+			focus->foci[focus->num_foci].b = whitgl_fvec_add(e->pos, whitgl_fvec_val(size));
+		}
 		focus->num_foci++;
 	}
 }
