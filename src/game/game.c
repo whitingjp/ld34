@@ -143,7 +143,43 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 		{
 			g.debris = space_debris_create(g.debris, g.pirates[j].e, g.player.speed);
 			g.pirates[j].active = false;
+			whitgl_sound_play(SOUND_EXPLODE, 1.5);
+		}
+	}
+	for(j=0; j<NUM_PIRATES; j++)
+	{
+		if(!g.pirates[j].active)
+			continue;
+		for(i=0; i<NUM_PIRATES; i++)
+		{
+			if(i==j)
+				continue;
+			if(!g.pirates[i].active)
+				continue;
+			if(space_entity_colliding(g.pirates[j].e, g.pirates[i].e))
+			{
+				g.debris = space_debris_create(g.debris, g.pirates[j].e, g.player.speed);
+				g.pirates[j].active = false;
+				g.debris = space_debris_create(g.debris, g.pirates[i].e, g.player.speed);
+				g.pirates[i].active = false;
+				whitgl_sound_play(SOUND_EXPLODE, 1.5);
+			}
+		}
+	}
+	for(i=0; i<NUM_PIRATES; i++)
+	{
+		if(!g.player.active)
+			continue;
+		if(!g.pirates[i].active)
+			continue;
+		if(space_entity_colliding(g.player.e, g.pirates[i].e))
+		{
+			g.debris = space_debris_create(g.debris, g.player.e, g.player.speed);
+			g.player.active = false;
+			g.debris = space_debris_create(g.debris, g.pirates[i].e, g.player.speed);
+			g.pirates[i].active = false;
 			whitgl_sound_play(SOUND_EXPLODE, 1);
+			whitgl_sound_play(SOUND_EXPLODE, 1.5);
 		}
 	}
 	return g;
