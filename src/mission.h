@@ -50,7 +50,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 {
 	{ // MISSION_INTRO
 		{"","","",""},
-		{"Hey, I want to get started, but first can you nip to xyz and get me a snack.", "Sure thing", "Ugh fine!", ""},
+		{"Hey, I want to get started, but first can you nip to Zunus and get me a snack.", "Sure thing", "Ugh fine!", ""},
 		{"","","","launch"},
 		{"","","","launch"},
 		{GOOD_NONE, 0},
@@ -59,7 +59,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		true,
 	},
 	{ // MISSION_LAUNCH
-		{"you need to get yourself to xyz and pick me up a snack\n\nto leave the station hold left and right", "", "", "launch"},
+		{"you need to get yourself to Zunus and pick me up a snack\n\nto leave the station hold left and right", "", "", "launch"},
 		{"great, thanks, so what we're going to do now is...","","","launch"},
 		{"","","","launch"},
 		{"","","","launch"},

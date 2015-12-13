@@ -14,14 +14,17 @@ Growth finished, final journey to sell plant for big bucks.
 
 
 Stations:
- Hub
- Supermarket + 1st Trade
- 2nd Trade
- 3rd Trade
- 4th Trade
- Tractor beam rental
- Asteroid
- Seed market
+Zunus - Hub
+Hutov - Supermarket + 1st Trade
+Yutis - 2nd Trade
+Alclov - 3rd Trade
+Seue - 4th Trade
+Tagawa - Tractor beam rental
+Oskao - Asteroid
+Utbrapus - Seed market
+
+
+
 
 Station template:
   Thing you need to make use of it
