@@ -33,6 +33,9 @@ void space_entity_draw(space_entity e, space_camera camera)
 whitgl_bool space_entity_colliding(space_entity ea, space_entity eb)
 {
 	whitgl_int i, j;
+	whitgl_float sqmag = whitgl_fvec_sqmagnitude(whitgl_fvec_sub(ea.pos, eb.pos));
+	if(sqmag > 5*5)
+		return false;
 	for(i=0; i<ea.sprite.num_lines; i++)
 	{
 		for(j=0; j<eb.sprite.num_lines; j++)

@@ -11,7 +11,7 @@
 #include <camera.h>
 
 #define NUM_STATIONS (6)
-#define NUM_ASTEROIDS (32)
+#define NUM_ASTEROIDS (64)
 #define NUM_PIRATES (0)
 
 typedef struct
