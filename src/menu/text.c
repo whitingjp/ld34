@@ -48,6 +48,10 @@ void text_draw(const char* string, whitgl_ivec pos, whitgl_int max_width, text_f
 			index = 42;
 		if(*string == '-')
 			index = 43;
+		if(*string == '<')
+			index = 44;
+		if(*string == '>')
+			index = 45;
 		if(*string == '\n')
 			draw_pos.x += 10000;
 		whitgl_int chars_left_in_word = 0;
@@ -69,7 +73,9 @@ void text_draw(const char* string, whitgl_ivec pos, whitgl_int max_width, text_f
 		}
 
 		if(*string != '\n')
+		{
 			draw_pos.x += sprite.size.x;
+		}
 		string++;
 		visible_chars--;
 	}

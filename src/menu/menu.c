@@ -165,6 +165,7 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 		text_draw(page.text, text_pos, box_size.x-12, FONT_SMALL, false, m.num_chars);
 	}
 
+	char buffer[128];
 	whitgl_int button_height = 16;
 	whitgl_iaabb launch_box = box;
 	launch_box.a.y = box.b.y;
@@ -180,7 +181,8 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 			whitgl_sys_draw_iaabb(launch_box_fill, inner_col);
 			whitgl_sys_draw_hollow_iaabb(launch_box, 1, col);
 			whitgl_ivec ltext_pos = {launch_box.a.x+box_size.x/2, box.b.y-(button_height-6)/2-6};
-			text_draw(page.launch, ltext_pos, box_size.x-12, FONT_SMALL, true, -1);
+			snprintf(buffer, 128, "<%s>", page.launch);
+			text_draw(buffer, ltext_pos, box_size.x-12, FONT_SMALL, true, -1);
 		}
 		launch_box.a.y+=1;
 	}
@@ -202,7 +204,8 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 			whitgl_sys_draw_iaabb(left_box_fill, inner_col);
 			whitgl_sys_draw_hollow_iaabb(lbutton_box, 1, col);
 			whitgl_ivec ltext_pos = {lbutton_box.a.x+box_size.x/4, lbutton_box.b.y-(24-6)/2-6};
-			text_draw(page.left, ltext_pos, box_size.x-12, FONT_SMALL, true, -1);
+			snprintf(buffer, 128, "<%s", page.left);
+			text_draw(buffer, ltext_pos, box_size.x-12, FONT_SMALL, true, -1);
 		}
 
 		whitgl_iaabb rbutton_box = lbutton_box;
@@ -218,7 +221,8 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 			whitgl_sys_draw_iaabb(right_box_fill, inner_col);
 			whitgl_sys_draw_hollow_iaabb(rbutton_box, 1, col);
 			whitgl_ivec rtext_pos = {rbutton_box.a.x+box_size.x/4, rbutton_box.b.y-(24-6)/2-6};
-			text_draw(page.right, rtext_pos, box_size.x-12, FONT_SMALL, true, -1);
+			snprintf(buffer, 128, "%s>", page.right);
+			text_draw(buffer, rtext_pos, box_size.x-12, FONT_SMALL, true, -1);
 		}
 	}
 }
