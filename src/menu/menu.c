@@ -6,7 +6,7 @@
 #include <whitgl/input.h>
 #include <resource.h>
 
-space_menu space_menu_update(space_menu m, space_game game, space_station* station)
+space_menu space_menu_update(space_menu m, space_game game, space_station* station, space_player* player)
 {
 	if(station)
 		m.mission_id = station->mission_id;
@@ -55,7 +55,19 @@ space_menu space_menu_update(space_menu m, space_game game, space_station* stati
 		{
 			if(m.buttons[0] >= 1 || m.buttons[1] >= 1)
 			{
-				if(station)
+				whitgl_bool accepted = m.buttons[0] >= 1 || mission.always_yes;
+				if(accepted)
+				{
+					if(mission.need.good != GOOD_NONE)
+						player->hold.good = GOOD_NONE;
+					if(mission.need.creds != 0)
+						player->hold.creds -= mission.need.creds;
+					if(mission.have.good != GOOD_NONE)
+						player->hold.good = mission.have.good;
+					if(mission.have.creds != 0)
+						player->hold.creds += mission.have.creds;
+				}
+				if(station && mission.replacement != NUM_MISSIONS)
 					station->mission_id = mission.replacement;
 				m.num_chars = 0;
 			}

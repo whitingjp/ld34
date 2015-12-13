@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
 			game = space_game_update(game, setup.size, camera_offset, in_menu);
 			space_station* station = NULL;
 			if(game.player.docked != -1) station = &game.stations[game.player.docked];
-			menu = space_menu_update(menu, game, station);
+			menu = space_menu_update(menu, game, station, &game.player);
 		}
 		whitgl_sys_draw_init();
 

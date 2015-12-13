@@ -40,6 +40,7 @@ typedef enum
 {
 	MISSION_INTRO,
 	MISSION_LAUNCH,
+	MISSION_SNACK,
 	NUM_MISSIONS
 } mission_index;
 
@@ -55,12 +56,20 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 	},
 	{ // MISSION_LAUNCH
 		{"you need to get yourself to xyz and pick me up a snack\n\nto leave the station hold left and right", "", "", "launch"},
-		{"","","",""},
+		{"great, thanks, so what we're going to do now is...","","","launch"},
 		{GOOD_SNACK, 0},
 		{GOOD_NONE, 10},
-		-1,
+		NUM_MISSIONS,
 		true,
-	}
+	},
+	{ // MISSION_SNACK
+		{"not even 4 creds to your name, youre gonna need some more","","","launch"},
+		{"get your snacks, only 4 creds!", "yes please", "bit steep", "launch"},
+		{GOOD_NONE, 4},
+		{GOOD_SNACK, 0},
+		NUM_MISSIONS,
+		false,
+	},
 };
 
 
