@@ -54,16 +54,24 @@ void _space_game_collide_handler(space_game* g, space_entity* e, whitgl_fvec spe
 
 	if(!e->active)
 		return;
+	whitgl_float player_sq_dist = whitgl_fvec_sqmagnitude(whitgl_fvec_sub(g->player.e.pos, e->pos));
+	if(player_sq_dist > 20*20)
+		return;
 	whitgl_bool colliding = false;
 	for(i=0; i<NUM_STATIONS; i++)
 		colliding |= space_entity_colliding(*e, g->stations[i].e);
 	for(i=0; i<NUM_ASTEROIDS; i++)
-		colliding |= space_entity_colliding(*e, g->asteroids[i].e);
-	if(colliding)
 	{
-		g->debris = space_debris_create(g->debris, *e, speed);
-		e->active = false;
-		whitgl_sound_play(SOUND_EXPLODE, whitgl_randfloat()/2+0.75);
+		if(!g->asteroids[i].e.active)
+			continue;
+		if(&g->asteroids[i].e == e)
+			continue;
+		if(space_entity_colliding(*e, g->asteroids[i].e))
+		{
+			colliding = true;
+			g->debris = space_debris_create(g->debris, g->asteroids[i].e, g->asteroids[i].speed);
+			g->asteroids[i].e.active = false;
+		}
 	}
 	for(i=0; i<NUM_PIRATES; i++)
 	{
@@ -73,14 +81,18 @@ void _space_game_collide_handler(space_game* g, space_entity* e, whitgl_fvec spe
 			continue;
 		if(space_entity_colliding(*e, g->pirates[i].e))
 		{
-			g->debris = space_debris_create(g->debris, *e, speed);
-			e->active = false;
-			g->debris = space_debris_create(g->debris, g->pirates[i].e, g->player.speed);
+			colliding = true;
+			g->debris = space_debris_create(g->debris, g->pirates[i].e, g->pirates[i].speed);
 			g->pirates[i].e.active = false;
-			whitgl_sound_play(SOUND_EXPLODE, whitgl_randfloat()/2+0.75);
-			whitgl_sound_play(SOUND_EXPLODE, whitgl_randfloat()/2+0.75);
 		}
 	}
+	if(colliding)
+	{
+		g->debris = space_debris_create(g->debris, *e, speed);
+		e->active = false;
+		whitgl_sound_play(SOUND_EXPLODE, whitgl_randfloat()/2+0.75);
+	}
+
 }
 
 space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec camera_offset)
@@ -136,6 +148,8 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 	_space_game_collide_handler(&g, &g.player.e, g.player.speed);
 	for(i=0; i<NUM_PIRATES; i++)
 		_space_game_collide_handler(&g, &g.pirates[i].e, g.pirates[i].speed);
+	for(i=0; i<NUM_ASTEROIDS; i++)
+		_space_game_collide_handler(&g, &g.asteroids[i].e, g.asteroids[i].speed);
 	return g;
 }
 
