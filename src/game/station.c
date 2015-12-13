@@ -2,7 +2,7 @@
 
 #include <whitgl/sys.h>
 
-space_station space_station_zero(const char* name, whitgl_int num_points, whitgl_fvec pos, mission_index mission_id)
+space_station space_station_zero(const char* name, whitgl_int num_points, whitgl_float x, whitgl_float y, mission_index mission_id)
 {
 	space_station s;
 	s.name = name;
@@ -25,7 +25,8 @@ space_station space_station_zero(const char* name, whitgl_int num_points, whitgl
 	s.e = space_entity_zero;
 	s.e.active = true;
 	s.e.sprite = sprite;
-	s.e.pos = pos;
+	s.e.pos.x = x;
+	s.e.pos.y = y;
 	s.e.angle = whitgl_randfloat()*whitgl_pi*2;
 	s.angle_speed = 0.01;
 	s.mission_id = mission_id;

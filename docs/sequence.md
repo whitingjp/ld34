@@ -18,9 +18,8 @@ Zunus - Hub
 Hutov - Supermarket + 1st Trade
 Yutis - 2nd Trade
 Alclov - 3rd Trade
-Seue - 4th Trade
 Tagawa - Tractor beam rental
-Oskao - Asteroid
+Oskao - 4th Trade
 Utbrapus - Seed market
 
 
@@ -42,6 +41,4 @@ Replace on meeting need condition
 Replace with save upon any launching
 No replace
 
-REPLACE_ON_ANY_ANSWER
-REPLACE_ON_ACCEPTED_LAUNCH
-REPLACE_ON_MET_NEED
+

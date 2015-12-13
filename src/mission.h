@@ -5,7 +5,7 @@ typedef enum
 {
 	GOOD_NONE,
 	GOOD_SNACK,
-	GOOD_TRADE2,
+	GOOD_WEED,
 	GOOD_TRACTOR,
 	GOOD_SEED,
 	GOOD_PLANT,
@@ -67,6 +67,8 @@ typedef enum
 	MISSION_RESTORED,
 	MISSION_YUCTIS,
 	MISSION_TRACTOR,
+	MISSION_ALCLOV,
+	MISSION_OSKAO,
 	NUM_MISSIONS,
 	MISSION_RESUME
 } mission_index;
@@ -87,7 +89,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 	{ // MISSION_LAUNCH
 		{"I hope someones taught you how to steer that old boat?\n\nNo?\n\nWell it's simple enough, left is left, and the other one is, uhh, y'know.. it's.. the other one\n\nOh, and yeah, you launch from a station by holding both directions at once. That one is pretty important too.\n\nStop dilly dallying, get yourself to Hutov", "", "", "launch"},
 		{"Do I smell Calamari? It's about time too!\n\nHere I am, all alone, hungry, and with a business to run\n\nHand it over then","here gran","get your own","launch"},
-		{"Okay, first you'll need to hire a big 'ol tractor beam to snag you an asteroid, but they cost big bucks\n\n$50 or so should be enough\n\nTry selling Calamari at Yutis, or if you're feeling adventurous run some space weed from Alclov to Seue\n\nI'll lend you $10 to get started. Come back when you have enough","","","launch"},
+		{"Okay, first you'll need to hire a big 'ol tractor beam to snag you an asteroid, but they cost big bucks\n\n$50 or so should be enough\n\nTry selling Calamari at Yutis, or if you're feeling adventurous run some red crabs from Alclov to Oskao\n\nI'll lend you $10 to get started. Come back when you have enough","","","launch"},
 		{"Not ever in my life. Come back when you got some manners girl.","","","launch"},
 		{GOOD_SNACK, 0},
 		{GOOD_NONE, 10},
@@ -105,7 +107,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		NO_REPLACE,
 	},
 	{ // MISSION_FUNDS
-		{"You'll need more than that to hire yourself a tractor beam!\n\n$50 or so should be enough\n\nTry selling Calamari at Yutis, or if you're feeling adventurous run some space weed from Alclov to Seue\n\nCome back when you have enough","","","launch"},
+		{"You'll need more than that to hire yourself a tractor beam!\n\n$50 or so should be enough\n\nTry selling Calamari at Yutis, or if you're feeling adventurous run some red crabs from Alclov to Oskao\n\nCome back when you have enough","","","launch"},
 		{"","","","launch"},
 		{"","","","launch"},
 		{"","","","launch"},
@@ -144,6 +146,26 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		NUM_MISSIONS,
 		false,
 	},
+	{ // MISSION_ALCLOV
+		{"Yeah cuz, we might have red crabs, or we might not. Show us some holobacked $$$ and we can talk\n\nIf you don't have ooh, at least $20, it's best you just leave now.\n\nif Pol finds me selling for less.. well.. she won't be happy\n\n","","","get out"},
+		{"You got $20? Sure, that'll get you some of the red stuff.\n\nJust if anybody asks, you didn't get it from me. Right?\n\n", "here's $20", "maybe later", "get out"},
+		{"Right, pleasure doing business with you\n\nI wouldn't stick around too long\n\nPol said she'd be getting back pretty soon, and she sounded pissed.","","","flee"},
+		{"Stop wasting my time cuz","","","launch"},
+		{GOOD_NONE, 20},
+		{GOOD_WEED, 0},
+		NUM_MISSIONS,
+		NO_REPLACE,
+	},
+	{ // MISSION_OSKAO
+		{"Heyyyy, don't suppose you could hook me up with some of the red stuff\n\nCan't get enough these days\n\nYou can't?\n\nWell, if you ever can I can maybe pay $50 if it's good stuff","","","launch"},
+		{"You got crabs?\n\nYES!\n\nI can give you $50 now, or, like, if you're happy for me to owe you, maybe $70 next week", "$50 now", "nah", "launch"},
+		{"Hey, I owe you one. Come round any time, we can get cosy, watch some holos, share a claw?","","","ugh, no!"},
+		{"Hey, why'd you even come here?\n\nYou're no fun at all.\n\nDon't bother coming back","","","launch"},
+		{GOOD_WEED, 0},
+		{GOOD_NONE, 50},
+		NUM_MISSIONS,
+		NO_REPLACE,
+	},
 	// { // MISSION_
 	// 	{"","","","launch"},
 	// 	{"", "", "", "launch"},
@@ -152,7 +174,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 	// 	{GOOD_NONE, 0},
 	// 	{GOOD_NONE, 0},
 	// 	NUM_MISSIONS,
-	// 	false,
+	// 	NO_REPLACE,
 	// },
 };
 
