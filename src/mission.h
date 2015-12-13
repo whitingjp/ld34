@@ -30,6 +30,8 @@ typedef struct
 {
 	mission_page need_page;
 	mission_page have_page;
+	mission_page accepted;
+	mission_page rejected;
 	mission_trade need;
 	mission_trade have;
 	whitgl_int replacement;
@@ -49,6 +51,8 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 	{ // MISSION_INTRO
 		{"","","",""},
 		{"Hey, I want to get started, but first can you nip to xyz and get me a snack.", "Sure thing", "Ugh fine!", ""},
+		{"","","","launch"},
+		{"","","","launch"},
 		{GOOD_NONE, 0},
 		{GOOD_NONE, 0},
 		MISSION_LAUNCH,
@@ -57,6 +61,8 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 	{ // MISSION_LAUNCH
 		{"you need to get yourself to xyz and pick me up a snack\n\nto leave the station hold left and right", "", "", "launch"},
 		{"great, thanks, so what we're going to do now is...","","","launch"},
+		{"","","","launch"},
+		{"","","","launch"},
 		{GOOD_SNACK, 0},
 		{GOOD_NONE, 10},
 		NUM_MISSIONS,
@@ -65,6 +71,8 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 	{ // MISSION_SNACK
 		{"not even 4 creds to your name, youre gonna need some more","","","launch"},
 		{"get your snacks, only 4 creds!", "yes please", "bit steep", "launch"},
+		{"pleasure doing buisness with you","","","launch"},
+		{"well, come back later if you scrapes some pennies together","","","launch"},
 		{GOOD_NONE, 4},
 		{GOOD_SNACK, 0},
 		NUM_MISSIONS,

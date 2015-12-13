@@ -10,11 +10,17 @@ space_menu space_menu_update(space_menu m, space_game game, space_station* stati
 {
 	if(station)
 		m.mission_id = station->mission_id;
+	else
+		m.state = STATE_QUESTION;
 
 	if(game.player.docked != -1)
 		m.transition = whitgl_fclamp(m.transition + 0.05, 0, 1);
 	else
 		m.transition = whitgl_fclamp(m.transition - 0.05, 0, 1);
+
+	if(!station)
+		return m;
+
 	if(m.transition > 0.5)
 		m.num_chars++;
 	else
@@ -47,7 +53,13 @@ space_menu space_menu_update(space_menu m, space_game game, space_station* stati
 			m.have_required = false;
 		if(mission.need.creds != 0 && game.player.hold.creds < mission.need.creds)
 			m.have_required = false;
-		mission_page page = m.have_required ? mission.have_page : mission.need_page;
+		mission_page page;
+		if(m.state == STATE_QUESTION)
+			page = m.have_required ? mission.have_page : mission.need_page;
+		else if(m.state == STATE_ACCEPTED)
+			page = mission.accepted;
+		else
+			page = mission.rejected;
 		m.has_choice = strlen(page.left) > 0;
 		m.can_launch = strlen(page.launch) > 0;
 
@@ -58,6 +70,7 @@ space_menu space_menu_update(space_menu m, space_game game, space_station* stati
 				whitgl_bool accepted = m.buttons[0] >= 1 || mission.always_yes;
 				if(accepted)
 				{
+					m.state = STATE_ACCEPTED;
 					if(mission.need.good != GOOD_NONE)
 						player->hold.good = GOOD_NONE;
 					if(mission.need.creds != 0)
@@ -66,9 +79,15 @@ space_menu space_menu_update(space_menu m, space_game game, space_station* stati
 						player->hold.good = mission.have.good;
 					if(mission.have.creds != 0)
 						player->hold.creds += mission.have.creds;
+				} else
+				{
+					m.state = STATE_REJECTED;
 				}
 				if(station && mission.replacement != NUM_MISSIONS)
+				{
 					station->mission_id = mission.replacement;
+					m.state = STATE_QUESTION;
+				}
 				m.num_chars = 0;
 			}
 		}
@@ -134,7 +153,13 @@ void space_menu_draw(space_menu m, whitgl_ivec screen_size)
 	if(m.transition <= 0)
 		return;
 	mission_mission mission = kMissions[m.mission_id];
-	mission_page page = m.have_required ? mission.have_page : mission.need_page;
+	mission_page page;
+	if(m.state == STATE_QUESTION)
+		page = m.have_required ? mission.have_page : mission.need_page;
+	else if(m.state == STATE_ACCEPTED)
+		page = mission.accepted;
+	else
+		page = mission.rejected;
 
 	whitgl_ivec box_size = {156, 180*m.transition*m.transition};
 	whitgl_iaabb box;
