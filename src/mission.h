@@ -37,6 +37,15 @@ typedef struct
 	char launch[MAX_TEXT_LEN];
 } mission_page;
 
+
+typedef enum
+{
+	NO_REPLACE,
+	REPLACE_ON_ANY_ANSWER,
+	REPLACE_ON_ACCEPTED_LAUNCH,
+	REPLACE_ON_MET_NEED,
+} mission_replacement_type;
+
 typedef struct
 {
 	mission_page need_page;
@@ -46,7 +55,7 @@ typedef struct
 	mission_trade need;
 	mission_trade have;
 	whitgl_int replacement;
-	whitgl_bool always_yes;
+	mission_replacement_type replacement_type;
 } mission_mission;
 
 typedef enum
@@ -56,9 +65,12 @@ typedef enum
 	MISSION_SNACK,
 	MISSION_FUNDS,
 	MISSION_RESTORED,
+	MISSION_YUCTIS,
+	MISSION_TRACTOR,
 	NUM_MISSIONS,
 	MISSION_RESUME
 } mission_index;
+
 
 static const mission_mission kMissions[NUM_MISSIONS] =
 {
@@ -70,7 +82,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{GOOD_NONE, 0},
 		{GOOD_NONE, 0},
 		MISSION_LAUNCH,
-		true,
+		REPLACE_ON_ANY_ANSWER,
 	},
 	{ // MISSION_LAUNCH
 		{"I hope someones taught you how to steer that old boat?\n\nNo?\n\nWell it's simple enough, left is left, and the other one is, uhh, y'know.. it's.. the other one\n\nOh, and yeah, you launch from a station by holding both directions at once. That one is pretty important too.\n\nStop dilly dallying, get yourself to Hutov", "", "", "launch"},
@@ -80,7 +92,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{GOOD_SNACK, 0},
 		{GOOD_NONE, 10},
 		MISSION_FUNDS,
-		false,
+		REPLACE_ON_ACCEPTED_LAUNCH,
 	},
 	{ // MISSION_SNACK
 		{"Darling, I'd really love to help, but you know how it is. I've got bills to pay, and Tracy isn't getting any better.\n\nSo it's 4 creds for calamari or nothing for nothing I'm afraid.\n\nI hope you can get that together somehow","","","launch"},
@@ -90,17 +102,17 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{GOOD_NONE, 4},
 		{GOOD_SNACK, 0},
 		NUM_MISSIONS,
-		false,
+		NO_REPLACE,
 	},
 	{ // MISSION_FUNDS
 		{"You'll need more than that to hire yourself a tractor beam!\n\n$50 or so should be enough\n\nTry selling Calamari at Yutis, or if you're feeling adventurous run some space weed from Alclov to Seue\n\nCome back when you have enough","","","launch"},
-		{"Okay, so, the best heavy machinery place I knows is down in the old country.\n\nTry Tagawa\n\nThey know one end of a tractor from the other down there\n\nyeah, I know they're robots, but robots aint bad people", "", "", "launch"},
+		{"","","","launch"},
 		{"","","","launch"},
 		{"","","","launch"},
 		{GOOD_NONE, 50},
-		{GOOD_NONE, 40},
-		NUM_MISSIONS,
-		false,
+		{GOOD_NONE, 50},
+		MISSION_TRACTOR,
+		REPLACE_ON_MET_NEED,
 	},
 	{ // MISSION_RESTORED
 		{"","","","launch"},
@@ -110,6 +122,26 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 		{GOOD_NONE, 0},
 		{GOOD_NONE, 0},
 		MISSION_RESUME,
+		REPLACE_ON_ANY_ANSWER,
+	},
+	{ // MISSION_YUCTIS
+		{"Yo! You live at Zunus station, near Hutov right?\n\nThe food here is super terrible. Hook us up with some of that good Hutov calamari and we'll pay well\n\nHow does $20 for a hold full sound to ya?","","","launch"},
+		{"Oh, wow, you got some of that Hutov calamari? That's just swell.\n\n$20 big ones for the hold full sound alright?\n\n", "you got it", "no thanks", "launch"},
+		{"Great, thanks sister.\n\nI'm sure we'd happily take more if you need to get rid of it.\n\n","","","launch"},
+		{"Ah shame, come back if you ever feel like sharing the wealth.","","","launch"},
+		{GOOD_SNACK, 0},
+		{GOOD_NONE, 20},
+		NUM_MISSIONS,
+		false,
+	},
+	{ // MISSION_TRACTOR
+		{"Okay, so, the best heavy machinery place I knows is down in the old country.\n\nTry Tagawa\n\nThey know one end of a tractor from the other down there\n\nyeah, I know they're robots, but robots aint bad people","","","launch"},
+		{"Great, now you have it...", "", "", "launch"},
+		{"","","","launch"},
+		{"","","","launch"},
+		{GOOD_TRACTOR, 0},
+		{GOOD_NONE, 0},
+		NUM_MISSIONS,
 		false,
 	},
 	// { // MISSION_

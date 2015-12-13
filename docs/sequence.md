@@ -34,3 +34,14 @@ Station template:
 
 Player has one inventory space
 
+
+Replace on accept/reject
+Replace on launching after accept only
+No replace
+Replace on meeting need condition
+Replace with save upon any launching
+No replace
+
+REPLACE_ON_ANY_ANSWER
+REPLACE_ON_ACCEPTED_LAUNCH
+REPLACE_ON_MET_NEED

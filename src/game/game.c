@@ -21,7 +21,7 @@ space_game space_game_zero(whitgl_ivec screen_size)
 	whitgl_fvec centurai_pos = {-10,-40};
 	g.stations[1] = space_station_zero("Hutov", 7, centurai_pos, MISSION_SNACK);
 	whitgl_fvec alpha_pos = {-50,75};
-	g.stations[2] = space_station_zero("Yutis", 11, alpha_pos, MISSION_LAUNCH);
+	g.stations[2] = space_station_zero("Yutis", 11, alpha_pos, MISSION_YUCTIS);
 	for(i=0; i<NUM_ASTEROIDS; i++)
 		g.asteroids[i] = space_asteroid_zero();
 	g.starfield = space_starfield_zero();

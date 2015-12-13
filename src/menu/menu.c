@@ -10,9 +10,14 @@
 space_menu space_menu_update(space_menu m, space_game game, space_station* station, space_player* player, mission_index mission_resume)
 {
 	if(station)
+	{
 		m.mission_id = station->mission_id;
+	}
 	else
+	{
 		m.state = STATE_QUESTION;
+		m.has_accepted = false;
+	}
 
 	if(game.player.docked != -1)
 		m.transition = whitgl_fclamp(m.transition + 0.05, 0, 1);
@@ -58,6 +63,12 @@ space_menu space_menu_update(space_menu m, space_game game, space_station* stati
 			m.have_required = false;
 		if(mission.need.creds != 0 && game.player.hold.creds < mission.need.creds)
 			m.have_required = false;
+		if(station && mission.replacement != NUM_MISSIONS && m.have_required && mission.replacement_type == REPLACE_ON_MET_NEED)
+		{
+			station->mission_id = mission.replacement;
+			m.state = STATE_QUESTION;
+			return m;
+		}
 		mission_page page;
 		if(m.state == STATE_QUESTION)
 			page = m.have_required ? mission.have_page : mission.need_page;
@@ -72,7 +83,7 @@ space_menu space_menu_update(space_menu m, space_game game, space_station* stati
 		{
 			if(m.buttons[0] >= 1 || m.buttons[1] >= 1)
 			{
-				whitgl_bool accepted = m.buttons[0] >= 1 || mission.always_yes;
+				whitgl_bool accepted = m.buttons[0] >= 1;
 				if(accepted)
 				{
 					m.state = STATE_ACCEPTED;
@@ -88,18 +99,24 @@ space_menu space_menu_update(space_menu m, space_game game, space_station* stati
 				{
 					m.state = STATE_REJECTED;
 				}
-				if(station && mission.replacement != NUM_MISSIONS && !m.can_launch)
+
+				if(station && mission.replacement != NUM_MISSIONS && mission.replacement_type == REPLACE_ON_ANY_ANSWER)
 				{
 					station->mission_id = mission.replacement;
 					m.state = STATE_QUESTION;
+					return m;
 				}
+				m.has_accepted = accepted;
+
 				m.num_chars = 0;
 			}
 		}
-		if(station && mission.replacement != NUM_MISSIONS && m.can_launch && m.buttons[2] >= 1)
+		bool replace_on_leave = mission.replacement_type == REPLACE_ON_ANY_ANSWER || (mission.replacement_type == REPLACE_ON_ACCEPTED_LAUNCH && m.has_accepted);
+		if(station && mission.replacement != NUM_MISSIONS && replace_on_leave && m.buttons[2] >= 1)
 		{
 			station->mission_id = mission.replacement;
 			m.state = STATE_QUESTION;
+			return m;
 		}
 	}
 
