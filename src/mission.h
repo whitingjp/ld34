@@ -125,7 +125,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 	},
 	{ // MISSION_YUCTIS
 		{"Yo! You live at Zunus station, near Hutov right?\n\nThe food here is super terrible. Hook us up with some of that good Hutov calamari and we'll pay well\n\nHow does $20 for a hold full sound to ya?","","","launch"},
-		{"Oh, wow, you got some of that Hutov calamari? That's just swell.\n\n$20 big ones for the hold full sound alright?\n\n", "you got it", "no thanks", "launch"},
+		{"Oh, wow, you got some of that Hutov calamari? That's just swell.\n\n$20 big ones for the hold full sound alright?\n\n", "sure", "no thanks", "launch"},
 		{"Great, thanks sister.\n\nI'm sure we'd happily take more if you need to get rid of it.\n\n","","","launch"},
 		{"Ah shame, come back if you ever feel like sharing the wealth.","","","launch"},
 		{GOOD_SNACK, 0},
@@ -136,7 +136,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 	},
 	{ // MISSION_TRACTOR
 		{"Okay, so, the best heavy machinery place I knows is down in the old country.\n\nTry Tagawa\n\nThey know one end of a tractor from the other down there\n\nyeah, I know they're robots, but robots aint bad people","","","launch"},
-		{"Great, now you have it...", "", "", "launch"},
+		{"Well done missy, we'll soon make an asteroid miner out of you!\n\nsadly jonathan didn't get a chance to work on any further plot points, sorry!\n\nthe tractor beam sure is fun and dangerous though, right?", "", "", "play"},
 		{"","","","launch"},
 		{"","","","launch"},
 		{GOOD_TRACTOR, 0},
