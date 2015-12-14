@@ -17,15 +17,15 @@ space_game space_game_zero(whitgl_ivec screen_size)
 	space_station_style zunus = {5, 1, {true,true,true,false,false}};
 	g.stations[0] = space_station_zero("Zunus", zunus, 0, 0, MISSION_INTRO);
 	space_station_style hutov = {4, 1, {true,false,true,false}};
-	g.stations[1] = space_station_zero("Hutov", hutov, -10, -40, MISSION_SNACK);
+	g.stations[1] = space_station_zero("Hutov", hutov, -28, -48, MISSION_SNACK);
 	space_station_style yutis = {7, 1, {true,true,true,true,true,false,false}};
-	g.stations[2] = space_station_zero("Yutis", yutis, -50, 75, MISSION_YUCTIS);
+	g.stations[2] = space_station_zero("Yutis", yutis, -64, 44, MISSION_YUCTIS);
 	space_station_style alclov = {6, 1, {true,false,true,false,true,false}};
-	g.stations[3] = space_station_zero("Alclov", alclov, 50, 10, MISSION_ALCLOV);
+	g.stations[3] = space_station_zero("Alclov", alclov, 120, -24, MISSION_ALCLOV);
 	space_station_style oskao = {4, 2, {true,false,true,false,true,false,true,false}};
-	g.stations[4] = space_station_zero("Oskao", oskao, -5, -100, MISSION_OSKAO);
+	g.stations[4] = space_station_zero("Oskao", oskao, -180, 20, MISSION_OSKAO);
 	space_station_style tagawa = {8, 3, {false,true,true,true,true,false,false,false, true,true,true,true,false,false,false,false, true,true,true,false,false,false,false,true}};
-	g.stations[5] = space_station_zero("Tagawa", tagawa, -50, -50, MISSION_TAGAWA);
+	g.stations[5] = space_station_zero("Tagawa", tagawa, 120, -250, MISSION_TAGAWA);
 	for(i=0; i<NUM_ASTEROIDS; i++)
 		g.asteroids[i] = space_asteroid_zero();
 	g.starfield = space_starfield_zero();
@@ -139,10 +139,11 @@ whitgl_fvec _space_game_get_safe_spawn(whitgl_fvec player_pos)
 space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec camera_offset, whitgl_bool in_menu)
 {
 	whitgl_int i;
+	g.target_pirates = whitgl_fclamp(g.target_pirates+whitgl_randfloat()*0.00015, 0, NUM_PIRATES);
 	if(!in_menu && g.player.was_in_menu)
 	{
 		g.target_asteroids = whitgl_fclamp(g.target_asteroids+4, 0, NUM_ASTEROIDS);
-		g.target_pirates = whitgl_fclamp(g.target_pirates+whitgl_randfloat()*0.3, 0, NUM_PIRATES);
+		g.target_pirates = whitgl_fclamp(g.target_pirates+whitgl_randfloat()*0.499, 0, NUM_PIRATES);
 		whitgl_int asteroids = 0;
 		for(i=0; i<NUM_ASTEROIDS; i++)
 			if(g.asteroids[i].e.active)
@@ -177,7 +178,7 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 			g.pirates[i].e.active = true;
 			g.pirates[i].e.pos = _space_game_get_safe_spawn(g.player.e.pos);
 			target--;
-			g.target_pirates -= whitgl_randfloat()*0.2;
+			g.target_pirates--;
 		}
 	}
 	g.hud = space_hud_update(g.hud, g.player.hold);
