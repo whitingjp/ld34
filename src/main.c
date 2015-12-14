@@ -13,6 +13,8 @@
 #include <capture.h>
 #include <resource.h>
 
+#include <menu/text.h>
+
 int main(int argc, char* argv[])
 {
 	whitgl_bool fullscreen = true;
@@ -65,6 +67,7 @@ int main(int argc, char* argv[])
 	save = space_game_save(save, game);
 
 	capture_info capture = capture_info_zero;
+	whitgl_float exit_timer = 0;
 	bool running = true;
 	while(running)
 	{
@@ -74,7 +77,13 @@ int main(int argc, char* argv[])
 		while(whitgl_timer_should_do_frame(60))
 		{
 			whitgl_input_update();
-			if(whitgl_input_pressed(WHITGL_INPUT_ESC))
+
+			if(whitgl_input_down(WHITGL_INPUT_ESC))
+				exit_timer += 0.02;
+			else
+				exit_timer -= 0.02;
+			exit_timer = whitgl_fclamp(exit_timer, 0, 1);
+			if(exit_timer == 1)
 				running = false;
 			if(whitgl_sys_should_close())
 				running = false;
@@ -118,6 +127,22 @@ int main(int argc, char* argv[])
 		whitgl_sys_draw_iaabb(screen_rect, blank_col);
 		space_game_draw(game);
 		space_menu_draw(menu, setup.size);
+
+		if(exit_timer > 0)
+		{
+			whitgl_sys_color col = {0x13,0x89,0x58,0xff};
+			whitgl_iaabb inner_box = {{0,0},{48*exit_timer,12}};
+			whitgl_sys_color inner_col = {0x0f,0x52,0x3a,0xff};
+			whitgl_sys_draw_iaabb(inner_box, inner_col);
+			whitgl_iaabb exit_box = {{0,0},{48,12}};
+
+			whitgl_sys_draw_hollow_iaabb(exit_box, 1, col);
+
+			whitgl_ivec exit_text_pos = {24,3};
+			text_draw("exiting", exit_text_pos, 100000, FONT_SMALL_BRIGHT, true, -1);
+		}
+
+
 		whitgl_sys_draw_finish();
 		if(can_capture)
 			capture = capture_info_update(capture);
