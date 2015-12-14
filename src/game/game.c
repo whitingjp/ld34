@@ -142,7 +142,7 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 	g.target_pirates = whitgl_fclamp(g.target_pirates+whitgl_randfloat()*0.00015, 0, NUM_PIRATES);
 	if(!in_menu && g.player.was_in_menu)
 	{
-		g.target_asteroids = whitgl_fclamp(g.target_asteroids+4, 0, NUM_ASTEROIDS);
+		g.target_asteroids = whitgl_fclamp(g.target_asteroids+3, 0, NUM_ASTEROIDS);
 		g.target_pirates = whitgl_fclamp(g.target_pirates+whitgl_randfloat()*0.499, 0, NUM_PIRATES);
 		whitgl_int asteroids = 0;
 		for(i=0; i<NUM_ASTEROIDS; i++)

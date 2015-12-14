@@ -81,7 +81,7 @@ static const mission_mission kMissions[NUM_MISSIONS] =
 	},
 	{ // MISSION_LAUNCH
 		{"I hope someones taught you how to steer that old boat?\n\nNo?\n\nWell it's simple enough, left is left, and the other one is, uhh, y'know.. it's.. the other one\n\nOh, and yeah, you launch from a station by holding both directions at once. That one is pretty important too.\n\nStop dilly dallying, get yourself to Hutov", "", "", "launch"},
-		{"Do I smell Calamari? It's about time too!\n\nHere I am, all alone, hungry, and with a business to run\n\nHand it over then","here gran","get your own","launch"},
+		{"Do I smell Calamari? It's about time too!\n\nHere I am, all alone, hungry, and with a business to run\n\nHand it over then","here gran","get ya' own","launch"},
 		{"Okay, first you'll need to hire a big 'ol tractor beam to start snagging asteroids, but they cost big bucks\n\n$50 or so should be enough\n\nTry selling Calamari at Yutis, or if you're feeling adventurous run some red crabs from Alclov to Oskao\n\nI'll lend you $10 to get started. Come back when you have enough","","","launch"},
 		{"Not ever in my life. Come back when you got some manners girl.","","","launch"},
 		{GOOD_SNACK, 0},

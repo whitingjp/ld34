@@ -10,7 +10,7 @@
 #include <game/starfield.h>
 #include <camera.h>
 
-#define NUM_ASTEROIDS (128)
+#define NUM_ASTEROIDS (64)
 #define NUM_PIRATES (4)
 
 typedef struct
