@@ -16,16 +16,19 @@ space_game space_game_zero(whitgl_ivec screen_size)
 		g.pirates[i] = space_pirate_zero;
 		g.pirates[i].e.pos.x += i*4;
 	}
-	space_station_style zunus = {5, {true,true,true,false,false}};
+
+	space_station_style zunus = {5, 1, {true,true,true,false,false}};
 	g.stations[0] = space_station_zero("Zunus", zunus, 0, 0, MISSION_INTRO);
-	space_station_style hutov = {4, {true,false,true,false}};
+	space_station_style hutov = {4, 1, {true,false,true,false}};
 	g.stations[1] = space_station_zero("Hutov", hutov, -10, -40, MISSION_SNACK);
-	space_station_style yutis = {7, {true,true,true,true,true,false,false}};
+	space_station_style yutis = {7, 1, {true,true,true,true,true,false,false}};
 	g.stations[2] = space_station_zero("Yutis", yutis, -50, 75, MISSION_YUCTIS);
-	space_station_style alclov = {6, {true,false,true,false,true,false}};
+	space_station_style alclov = {6, 1, {true,false,true,false,true,false}};
 	g.stations[3] = space_station_zero("Alclov", alclov, 50, 10, MISSION_ALCLOV);
-	g.stations[4] = space_station_zero("Oskao", zunus, -5, -100, MISSION_OSKAO);
-	g.stations[5] = space_station_zero("Tagawa", zunus, -50, -50, MISSION_TAGAWA);
+	space_station_style oskao = {4, 2, {true,false,true,false,true,false,true,false}};
+	g.stations[4] = space_station_zero("Oskao", oskao, -5, -100, MISSION_OSKAO);
+	space_station_style tagawa = {8, 3, {false,true,true,true,true,false,false,false, true,true,true,true,false,false,false,false, true,true,true,false,false,false,false,true}};
+	g.stations[5] = space_station_zero("Tagawa", tagawa, -50, -50, MISSION_TAGAWA);
 	for(i=0; i<NUM_ASTEROIDS; i++)
 		g.asteroids[i] = space_asteroid_zero();
 	g.starfield = space_starfield_zero();

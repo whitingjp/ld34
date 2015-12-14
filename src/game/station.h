@@ -20,9 +20,11 @@ typedef struct
 typedef struct
 {
 	whitgl_int num_points;
-	whitgl_bool segment_used[MAX_STYLE_POINTS];
+	whitgl_int num_layers;
+
+	whitgl_bool segment_used[MAX_STYLE_POINTS*MAX_LAYERS];
 } space_station_style;
-static const space_station_style space_station_style_zero = {0,{}};
+static const space_station_style space_station_style_zero = {0,0,{}};
 
 space_station space_station_zero(const char* name, space_station_style style, whitgl_float x, whitgl_float y, mission_index mission_id);
 space_station space_station_update(space_station s);

@@ -7,22 +7,28 @@ space_station space_station_zero(const char* name, space_station_style style, wh
 	space_station s;
 	s.name = name;
 	space_sprite sprite;
-	whitgl_int i;
+	whitgl_int i,j;
 	whitgl_int line_count = 0;
-	for(i=0; i<style.num_points; i++)
+	for(j=0; j<style.num_layers; j++)
 	{
-		whitgl_fvec point = {0, -2.5};
-		sprite.points[i] = whitgl_rotate_point_around_point(point, whitgl_fvec_zero, (whitgl_pi*2)*((float)i/style.num_points));
+		for(i=0; i<style.num_points; i++)
+		{
+			whitgl_fvec point = {0, -2.5-j*1.5};
+			sprite.points[i+j*style.num_points] = whitgl_rotate_point_around_point(point, whitgl_fvec_zero, (whitgl_pi*2)*((float)i/style.num_points));
+		}
 	}
-	for(i=0; i<style.num_points; i++)
+	for(j=0; j<style.num_layers; j++)
 	{
-		if(!style.segment_used[i])
-			continue;
-		whitgl_ivec line = {i, (i+1)%style.num_points};
-		sprite.lines[line_count] = line;
-		line_count++;
+		for(i=0; i<style.num_points; i++)
+		{
+			if(!style.segment_used[i+j*style.num_points])
+				continue;
+			whitgl_ivec line = {i+j*style.num_points, (i+1)%style.num_points+j*style.num_points};
+			sprite.lines[line_count] = line;
+			line_count++;
+		}
 	}
-	sprite.num_points = style.num_points;
+	sprite.num_points = style.num_points*style.num_layers;
 	sprite.num_lines = line_count;
 	whitgl_sys_color col = {0x9f,0xfd,0x3b,0xff};
 	sprite.col = col;

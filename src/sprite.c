@@ -34,7 +34,7 @@ whitgl_bool space_entity_colliding(space_entity ea, space_entity eb)
 {
 	whitgl_int i, j;
 	whitgl_float sqmag = whitgl_fvec_sqmagnitude(whitgl_fvec_sub(ea.pos, eb.pos));
-	if(sqmag > 5*5)
+	if(sqmag > 10*10)
 		return false;
 	for(i=0; i<ea.sprite.num_lines; i++)
 	{
