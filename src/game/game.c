@@ -51,6 +51,9 @@ space_game space_game_load(space_game game, space_save save)
 	whitgl_int i;
 	for(i=0; i<NUM_STATIONS; i++)
 		game.stations[i].mission_id = save.mission_ids[i];
+	game.camera.pos = whitgl_fvec_zero;
+	game.camera.scale = 8;
+	game.camera.speed = whitgl_fvec_zero;
 	return game;
 }
 
