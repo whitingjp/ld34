@@ -15,14 +15,14 @@
 
 int main(int argc, char* argv[])
 {
-	whitgl_bool fullscreen = false;
+	whitgl_bool fullscreen = true;
 	whitgl_bool vsync = true;
 	whitgl_bool can_capture = false;
 	int currentarg;
 	for(currentarg=1; currentarg<argc; currentarg++)
 	{
-		if(strncmp(argv[currentarg], "fullscreen", 10)==0)
-			fullscreen = true;
+		if(strncmp(argv[currentarg], "windowed", 8)==0)
+			fullscreen = false;
 		if(strncmp(argv[currentarg], "novsync", 7)==0)
 			vsync = false;
 		if(strncmp(argv[currentarg], "capture", 7)==0)
