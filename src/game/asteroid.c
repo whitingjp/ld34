@@ -40,7 +40,7 @@ space_asteroid space_asteroid_update(space_asteroid a, whitgl_fvec player_pos)
 		return a;
 	a.e.angle = whitgl_fwrap(a.e.angle + a.angle_speed, 0, whitgl_pi*2);
 	a.e.pos = whitgl_fvec_add(a.e.pos, a.speed);
-	whitgl_int bound = 200;
+	whitgl_int bound = 100;
 	a.e.pos.x = whitgl_fwrap(a.e.pos.x, player_pos.x - bound, player_pos.x + bound);
 	a.e.pos.y = whitgl_fwrap(a.e.pos.y, player_pos.y - bound, player_pos.y + bound);
 	return a;
