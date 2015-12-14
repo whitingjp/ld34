@@ -51,6 +51,9 @@ space_game space_game_load(space_game game, space_save save)
 	whitgl_int i;
 	for(i=0; i<NUM_STATIONS; i++)
 		game.stations[i].mission_id = save.mission_ids[i];
+	game.camera.pos = whitgl_fvec_zero;
+	game.camera.scale = 8;
+	game.camera.speed = whitgl_fvec_zero;
 	return game;
 }
 
@@ -292,6 +295,31 @@ space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec 
 		whitgl_fvec thrust = whitgl_fvec_scale_val(dir, g.asteroids[i].tractor*0.001);
 		g.asteroids[i].speed = whitgl_fvec_add(g.asteroids[i].speed, thrust);
 		g.asteroids[i].speed = whitgl_fvec_interpolate(g.asteroids[i].speed, whitgl_fvec_zero, 0.01);
+	}
+
+	for(i=0; i<NUM_ASTEROIDS; i++)
+	{
+		if(!g.asteroids[i].e.active)
+			continue;
+		whitgl_int j;
+		for(j=0; j<NUM_STATIONS; j++)
+		{
+			if(!g.stations[j].e.active)
+				continue;
+			whitgl_fvec diff = whitgl_fvec_sub(g.stations[j].e.pos, g.asteroids[i].e.pos);
+			whitgl_float sqmagnitude = whitgl_fvec_sqmagnitude(diff);
+			if(sqmagnitude > 10*10)
+				continue;
+			if(sqmagnitude < 1)
+			{
+				g.asteroids[i].e.active = false;
+				g.debris = space_debris_create(g.debris, g.asteroids[i].e, g.asteroids[i].speed);
+			}
+			whitgl_fvec dir = whitgl_fvec_normalize(diff);
+			whitgl_fvec thrust = whitgl_fvec_scale_val(dir, 0.0005);
+			g.asteroids[i].speed = whitgl_fvec_add(g.asteroids[i].speed, thrust);
+			g.asteroids[i].speed = whitgl_fvec_interpolate(g.asteroids[i].speed, whitgl_fvec_zero, 0.01);
+		}
 	}
 
 	return g;
