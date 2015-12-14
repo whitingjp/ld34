@@ -15,7 +15,7 @@ typedef struct
 static const space_pirate space_pirate_zero =
 {
 	{
-		true,
+		false,
 		{
 			{{0.0,-0.5},{0.5,0.5},{-0.5,0.5},{0.0,0.3}},
 			{{0,1},{1,2},{0,2},{1,3},{2,3},{0,3}},

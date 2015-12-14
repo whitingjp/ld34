@@ -10,8 +10,8 @@
 #include <game/starfield.h>
 #include <camera.h>
 
-#define NUM_ASTEROIDS (32)
-#define NUM_PIRATES (0)
+#define NUM_ASTEROIDS (128)
+#define NUM_PIRATES (4)
 
 typedef struct
 {
@@ -23,6 +23,9 @@ typedef struct
 	space_camera camera;
 	space_debris debris;
 	space_hud hud;
+
+	whitgl_float target_asteroids;
+	whitgl_float target_pirates;
 } space_game;
 
 typedef struct

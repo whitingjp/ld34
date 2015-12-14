@@ -12,10 +12,7 @@ space_game space_game_zero(whitgl_ivec screen_size)
 	g.camera = camera;
 	g.player = space_player_zero;
 	for(i=0; i<NUM_PIRATES; i++)
-	{
 		g.pirates[i] = space_pirate_zero;
-		g.pirates[i].e.pos.x += i*4;
-	}
 
 	space_station_style zunus = {5, 1, {true,true,true,false,false}};
 	g.stations[0] = space_station_zero("Zunus", zunus, 0, 0, MISSION_INTRO);
@@ -34,6 +31,8 @@ space_game space_game_zero(whitgl_ivec screen_size)
 	g.starfield = space_starfield_zero();
 	g.debris = space_debris_zero();
 	g.hud = space_hud_zero;
+	g.target_asteroids = 16;
+	g.target_pirates = 0;
 	return g;
 }
 
@@ -128,9 +127,59 @@ void _space_game_collide_handler(space_game* g, space_entity* e, whitgl_fvec spe
 
 }
 
+
+whitgl_fvec _space_game_get_safe_spawn(whitgl_fvec player_pos)
+{
+	whitgl_float angle = whitgl_randfloat()*whitgl_pi*2;
+	whitgl_float dist = whitgl_randfloat()*50+50;
+	whitgl_fvec pos = whitgl_fvec_add(player_pos, whitgl_fvec_scale_val(whitgl_angle_to_fvec(angle), dist));
+	return pos;
+}
+
 space_game space_game_update(space_game g, whitgl_ivec screen_size, whitgl_fvec camera_offset, whitgl_bool in_menu)
 {
 	whitgl_int i;
+	if(!in_menu && g.player.was_in_menu)
+	{
+		g.target_asteroids = whitgl_fclamp(g.target_asteroids+4, 0, NUM_ASTEROIDS);
+		g.target_pirates = whitgl_fclamp(g.target_pirates+whitgl_randfloat()*0.3, 0, NUM_PIRATES);
+		whitgl_int asteroids = 0;
+		for(i=0; i<NUM_ASTEROIDS; i++)
+			if(g.asteroids[i].e.active)
+				asteroids++;
+
+		whitgl_int target = g.target_asteroids-asteroids;
+		for(i=0; i<NUM_ASTEROIDS; i++)
+		{
+			if(target <= 0)
+				continue;
+			if(g.asteroids[i].e.active)
+				continue;
+			g.asteroids[i] = space_asteroid_zero();
+			g.asteroids[i].e.active = true;
+			g.asteroids[i].e.pos = _space_game_get_safe_spawn(g.player.e.pos);
+			target--;
+		}
+
+		whitgl_int pirates = 0;
+		for(i=0; i<NUM_PIRATES; i++)
+			if(g.pirates[i].e.active)
+				pirates++;
+
+		target = g.target_pirates-pirates;
+		for(i=0; i<NUM_PIRATES; i++)
+		{
+			if(target <= 0)
+				continue;
+			if(g.pirates[i].e.active)
+				continue;
+			g.pirates[i] = space_pirate_zero;
+			g.pirates[i].e.active = true;
+			g.pirates[i].e.pos = _space_game_get_safe_spawn(g.player.e.pos);
+			target--;
+			g.target_pirates -= whitgl_randfloat()*0.2;
+		}
+	}
 	g.hud = space_hud_update(g.hud, g.player.hold);
 	g.player = space_player_update(g.player, !in_menu);
 	for(i=0; i<NUM_PIRATES; i++)
