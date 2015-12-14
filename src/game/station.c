@@ -13,7 +13,7 @@ space_station space_station_zero(const char* name, space_station_style style, wh
 	{
 		for(i=0; i<style.num_points; i++)
 		{
-			whitgl_fvec point = {0, -2.5-j*1.5};
+			whitgl_fvec point = {0, -3.0-j*1.5};
 			sprite.points[i+j*style.num_points] = whitgl_rotate_point_around_point(point, whitgl_fvec_zero, (whitgl_pi*2)*((float)i/style.num_points));
 		}
 	}
