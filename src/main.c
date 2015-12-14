@@ -87,8 +87,7 @@ int main(int argc, char* argv[])
 			if(game.player.docked != -1)
 			{
 				station = &game.stations[game.player.docked];
-				if(game.player.docked == 0)
-					save = space_game_save(save, game);
+				save = space_game_save(save, game);
 			}
 			menu = space_menu_update(menu, game, station, &game.player, save.mission_ids[0]);
 			if(menu.mission_id != NUM_MISSIONS)
